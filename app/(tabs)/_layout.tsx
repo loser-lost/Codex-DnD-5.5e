@@ -1,57 +1,53 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
-
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Tabs } from 'expo-router';
+import { useTheme } from '@ui-kitten/components';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
+        headerShown: false,
+        tabBarStyle: { backgroundColor: theme['color-basic-1000'] },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          title: 'Magias',
+          tabBarActiveTintColor: theme['color-primary-500'],
+          tabBarLabelStyle: { fontFamily: 'Inter' },
+          tabBarIcon: ({ color }) => <FontAwesome6 name="book-quran" size={28} color={color} />
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="monsters"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Monstros',
+          tabBarActiveTintColor: theme['color-primary-500'],
+          tabBarLabelStyle: { fontFamily: 'Inter' },
+          tabBarIcon: ({ color }) => <FontAwesome6 name="dragon" size={25} color={color} />
+        }}
+      />
+      <Tabs.Screen
+        name="characters"
+        options={{
+          title: 'Fichas',
+          tabBarActiveTintColor: theme['color-primary-500'],
+          tabBarLabelStyle: { fontFamily: 'Inter' },
+          tabBarIcon: ({ color }) => <FontAwesome6 size={28} name="address-book" color={color} />
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Configurações',
+          tabBarActiveTintColor: theme['color-primary-500'],
+          tabBarLabelStyle: { fontFamily: 'Inter' },
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />
         }}
       />
     </Tabs>

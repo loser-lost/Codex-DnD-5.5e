@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
+
 import { Layout } from '@ui-kitten/components';
 import { Text, TitleText } from '@/components/StyledText';
 
-
-export default function TabOneScreen() {
-  
+export default function TabTwoScreen() {
   return (
     <Layout style={styles.container}>
-      <TitleText category='h1'>Magias</TitleText>
-      <Text >exempo de texto médio</Text>
+      <TitleText category='h1'>Ficha para magias</TitleText>
+      <Text>Tela em desenvolvimento...</Text>
     </Layout>
   );
 }
