@@ -1,5 +1,6 @@
 //* React Imports
 import { useEffect } from 'react';
+import React from 'react';
 
 //* Expo Imports
 import FontAwesome from '@expo/vector-icons/FontAwesome';

@@ -1,43 +1,75 @@
-import { Button, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
-import { Layout } from '@ui-kitten/components';
+import { Button, FlatList, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { Divider, Layout, List, ListItem} from '@ui-kitten/components';
 import { Text, TitleText } from '@/components/StyledText';
-import React from 'react';
+import magias from '@/assets/json/magias.json';
+import React, { useEffect, useMemo, useState } from 'react';
 
+interface Item {
+  magia_id: string;
+  nome: string;
+  circulo: string;
+  escola: string;
+  classes: string[];
+  tempo_de_conjuracao: string;
+  alcance: string;
+  componentes: string[];
+  duracao: string;
+  efeito: string;
+}
 
 export default function TabOneScreen() {
+  const [filteredData, setFilteredData] = useState<Item[]>([]);
+  const [data, setData] = useState<Item[]>([]);
+  
+
   const handleFilter = () => {
     alert('filtro');
   };
-  
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Layout style={styles.container}>
-        <View>
-        <View style={styles.seachContainer}>
-          <TextInput
-          style={styles.input}
-            placeholder="Search..."/*
-            onChangeText={setSearchQuery}*/
-          />
-          <TouchableOpacity style={styles.filterButton} onPress={handleFilter}>
-            <Text style={{ color: 'white' }}>Filtro</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.nivelBar}>
-          <Text style={styles.nivelText}>
-            Nivel:
-            </Text>
-          <View>
-            Total:
-            </View>
-        </View>
 
-        </View>
-        <TitleText category='h1'>Magias</TitleText>
-        <Text >exemplo de texto médio</Text>
+  useEffect(() => { 
+    setData(magias.magias);
+  }, []);
+  
+  const renderItem = ({ item }: { item: Item }) => (
+   <Layout>
+   <ListItem 
+      title={item.nome}
+      description={item.circulo}
+      />
+    </Layout>
+  );
+
+  return (
+      <Layout style={styles.container}>
+        <Layout>
+          <Layout style={styles.seachContainer}>
+            <TextInput
+            style={styles.input}
+              placeholder="Search..."/*
+              onChangeText={setSearchQuery}*/
+            />
+            <TouchableOpacity style={styles.filterButton} onPress={handleFilter}>
+              <Text style={{ color: 'white' }} category='alternative'>Filtro</Text>
+            </TouchableOpacity>
+          </Layout>
+            <Layout style={styles.nivelBar}>
+              <Text category='alternative'>
+                Nivel:
+                </Text>
+              <Text category='alternative'>
+                Total:
+                </Text>
+            </Layout>
+            <TitleText category='h1'>Magias</TitleText>
+            <Text >exemplo de texto médio</Text>
+          <List
+          data={data}
+          renderItem={renderItem}
+          ItemSeparatorComponent={Divider}
+          />
+       </Layout>
       </Layout>
-    </SafeAreaView>
-    
+      
   );
   
 }
@@ -78,23 +110,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    color: '#02060D',
-    //backgroundColor: '#DB7610',
+    backgroundColor : 'black',
     width: '100%',
     borderRadius: 8,
-
-    backgroundColor: '#d1d5db',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 5,
-  },
-  nivelText: {
-    color: '#02060D',
-    marginRight: '60%',
-  },
-  totalText: { 
-   // color: '#F2F5F7',
-    
   },
   title: {
     fontSize: 32, //DB7610
