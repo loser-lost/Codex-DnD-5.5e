@@ -3,7 +3,7 @@
   {
     "magia_id": "1",
     "nome": "Acalmar Emoções",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Encantamento",
     "classes": ["Bardo", "Clérigo"],
     "tempo_de_conjuracao": "Ação",
@@ -27,7 +27,7 @@
   {
     "magia_id": "3",
     "nome": "Alarme",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Abjuração",
     "classes": ["Guardião", "Mago"],
     "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -39,7 +39,7 @@
   {
     "magia_id": "4",
     "nome": "Aliado Extraplanar",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Invocação",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "10 minutos",
@@ -51,7 +51,7 @@
   {
     "magia_id": "5",
     "nome": "Aljava Veloz",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Transmutação",
     "classes": ["Guardião"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -63,7 +63,7 @@
   {
     "magia_id": "6",
     "nome": "Alterar-se",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -87,7 +87,7 @@
   {
     "magia_id": "8",
     "nome": "Amizade Animal",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Encantamento",
     "classes": ["Bardo", "Druida", "Guardião"],
     "tempo_de_conjuracao": "Ação",
@@ -99,7 +99,7 @@
   {
     "magia_id": "9",
     "nome": "Âncora Planar",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Abjuração",
     "classes": ["Bardo", "Bruxo", "Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "1 hora",
@@ -111,7 +111,7 @@
   {
     "magia_id": "10",
     "nome": "Animar Mortos",
-    "circulo": "3°",
+    "circulo": "3",
     "escola": "Necromancia",
     "classes": ["Clérigo", "Mago"],
     "tempo_de_conjuracao": "1 minuto",
@@ -123,7 +123,7 @@
   {
     "magia_id": "11",
     "nome": "Animar Objetos",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Transmutação",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -135,7 +135,7 @@
   {
     "magia_id": "12",
     "nome": "Antipatia/Simpatia",
-    "circulo": "8º",
+    "circulo": "8",
     "escola": "Encantamento",
     "classes": ["Bardo", "Druida", "Mago"],
     "tempo_de_conjuracao": "1 hora",
@@ -147,7 +147,7 @@
   {
     "magia_id": "13",
     "nome": "Aprimorar Atributo",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Bardo", "Clérigo", "Druida", "Feiticeiro", "Guardião", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -159,7 +159,7 @@
   {
     "magia_id": "14",
     "nome": "Aprisionamento",
-    "circulo": "9º",
+    "circulo": "9",
     "escola": "Abjuração",
     "classes": ["Bruxo", "Mago"],
     "tempo_de_conjuracao": "1 minuto",
@@ -171,7 +171,7 @@
   {
     "magia_id": "15",
     "nome": "Arca Secreta de Leomund",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Invocação",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -183,7 +183,7 @@
   {
     "magia_id": "16",
     "nome": "Arma Elemental",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Transmutação",
     "classes": ["Druida", "Guardião", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -195,7 +195,7 @@
   {
     "magia_id": "17",
     "nome": "Arma Espiritual",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Evocação",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -207,7 +207,7 @@
   {
     "magia_id": "18",
     "nome": "Arma Mágica",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Feiticeiro", "Guardião", "Mago", "Paladino"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -219,7 +219,7 @@
   {
     "magia_id": "19",
     "nome": "Armadura Arcana",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Abjuração",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -231,7 +231,7 @@
   {
     "magia_id": "20",
     "nome": "Armadura de Agathys",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Abjuração",
     "classes": ["Bruxo"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -243,7 +243,7 @@
   {
     "magia_id": "21",
     "nome": "Arrombar",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -267,7 +267,7 @@
   {
     "magia_id": "23",
     "nome": "Assassino Fantasmagórico",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Ilusão",
     "classes": ["Bardo", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -279,7 +279,7 @@
   {
     "magia_id": "24",
     "nome": "Augúrio",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Adivinhação",
     "classes": ["Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -291,7 +291,7 @@
   {
     "magia_id": "25",
     "nome": "Aumentar/Reduzir",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Bardo", "Druida", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -303,7 +303,7 @@
   {
     "magia_id": "26",
     "nome": "Aura de Pureza",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -315,7 +315,7 @@
   {
     "magia_id": "27",
     "nome": "Aura de Vida",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -327,7 +327,7 @@
   {
     "magia_id": "28",
     "nome": "Aura de Vitalidade",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Druida", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -339,7 +339,7 @@
   {
     "magia_id": "29",
     "nome": "Aura Mágica de Nystul",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Ilusão",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -351,7 +351,7 @@
   {
     "magia_id": "30",
     "nome": "Aura Sagrada",
-    "circulo": "8º",
+    "circulo": "8",
     "escola": "Abjuração",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "Ação",
@@ -363,7 +363,7 @@
   {
     "magia_id": "31",
     "nome": "Auxílio",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Abjuração",
     "classes": ["Bardo", "Clérigo", "Druida", "Guardião", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -387,7 +387,7 @@
   {
     "magia_id": "33",
     "nome": "Banimento",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Abjuração",
     "classes": ["Bruxo", "Clérigo", "Feiticeiro", "Mago", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -399,7 +399,7 @@
   {
     "magia_id": "34",
     "nome": "Banquete de Heróis",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Invocação",
     "classes": ["Bardo", "Clérigo", "Druida"],
     "tempo_de_conjuracao": "10 minutos",
@@ -412,7 +412,7 @@
   {
     "magia_id": "35",
     "nome": "Barreira de Lâminas",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Evocação",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "Ação",
@@ -424,7 +424,7 @@
 {
     "magia_id": "36",
     "nome": "Bênção",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Encantamento",
     "classes": ["Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -436,7 +436,7 @@
 {
     "magia_id": "37",
     "nome": "Boca Encantada",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Ilusão",
     "classes": ["Bardo", "Mago"],
     "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -448,7 +448,7 @@
 {
     "magia_id": "38",
     "nome": "Bola de Fogo",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Evocação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -461,7 +461,7 @@
 
     "magia_id": "39",
     "nome": "Bola de Fogo Adiável",
-    "circulo": "7º",
+    "circulo": "7",
     "escola": "Evocação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -485,7 +485,7 @@
   {
     "magia_id": "41",
     "nome": "Bom Fruto",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Invocação",
     "classes": ["Druida", "Guardião"],
     "tempo_de_conjuracao": "Ação",
@@ -509,7 +509,7 @@
   {
     "magia_id": "43",
     "nome": "Braços de Hadar",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Invocação",
     "classes": ["Bruxo"],
     "tempo_de_conjuracao": "Ação",
@@ -521,7 +521,7 @@
   {
     "magia_id": "44",
     "nome": "Caldeirão Borbulhante de Tasha",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Invocação",
     "classes": ["Bruxo", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -533,7 +533,7 @@
   {
     "magia_id": "45",
     "nome": "Caminhar no Vento",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Transmutação",
     "classes": ["Druida"],
     "tempo_de_conjuracao": "1 minuto",
@@ -545,7 +545,7 @@
   {
     "magia_id": "46",
     "nome": "Caminhar Sobre as Águas",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Transmutação",
     "classes": ["Clérigo", "Druida", "Feiticeiro", "Guardião"],
     "tempo_de_conjuracao": "Ação ou Ritual",
@@ -557,7 +557,7 @@
   {
     "magia_id": "47",
     "nome": "Campo Antimagia",
-    "circulo": "8º",
+    "circulo": "8",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -569,7 +569,7 @@
   {
     "magia_id": "48",
     "nome": "Cão Fiel de Mordenkainen",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Invocação",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -581,7 +581,7 @@
   {
     "magia_id": "49",
     "nome": "Cárcere de Energia",
-    "circulo": "7º",
+    "circulo": "7",
     "escola": "Evocação",
     "classes": ["Bardo", "Bruxo", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -593,7 +593,7 @@
   {
     "magia_id": "50",
     "nome": "Cativar",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Encantamento",
     "classes": ["Bardo", "Bruxo"],
     "tempo_de_conjuracao": "Ação",
@@ -605,7 +605,7 @@
   {
     "magia_id": "51",
     "nome": "Cegueira/Surdez",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Bardo", "Clérigo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -617,7 +617,7 @@
   {
     "magia_id": "52",
     "nome": "Celeridade",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Transmutação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -629,7 +629,7 @@
   {
     "magia_id": "53",
     "nome": "Chama Contínua",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Evocação",
     "classes": ["Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -665,7 +665,7 @@
   {
     "magia_id": "56",
     "nome": "Chuva de Meteoros",
-    "circulo": "9º",
+    "circulo": "9",
     "escola": "Evocação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -677,7 +677,7 @@
   {
     "magia_id": "57",
     "nome": "Círculo da Morte",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Necromancia",
     "classes": ["Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -689,7 +689,7 @@
   { 
     "magia_id": "58",
     "nome": "Círculo de Poder",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Mago", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -701,7 +701,7 @@
   {
     "magia_id": "59",
     "nome": "Círculo de Teleporte",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Invocação",
     "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "1 minuto",
@@ -713,7 +713,7 @@
   { 
     "magia_id": "60",
     "nome": "Círculo Mágico",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Bruxo", "Mago", "Paladino"],
     "tempo_de_conjuracao": "1 minuto",
@@ -725,7 +725,7 @@
   {
     "magia_id": "61",
     "nome": "Clarividência",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Adivinhação",
     "classes": ["Bardo", "Clérigo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "10 minutos",
@@ -737,7 +737,7 @@
   {
     "magia_id": "62",
     "nome": "Clone",
-    "circulo": "8º",
+    "circulo": "8",
     "escola": "Necromancia",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "1 hora",
@@ -749,7 +749,7 @@
   {
     "magia_id": "63",
     "nome": "Coluna de Chamas",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Evocação",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "Ação",
@@ -761,7 +761,7 @@
   {
     "magia_id": "64",
     "nome": "Comando",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Encantamento",
     "classes": ["Bardo", "Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -773,7 +773,7 @@
   {
     "magia_id": "65",
     "nome": "Compreender Idiomas",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Adivinhação",
     "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação ou Ritual",
@@ -785,7 +785,7 @@
   {
     "magia_id": "66",
     "nome": "Compulsão",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Encantamento",
     "classes": ["Bardo"],
     "tempo_de_conjuracao": "Ação",
@@ -797,7 +797,7 @@
   {
     "magia_id": "67",
     "nome": "Comunhão",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Adivinhação",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -809,7 +809,7 @@
   {
     "magia_id": "68",
     "nome": "Comunhão com a Natureza",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Adivinhação",
     "classes": ["Druida", "Guardião"],
     "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -821,7 +821,7 @@
   {
     "magia_id": "69",
     "nome": "Cone de Frio",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Evocação",
     "classes": ["Druida", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -833,7 +833,7 @@
   {
     "magia_id": "70",
     "nome": "Confusão",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Encantamento",
     "classes": ["Bardo", "Druida", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -845,7 +845,7 @@
   {
     "magia_id": "71",
     "nome": "Consagrar",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Abjuração",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "24 horas",
@@ -857,7 +857,7 @@
   {
     "magia_id": "72",
     "nome": "Contágio",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Necromancia",
     "classes": ["Clérigo", "Druida"],
     "tempo_de_conjuracao": "Ação",
@@ -869,7 +869,7 @@
   {
     "magia_id": "73",
     "nome": "Contato Extraplanar",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Adivinhação",
     "classes": ["Bruxo", "Mago"],
     "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -881,7 +881,7 @@
 {
     "magia_id": "74",
     "nome": "Contingência",
-    "circulo": "6º",
+    "circulo": "6",
     "escola": "Abjuração",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "10 minutos",
@@ -893,7 +893,7 @@
   {
     "magia_id": "75",
     "nome": "Contramagia",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Abjuração",
     "classes": ["Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Reação, que você executa quando vê uma criatura a até 18 metros de você conjurando uma magia com componentes Verbais, Somáticos ou Materiais",
@@ -905,7 +905,7 @@
   {
     "magia_id": "76",
     "nome": "Controlar Água",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Transmutação",
     "classes": ["Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -917,7 +917,7 @@
   {
     "magia_id": "77",
     "nome": "Controlar o Clima",
-    "circulo": "8º",
+    "circulo": "8",
     "escola": "Transmutação",
     "classes": ["Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "10 minutos",
@@ -929,7 +929,7 @@
   {
     "magia_id": "78",
     "nome": "Convocar Celestial",
-    "circulo": "5º",
+    "circulo": "5",
     "escola": "Invocação",
     "classes": ["Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -941,7 +941,7 @@
   {
     "magia_id": "79",
     "nome": "Convocar Elemental",
-    "circulo": "4º",
+    "circulo": "4",
     "escola": "Invocação",
     "classes": ["Druida", "Guardião", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -953,7 +953,7 @@
   {
     "magia_id": "80",
     "nome": "Convocar Familiar",
-    "circulo": "1º",
+    "circulo": "1",
     "escola": "Invocação",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "1 hora ou Ritual",
@@ -965,7 +965,7 @@
   {
     "magia_id": "81",
     "nome": "Convocar Feérico",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Invocação",
     "classes": ["Bruxo", "Druida", "Guardião", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -977,7 +977,7 @@
   {
     "magia_id": "82",
     "nome": "Convocar Montaria",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Invocação",
     "classes": ["Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -989,7 +989,7 @@
   {
     "magia_id": "83",
     "nome": "Convocar Relâmpagos",
-    "circulo": "3º",
+    "circulo": "3",
     "escola": "Invocação",
     "classes": ["Druida"],
     "tempo_de_conjuracao": "Ação",
@@ -1001,7 +1001,7 @@
   {
     "magia_id": "84",
     "nome": "Corda Extradimensional",
-    "circulo": "2º",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -1014,7 +1014,7 @@
 {
 "magia_id": "85",
 "nome": "Cordão de Flechas",
-"circulo": "2º",
+"circulo": "2",
 "escola": "Transmutação",
 "classes": ["Guardião"],
 "tempo_de_conjuracao": "Ação",
@@ -1026,7 +1026,7 @@
 {
 "magia_id": "86",
 "nome": "Coroa da Loucura",
-"circulo": "2º",
+"circulo": "2",
 "escola": "Encantamento",
 "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
 "tempo_de_conjuracao": "Ação",
@@ -1038,7 +1038,7 @@
 {
 "magia_id": "87",
 "nome": "Corrente de Relâmpagos",
-"circulo": "6º",
+"circulo": "6",
 "escola": "Evocação",
 "classes": ["Feiticeiro", "Mago"],
 "tempo_de_conjuracao": "Ação",
@@ -1050,7 +1050,7 @@
 {
 "magia_id": "88",
 "nome": "Crescer Espinhos",
-"circulo": "2º",
+"circulo": "2",
 "escola": "Transmutação",
 "classes": ["Druida", "Guardião"],
 "tempo_de_conjuracao": "Ação",
@@ -1062,7 +1062,7 @@
 {
 "magia_id": "89",
 "nome": "Crescimento de Plantas",
-"circulo": "3º",
+"circulo": "3",
 "escola": "Transmutação",
 "classes": ["Bardo", "Druida", "Guardião"],
 "tempo_de_conjuracao": "Ação (Crescimento Excessivo) ou 8 horas (Fertilização)",
@@ -1074,7 +1074,7 @@
 {
 "magia_id": "90",
 "nome": "Criação",
-"circulo": "5º",
+"circulo": "5",
 "escola": "Ilusão",
 "classes": ["Feiticeiro", "Mago"],
 "tempo_de_conjuracao": "1 minuto",
@@ -1098,7 +1098,7 @@
 {
 "magia_id": "92",
 "nome": "Criar Comida e Água",
-"circulo": "3º",
+"circulo": "3",
 "escola": "Invocação",
 "classes": ["Clérigo", "Paladino"],
 "tempo_de_conjuracao": "Ação",
@@ -1110,7 +1110,7 @@
 {
 "magia_id": "93",
 "nome": "Criar Mortos-Vivos",
-"circulo": "6º",
+"circulo": "6",
 "escola": "Necromancia",
 "classes": ["Bruxo", "Clérigo", "Mago"],
 "tempo_de_conjuracao": "1 minuto",
@@ -1122,7 +1122,7 @@
 {
   "magia_id": "94",
   "nome": "Criar ou Destruir Água",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Transmutação",
   "classes": ["Clérigo", "Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1134,7 +1134,7 @@
 {
   "magia_id": "95",
   "nome": "Criar Passagem",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Transmutação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1146,7 +1146,7 @@
 {
   "magia_id": "96",
   "nome": "Cúpula Antivida",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Abjuração",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1158,7 +1158,7 @@
 {
   "magia_id": "97",
   "nome": "Cura Completa",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1170,7 +1170,7 @@
 {
   "magia_id": "98",
   "nome": "Cura Completa em Massa",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Abjuração",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -1182,7 +1182,7 @@
 {
   "magia_id": "99",
   "nome": "Curar Ferimentos",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo", "Druida", "Guardião", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -1195,7 +1195,7 @@
 {
   "magia_id": "100",
   "nome": "Curar Ferimentos em Massa",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo", "Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1207,7 +1207,7 @@
 {
   "magia_id": "101",
   "nome": "Danação",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Encantamento",
   "classes": ["Bruxo"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -1219,7 +1219,7 @@
 {
   "magia_id": "102",
   "nome": "Dança Irresistível de Otto",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Encantamento",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1231,7 +1231,7 @@
 {
   "magia_id": "103",
   "nome": "De Carne para Pedra",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Transmutação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1243,7 +1243,7 @@
 {
   "magia_id": "104",
   "nome": "Dedo da Morte",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Necromancia",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1255,7 +1255,7 @@
 {
   "magia_id": "105",
   "nome": "Defensor da Fé",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -1267,7 +1267,7 @@
 {
   "magia_id": "106",
   "nome": "Desejo",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Invocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1279,7 +1279,7 @@
 {
   "magia_id": "107",
   "nome": "Desintegrar",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Transmutação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1291,7 +1291,7 @@
 {
   "magia_id": "108",
   "nome": "Despedaçar",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1303,7 +1303,7 @@
 {
   "magia_id": "109",
   "nome": "Despertar",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Transmutação",
   "classes": ["Bardo", "Druida"],
   "tempo_de_conjuracao": "8 horas",
@@ -1315,7 +1315,7 @@
 {
   "magia_id": "110",
   "nome": "Despistar",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1327,7 +1327,7 @@
 {
   "magia_id": "111",
   "nome": "Destruição Atordoante",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Encantamento",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1339,7 +1339,7 @@
 {
   "magia_id": "112",
   "nome": "Destruição Banidora",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1351,7 +1351,7 @@
 {
   "magia_id": "113",
   "nome": "Destruição Cauterizante",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1363,7 +1363,7 @@
 {
   "magia_id": "114",
   "nome": "Destruição Cegante",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Evocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1375,7 +1375,7 @@
 {
   "magia_id": "115",
   "nome": "Destruição Colérica",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Necromancia",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1387,7 +1387,7 @@
 {
   "magia_id": "116",
   "nome": "Destruição Divina",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1399,7 +1399,7 @@
 {
   "magia_id": "117",
   "nome": "Destruição Estrondosa",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1411,7 +1411,7 @@
 {
   "magia_id": "118",
   "nome": "Destruição Radiante",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Transmutação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma Corpo a Corpo ou um Ataque Desarmado",
@@ -1423,7 +1423,7 @@
 {
   "magia_id": "119",
   "nome": "Detectar Magia",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Bruxo", "Clérigo", "Druida", "Feiticeiro", "Guardião", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -1435,7 +1435,7 @@
 {
   "magia_id": "120",
   "nome": "Detectar o Bem e o Mal",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Adivinhação",
   "classes": ["Clérigo", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -1447,7 +1447,7 @@
 {
   "magia_id": "121",
   "nome": "Detectar Pensamentos",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1459,7 +1459,7 @@
 {
   "magia_id": "122",
   "nome": "Detectar Veneno e Doença",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Adivinhação",
   "classes": ["Clérigo", "Druida", "Guardião", "Paladino"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -1471,7 +1471,7 @@
 {
   "magia_id": "123",
   "nome": "Disco Flutuante de Tenser",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Invocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -1483,7 +1483,7 @@
 {
   "magia_id": "124",
   "nome": "Disfarçar-se",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Ilusão",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1495,7 +1495,7 @@
 {
   "magia_id": "125",
   "nome": "Dissipar Magia",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Abjuração",
   "classes": ["Bardo", "Bruxo", "Clérigo", "Druida", "Feiticeiro", "Guardião", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -1508,7 +1508,7 @@
 {
   "magia_id": "126",
   "nome": "Dissipar o Bem e o Mal",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -1520,7 +1520,7 @@
 {
   "magia_id": "127",
   "nome": "Dominar Fera",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Encantamento",
   "classes": ["Druida", "Feiticeiro", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -1532,7 +1532,7 @@
 {
   "magia_id": "128",
   "nome": "Dominar Monstro",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1544,7 +1544,7 @@
 {
   "magia_id": "129",
   "nome": "Dominar Pessoa",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Encantamento",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1556,7 +1556,7 @@
 {
   "magia_id": "130",
   "nome": "Duelo Compelido",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Encantamento",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -1580,7 +1580,7 @@
 {
   "magia_id": "132",
   "nome": "Emaranhar",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Invocação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -1592,7 +1592,7 @@
 {
   "magia_id": "133",
   "nome": "Encarnação Fantasmagórica",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Ilusão",
   "classes": ["Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1604,7 +1604,7 @@
 {
   "magia_id": "134",  
   "nome": "Encontrar Armadilhas",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Adivinhação",
   "classes": ["Clérigo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -1616,7 +1616,7 @@
 {
   "magia_id": "135",
   "nome": "Encontrar o Caminho",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Clérigo", "Druida"],
   "tempo_de_conjuracao": "1 minuto",
@@ -1628,7 +1628,7 @@
 {
   "magia_id": "136",
   "nome": "Enfeitiçar Monstro",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1640,7 +1640,7 @@
 {
   "magia_id": "137",
   "nome": "Enfeitiçar Pessoa",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1652,7 +1652,7 @@
 {
   "magia_id": "138",
   "nome": "Escalada de Aranha",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Transmutação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1664,7 +1664,7 @@
 {
   "magia_id": "139",
   "nome": "Escrita Ilusória",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Mago"],
   "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -1676,7 +1676,7 @@
 {
   "magia_id": "140",  
   "nome": "Escudo Arcano",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Abjuração",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Reação, que você executa quando é atingido por uma jogada de ataque ou é alvo da magia Mísseis Mágicos",
@@ -1688,7 +1688,7 @@
 {
   "magia_id": "141",
   "nome": "Escudo Ardente",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Evocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1700,7 +1700,7 @@
 {
   "magia_id": "142",
   "nome": "Escudo da Fé",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Paladino"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -1712,7 +1712,7 @@
 {
   "magia_id": "143",
   "nome": "Escuridão",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1724,7 +1724,7 @@
 {
   "magia_id": "144",
   "nome": "Esfera Congelante de Otiluke",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1736,7 +1736,7 @@
 {
   "magia_id": "145",
   "nome": "Esfera Flamejante",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Invocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1748,7 +1748,7 @@
 {
   "magia_id": "146",
   "nome": "Esfera Resiliente de Otiluke",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Abjuração",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1760,7 +1760,7 @@
 {
   "magia_id": "147",
   "nome": "Esfera Vitriólica",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1772,7 +1772,7 @@
 {
   "magia_id": "148",
   "nome": "Espada de Mordenkainen",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Evocação",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1784,7 +1784,7 @@
 {
   "magia_id": "149",
   "nome": "Espinho Mental",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Adivinhação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1796,7 +1796,7 @@
 {
   "magia_id": "150",
   "nome": "Esquentar Metal",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Transmutação",
   "classes": ["Bardo", "Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1808,7 +1808,7 @@
 {
   "magia_id": "151",
   "nome": "Estática Sináptica",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1832,7 +1832,7 @@
 {
   "magia_id": "153",
   "nome": "Explosão Solar",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Evocação",
   "classes": ["Clérigo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1844,7 +1844,7 @@
 {
   "magia_id": "154",
   "nome": "Fabricar",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Transmutação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "10 minutos",
@@ -1856,7 +1856,7 @@
 {
   "magia_id": "155",
   "nome": "Faca de Gelo",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Invocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1880,7 +1880,7 @@
 {
   "magia_id": "157",
   "nome": "Falar com Animais",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Bruxo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -1892,7 +1892,7 @@
 {
   "magia_id": "158",
   "nome": "Falar com Mortos",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Necromancia",
   "classes": ["Bardo", "Clérigo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1904,7 +1904,7 @@
 {
   "magia_id": "159",
   "nome": "Falar com Plantas",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Bardo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -1916,7 +1916,7 @@
 {
   "magia_id": "160",
   "nome": "Favor Divino",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Transmutação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -1928,7 +1928,7 @@
 {
   "magia_id": "161",
   "nome": "Flecha Ácida de Melf",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -1940,7 +1940,7 @@
 {
   "magia_id": "162",
   "nome": "Flecha Relâmpago",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Guardião"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir ou errar um alvo com um ataque à distância usando uma arma",
@@ -1952,7 +1952,7 @@
 {
   "magia_id": "163",
   "nome": "Fogo das Fadas",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Bardo", "Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1964,7 +1964,7 @@
 {
   "magia_id": "164",
   "nome": "Fome de Hadar",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Invocação",
   "classes": ["Bruxo"],
   "tempo_de_conjuracao": "Ação",
@@ -1976,7 +1976,7 @@
 {
   "magia_id": "165",
   "nome": "Fonte do Luar",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Evocação",
   "classes": ["Bardo", "Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -1988,7 +1988,7 @@
 {
   "magia_id": "166",
   "nome": "Força Espectral",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Ilusão",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2000,7 +2000,7 @@
 {
   "magia_id": "167",
   "nome": "Forma Etérea",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Invocação",
   "classes": ["Bardo", "Bruxo", "Clérigo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2012,7 +2012,7 @@
 {
   "magia_id": "168",
   "nome": "Forma Gasosa",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2024,7 +2024,7 @@
 {
   "magia_id": "169",
   "nome": "Formas Animais",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Transmutação",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -2036,7 +2036,7 @@
 {
   "magia_id": "170",
   "nome": "Gargalhada Nefasta de Tasha",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2048,7 +2048,7 @@
 {
   "magia_id": "171",
   "nome": "Glifo de Proteção",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo", "Mago"],
   "tempo_de_conjuracao": "1 hora",
@@ -2060,7 +2060,7 @@
 {
   "magia_id": "172",
   "nome": "Globo de Invulnerabilidade",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Abjuração",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2084,7 +2084,7 @@
 {
   "magia_id": "174",
   "nome": "Golpe Constritor",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Invocação",
   "classes": ["Guardião"],
   "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma",
@@ -2096,7 +2096,7 @@
 {
   "magia_id": "175",
   "nome": "Golpe de Arço",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2108,7 +2108,7 @@
 {
   "magia_id": "176",
   "nome": "Graxa",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Invocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2120,7 +2120,7 @@
 {
   "magia_id": "177",
   "nome": "Guardiões Espirituais",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Invocação",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -2144,7 +2144,7 @@
 {
   "magia_id": "179",
   "nome": "Ilusão Programada",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Ilusão",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2156,7 +2156,7 @@
 {
   "magia_id": "180",
   "nome": "Imagem Maior",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2168,7 +2168,7 @@
 {
   "magia_id": "181",
   "nome": "Imagem Silenciosa",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Ilusão",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2180,7 +2180,7 @@
 {
   "magia_id": "182",
   "nome": "Indetectável",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Abjuração",
   "classes": ["Bardo", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2192,7 +2192,7 @@
 {
   "magia_id": "183",
   "nome": "Infligir Ferimentos",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Necromancia",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -2204,7 +2204,7 @@
 {
   "magia_id": "184",
   "nome": "Inseto Gigante",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -2216,7 +2216,7 @@
 {
   "magia_id": "185",
   "nome": "Inverter a Gravidade",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Transmutação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2228,7 +2228,7 @@
 {
   "magia_id": "186",
   "nome": "Invisibilidade",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2240,7 +2240,7 @@
 {
   "magia_id": "187",
   "nome": "Invisibilidade Maior",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Ilusão",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2252,7 +2252,7 @@
 {
   "magia_id": "188",
   "nome": "Invocação Instantânea de Drawmij",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Invocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -2264,7 +2264,7 @@
 {
   "magia_id": "189",
   "nome": "Invocar Aberração",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2276,7 +2276,7 @@
 {
   "magia_id": "190",
   "nome": "Invocar Animais",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Invocação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2288,7 +2288,7 @@
 {
   "magia_id": "191",
   "nome": "Invocar Barragem",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Invocação",
   "classes": ["Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2300,7 +2300,7 @@
 {
   "magia_id": "192",
   "nome": "Invocar Celestial",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Invocação",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -2312,7 +2312,7 @@
 {
   "magia_id": "193",
   "nome": "Invocar Constructo",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2324,7 +2324,7 @@
 {
   "magia_id": "194",
   "nome": "Invocar Dragão",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2336,7 +2336,7 @@
 {
   "magia_id": "195",
   "nome": "Invocar Elementais Menores",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Druida", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2348,7 +2348,7 @@
 {
   "magia_id": "196",
   "nome": "Invocar Elemental",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Druida", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2360,7 +2360,7 @@
 {
   "magia_id": "197",
   "nome": "Invocar Feérico",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Invocação",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -2372,7 +2372,7 @@
 {
   "magia_id": "198",
   "nome": "Invocar Fera",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Invocação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2384,7 +2384,7 @@
 {
   "magia_id": "199",
   "nome": "Invocar Ínfero",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Invocação",
   "classes": ["Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2396,7 +2396,7 @@
 {
   "magia_id": "200",
   "nome": "Invocar Morto-Vivo",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Necromancia",
   "classes": ["Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2408,7 +2408,7 @@
 {
   "magia_id": "201",
   "nome": "Invocar Saraivada",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2420,7 +2420,7 @@
 {
   "magia_id": "202",
   "nome": "Invocar Seres da Floresta",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2432,7 +2432,7 @@
 {
   "magia_id": "203",
   "nome": "Labirinto",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Invocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2444,7 +2444,7 @@
 {
   "magia_id": "204",
   "nome": "Lâmina Flamejante",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Druida", "Feiticeiro"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -2456,7 +2456,7 @@
 {
   "magia_id": "205",
   "nome": "Lendas e Histórias",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Clérigo", "Mago"],
   "tempo_de_conjuracao": "10 minutos",
@@ -2468,7 +2468,7 @@
 {
   "magia_id": "206",
   "nome": "Lentidão",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2480,7 +2480,7 @@
 {
   "magia_id": "207",
   "nome": "Leque Cromático",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Ilusão",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2492,7 +2492,7 @@
 {
   "magia_id": "208",
   "nome": "Levitação",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Transmutação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2504,7 +2504,7 @@
 {
   "magia_id": "209",
   "nome": "Ligação Telepática de Rary",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -2516,7 +2516,7 @@
 {
   "magia_id": "210",
   "nome": "Limpar a Mente",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Abjuração",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2528,7 +2528,7 @@
 {
   "magia_id": "211",
   "nome": "Línguas",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Bruxo", "Clérigo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2540,7 +2540,7 @@
 {
   "magia_id": "212",
   "nome": "Localizar Animais ou Plantas",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -2552,7 +2552,7 @@
 {
   "magia_id": "213",
   "nome": "Localizar Criatura",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Clérigo", "Druida", "Guardião", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -2564,7 +2564,7 @@
 {
   "magia_id": "214",
   "nome": "Localizar Objeto",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Clérigo", "Druida", "Guardião", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -2576,7 +2576,7 @@
 {
   "magia_id": "215",
   "nome": "Loquacidade",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo"],
   "tempo_de_conjuracao": "Ação",
@@ -2588,7 +2588,7 @@
 {
   "magia_id": "216",
   "nome": "Lufada de Vento",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Druida", "Feiticeiro", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2612,7 +2612,7 @@
 {
   "magia_id": "218",
   "nome": "Luz do Dia",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Evocação",
   "classes": ["Clérigo", "Druida", "Feiticeiro", "Guardião", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -2636,7 +2636,7 @@
 {
   "magia_id": "220",
   "nome": "Malogro",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Necromancia",
   "classes": ["Bruxo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2648,7 +2648,7 @@
 {
   "magia_id": "221",
   "nome": "Mansão Magnífica de Mordenkainen",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Invocação",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "1 minuto",
@@ -2660,7 +2660,7 @@
 {
   "magia_id": "222",
   "nome": "Manto do Cruzado",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Evocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -2672,7 +2672,7 @@
 {
   "magia_id": "223",
   "nome": "Mão de Bigby",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2684,7 +2684,7 @@
 {
   "magia_id": "224",
   "nome": "Mãos Flamejantes",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2708,7 +2708,7 @@
 {
   "magia_id": "226",
   "nome": "Marca do Predador",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Adivinhação",
   "classes": ["Guardião"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -2720,7 +2720,7 @@
 {
   "magia_id": "227",
   "nome": "Mau Olhado",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Necromancia",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2732,7 +2732,7 @@
 {
   "magia_id": "228",
   "nome": "Medo",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2744,7 +2744,7 @@
 {
   "magia_id": "229",
   "nome": "Mensageiro Animal",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Encantamento",
   "classes": ["Bardo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -2768,7 +2768,7 @@
 {
   "magia_id": "231",
   "nome": "Mesclar-se às Rochas",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Clérigo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -2780,7 +2780,7 @@
 {
   "magia_id": "232",
   "nome": "Metamorfose",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Transmutação",
   "classes": ["Druida", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2792,7 +2792,7 @@
 {
   "magia_id": "233",
   "nome": "Miragem Arcana",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Ilusão",
   "classes": ["Bardo", "Druida", "Mago"],
   "tempo_de_conjuracao": "10 minutos",
@@ -2804,7 +2804,7 @@
 {
   "magia_id": "234",
   "nome": "Missão",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Encantamento",
   "classes": ["Bardo", "Clérigo", "Druida", "Paladino", "Mago"],
   "tempo_de_conjuracao": "1 minuto",
@@ -2816,7 +2816,7 @@
 {
   "magia_id": "235",
   "nome": "Mísseis Mágicos",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2828,7 +2828,7 @@
 {
   "magia_id": "236",
   "nome": "Modificar Memória",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Encantamento",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2840,7 +2840,7 @@
 {
   "magia_id": "237",
   "nome": "Moldar Rochas",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Transmutação",
   "classes": ["Clérigo", "Druida", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2852,7 +2852,7 @@
 {
   "magia_id": "238",
   "nome": "Moléstia",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Necromancia",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -2864,7 +2864,7 @@
 {
   "magia_id": "239",
   "nome": "Montaria Fantasmagórica",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Ilusão",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -2876,7 +2876,7 @@
 {
   "magia_id": "240",
   "nome": "Mover Terra",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Transmutação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2888,7 +2888,7 @@
 {
   "magia_id": "241",
   "nome": "Movimentação Livre",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo", "Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2900,7 +2900,7 @@
 {
   "magia_id": "242",
   "nome": "Muralha de Energia",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Evocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2912,7 +2912,7 @@
 {
   "magia_id": "243",
   "nome": "Muralha de Espinhos",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Invocação",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -2924,7 +2924,7 @@
 {
   "magia_id": "244",
   "nome": "Muralha de Fogo",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Evocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2936,7 +2936,7 @@
 {
   "magia_id": "245",
   "nome": "Muralha de Gelo",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Evocação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2948,7 +2948,7 @@
 {
   "magia_id": "246",
   "nome": "Muralha de Pedra",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Evocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2960,7 +2960,7 @@
 {
   "magia_id": "247",
   "nome": "Muralha de Vento",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Evocação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -2972,7 +2972,7 @@
 {
   "magia_id": "248",
   "nome": "Muralha Prismática",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Abjuração",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2984,7 +2984,7 @@
 {
   "magia_id": "249",
   "nome": "Nevasca",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Invocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -2996,7 +2996,7 @@
 {
   "magia_id": "250",
   "nome": "Névoa Mortal",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3008,7 +3008,7 @@
 {
   "magia_id": "251",
   "nome": "Névoa Obscurecente",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Invocação",
   "classes": ["Druida", "Feiticeiro", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3020,7 +3020,7 @@
 {
   "magia_id": "252",
   "nome": "Nuvem de Adagas",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Invocação",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3032,7 +3032,7 @@
 {
   "magia_id": "253",
   "nome": "Nuvem Fétida",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Invocação",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3044,7 +3044,7 @@
 {
   "magia_id": "254",
   "nome": "Nuvem Incendiária",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Invocação",
   "classes": ["Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3056,7 +3056,7 @@
 {
   "magia_id": "255",
   "nome": "Olho Arcano",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Adivinhação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3068,7 +3068,7 @@
 {
   "magia_id": "256",
   "nome": "Onda Destrutiva",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Evocação",
   "classes": ["Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -3080,7 +3080,7 @@
 {
   "magia_id": "257",
   "nome": "Onda Trovejante",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Bardo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3092,7 +3092,7 @@
 {
   "magia_id": "258",
   "nome": "Oração de Cura",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Paladino"],
   "tempo_de_conjuracao": "10 minutos",
@@ -3104,7 +3104,7 @@
 {
   "magia_id": "259",
   "nome": "Orbe Cromático",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3128,7 +3128,7 @@
 {
   "magia_id": "261",
   "nome": "Padrão Hipnótico",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3140,7 +3140,7 @@
 {
   "magia_id": "262",
   "nome": "Palavra Curativa",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo", "Druida"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -3152,7 +3152,7 @@
 {
   "magia_id": "263",
   "nome": "Palavra Curativa em Massa",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -3164,7 +3164,7 @@
 {
   "magia_id": "264",
   "nome": "Palavra de Poder: Atordoar",
-  "circulo": "8º",
+  "circulo": "8",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3176,7 +3176,7 @@
 {
   "magia_id": "265",
   "nome": "Palavra de Poder: Fortificar",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Encantamento",
   "classes": ["Bardo", "Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -3188,7 +3188,7 @@
 {
   "magia_id": "266",
   "nome": "Palavra de Poder: Matar",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3200,7 +3200,7 @@
 {
   "magia_id": "267",
   "nome": "Palavra de Poder: Salvar",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Encantamento",
   "classes": ["Bardo", "Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -3224,7 +3224,7 @@
 {
   "magia_id": "269",
   "nome": "Palavra de Regresso",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Invocação",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -3236,7 +3236,7 @@
 {
   "magia_id": "270",
   "nome": "Palavra Sagrada",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Evocação",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -3248,7 +3248,7 @@
 {
   "magia_id": "271",
   "nome": "Paralisar Monstro",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3260,7 +3260,7 @@
 {
   "magia_id": "272",
   "nome": "Paralisar Pessoa",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Clérigo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3272,7 +3272,7 @@
 {
   "magia_id": "273",
   "nome": "Parar o Tempo",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Transmutação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3284,7 +3284,7 @@
 {
   "magia_id": "274",
   "nome": "Passo Arbóreo",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -3296,7 +3296,7 @@
 {
   "magia_id": "275",
   "nome": "Passo Nebuloso",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Invocação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -3308,7 +3308,7 @@
 {
   "magia_id": "276",
   "nome": "Passo Sem Rastro",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Abjuração",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação",
@@ -3320,7 +3320,7 @@
 {
   "magia_id": "277",
   "nome": "Passos Largos",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Transmutação",
   "classes": ["Bardo", "Druida", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3332,7 +3332,7 @@
 {
   "magia_id": "278",
   "nome": "Pele-Casca",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Transmutação",
   "classes": ["Druida", "Guardião"],
   "tempo_de_conjuracao": "Ação Bônus",
@@ -3344,7 +3344,7 @@
 {
   "magia_id": "279",
   "nome": "Pele-Rocha",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Transmutação",
   "classes": ["Druida", "Feiticeiro", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3356,7 +3356,7 @@
 {
   "magia_id": "280",
   "nome": "Pequeno Refúgio de Leomund",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Evocação",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "1 minuto ou Ritual",
@@ -3368,7 +3368,7 @@
 {
   "magia_id": "281",
   "nome": "Perdição",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Encantamento",
   "classes": ["Bardo", "Bruxo", "Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -3380,7 +3380,7 @@
 {
   "magia_id": "282",
   "nome": "Piscar",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3392,7 +3392,7 @@
 {
   "magia_id": "283",
   "nome": "Polimorfia",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Transmutação",
   "classes": ["Bardo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3404,7 +3404,7 @@
 {
   "magia_id": "284",
   "nome": "Polimorfia Total",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Transmutação",
   "classes": ["Bardo", "Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3416,7 +3416,7 @@
 {
   "magia_id": "285",
   "nome": "Porta Dimensional",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Invocação",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3428,7 +3428,7 @@
 {
   "magia_id": "286",
   "nome": "Portais Arcanos",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Invocação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3440,7 +3440,7 @@
 {
   "magia_id": "287",
   "nome": "Portal",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Invocação",
   "classes": ["Bruxo", "Clérigo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3452,7 +3452,7 @@
 {
   "magia_id": "288",
   "nome": "Praga de Insetos",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Invocação",
   "classes": ["Clérigo", "Druida", "Feiticeiro"],
   "tempo_de_conjuracao": "Ação",
@@ -3464,7 +3464,7 @@
 {
   "magia_id": "289",
   "nome": "Presença Régia de Yolande",
-  "circulo": "5º",
+  "circulo": "5",
   "escola": "Encantamento",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3476,7 +3476,7 @@
 {
   "magia_id": "290",
   "nome": "Presságio",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Adivinhação",
   "classes": ["Clérigo", "Druida", "Mago"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -3500,7 +3500,7 @@
 {
   "magia_id": "292",
   "nome": "Proibição",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Abjuração",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "10 minutos ou Ritual",
@@ -3512,7 +3512,7 @@
 {
   "magia_id": "293",
   "nome": "Projeção Astral",
-  "circulo": "9º",
+  "circulo": "9",
   "escola": "Necromancia",
   "classes": ["Clérigo", "Bruxo", "Mago"],
   "tempo_de_conjuracao": "1 hora",
@@ -3524,7 +3524,7 @@
 {
   "magia_id": "294",
   "nome": "Projetar Imagem",
-  "circulo": "7º",
+  "circulo": "7",
   "escola": "Ilusão",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3536,7 +3536,7 @@
 {
   "magia_id": "295",
   "nome": "Proteção Contra a Morte",
-  "circulo": "4º",
+  "circulo": "4",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -3548,7 +3548,7 @@
 {
   "magia_id": "296",
   "nome": "Proteção Contra Energia",
-  "circulo": "3º",
+  "circulo": "3",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Druida", "Feiticeiro", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3572,7 +3572,7 @@
 {
   "magia_id": "298",
   "nome": "Proteção Contra o Bem e o Mal",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Bruxo", "Druida", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -3584,7 +3584,7 @@
 {
   "magia_id": "299",
   "nome": "Proteção Contra Veneno",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Druida", "Guardião", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -3596,7 +3596,7 @@
 {
   "magia_id": "300",
   "nome": "Proteger Fortaleza",
-  "circulo": "6º",
+  "circulo": "6",
   "escola": "Abjuração",
   "classes": ["Bardo", "Mago"],
   "tempo_de_conjuracao": "1 hora",
@@ -3608,7 +3608,7 @@
 {
   "magia_id": "301",
   "nome": "Purificar Alimentos e Bebidas",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Transmutação",
   "classes": ["Clérigo", "Druida", "Paladino"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -3620,7 +3620,7 @@
 {
   "magia_id": "302",
   "nome": "Queda Suave",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Transmutação",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Reação (quando uma criatura em queda entra no alcance)",
@@ -3632,7 +3632,7 @@
 {
   "magia_id": "303",
   "nome": "Raio Ardente",
-  "circulo": "2º",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3644,7 +3644,7 @@
 {
   "magia_id": "304",
   "nome": "Raio de Bruxa",
-  "circulo": "1º",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3680,7 +3680,7 @@
 { 
   "magia_id": "307",
   "nome": "Raio do Enfraquecimento",
-  "circulo": "2º Círculo",
+  "circulo": "2",
   "escola": "Necromancia",
   "classes": ["Bruxo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3692,7 +3692,7 @@
 {
   "magia_id": "308",
   "nome": "Raio Guia",
-  "circulo": "1º Círculo",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Clérigo"],
   "tempo_de_conjuracao": "Ação",
@@ -3704,7 +3704,7 @@
 {
   "magia_id": "309",
   "nome": "Raio Lunar",
-  "circulo": "2º Círculo",
+  "circulo": "2",
   "escola": "Evocação",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "Ação",
@@ -3728,7 +3728,7 @@
 {
   "magia_id": "311",
   "nome": "Raio Nauseante",
-  "circulo": "1º Círculo",
+  "circulo": "1",
   "escola": "Necromancia",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3740,7 +3740,7 @@
 {
   "magia_id": "312",
   "nome": "Raio Solar",
-  "circulo": "6º Círculo",
+  "circulo": "6",
   "escola": "Evocação",
   "classes": ["Clérigo", "Druida", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3764,7 +3764,7 @@
 {
   "magia_id": "314",
   "nome": "Rajada Prismática",
-  "circulo": "7º Círculo",
+  "circulo": "7",
   "escola": "Evocação",
   "classes": ["Bardo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3776,7 +3776,7 @@
 {
   "magia_id": "315",
   "nome": "Receptáculo Arcano",
-  "circulo": "6º Círculo",
+  "circulo": "6",
   "escola": "Necromancia",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "1 minuto",
@@ -3788,7 +3788,7 @@
 {
   "magia_id": "316",
   "nome": "Reencarnar",
-  "circulo": "5º Círculo",
+  "circulo": "5",
   "escola": "Necromancia",
   "classes": ["Druida"],
   "tempo_de_conjuracao": "1 hora",
@@ -3800,7 +3800,7 @@
 {
   "magia_id": "317",
   "nome": "Reflexos",
-  "circulo": "2º Círculo",
+  "circulo": "2",
   "escola": "Ilusão",
   "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3812,7 +3812,7 @@
 {
   "magia_id": "318",
   "nome": "Refugiar",
-  "circulo": "7º Círculo",
+  "circulo": "7",
   "escola": "Transmutação",
   "classes": ["Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3824,7 +3824,7 @@
 {
   "magia_id": "319",
   "nome": "Regeneração",
-  "circulo": "7º Círculo",
+  "circulo": "7",
   "escola": "Transmutação",
   "classes": ["Bardo", "Clérigo", "Druida"],
   "tempo_de_conjuracao": "1 minuto",
@@ -3836,7 +3836,7 @@
 {
   "magia_id": "320",
   "nome": "Relâmpago",
-  "circulo": "3º Círculo",
+  "circulo": "3",
   "escola": "Evocação",
   "classes": ["Feiticeiro", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3848,7 +3848,7 @@
 {
   "magia_id": "321",
   "nome": "Remeter",
-  "circulo": "3º Círculo",
+  "circulo": "3",
   "escola": "Adivinhação",
   "classes": ["Bardo", "Clérigo", "Mago"],
   "tempo_de_conjuracao": "Ação",
@@ -3860,7 +3860,7 @@
 {
   "magia_id": "322",
   "nome": "Remover Maldição",
-  "circulo": "3º Círculo",
+  "circulo": "3",
   "escola": "Abjuração",
   "classes": ["Clérigo", "Bruxo", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -3884,7 +3884,7 @@
 {
   "magia_id": "324",
   "nome": "Repouso Tranquilo",
-  "circulo": "2º Círculo",
+  "circulo": "2",
   "escola": "Necromancia",
   "classes": ["Clérigo", "Mago", "Paladino"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -3896,7 +3896,7 @@
 {
   "magia_id": "325",
   "nome": "Repreensão Diabólica",
-  "circulo": "1º Círculo",
+  "circulo": "1",
   "escola": "Evocação",
   "classes": ["Bruxo"],
   "tempo_de_conjuracao": "Reação (ao receber dano de uma criatura à vista em até 18 metros)",
@@ -3920,7 +3920,7 @@
 {
   "magia_id": "327",
   "nome": "Respirar na Água",
-  "circulo": "3º Círculo",
+  "circulo": "3",
   "escola": "Transmutação",
   "classes": ["Druida", "Feiticeiro", "Guardião", "Mago"],
   "tempo_de_conjuracao": "Ação ou Ritual",
@@ -3932,7 +3932,7 @@
 {
   "magia_id": "328",
   "nome": "Ressurreição",
-  "circulo": "7º Círculo",
+  "circulo": "7",
   "escola": "Necromancia",
   "classes": ["Bardo", "Clérigo"],
   "tempo_de_conjuracao": "1 hora",
@@ -3944,7 +3944,7 @@
 {
   "magia_id": "329",
   "nome": "Ressurreição Verdadeira",
-  "circulo": "9º Círculo",
+  "circulo": "9",
   "escola": "Necromancia",
   "classes": ["Clérigo", "Druida"],
   "tempo_de_conjuracao": "1 hora",
@@ -3956,7 +3956,7 @@
 {
   "magia_id": "330",
   "nome": "Restauração Maior",
-  "circulo": "5º Círculo",
+  "circulo": "5",
   "escola": "Abjuração",
   "classes": ["Bardo", "Clérigo", "Druida", "Guardião", "Paladino"],
   "tempo_de_conjuracao": "Ação",
@@ -3969,7 +3969,7 @@
   {
     "magia_id": "331",
     "nome": "Restauração Menor",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Abjuração",
     "classes": ["Bardo", "Clérigo", "Druida", "Guardião", "Paladino"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -3981,7 +3981,7 @@
   {
     "magia_id": "332",
     "nome": "Retirada Acelerada",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Transmutação",
     "classes": ["Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -3993,7 +3993,7 @@
   {
     "magia_id": "333",
     "nome": "Reviver os Mortos",
-    "circulo": "5º Círculo",
+    "circulo": "5",
     "escola": "Necromancia",
     "classes": ["Bardo", "Clérigo", "Paladino"],
     "tempo_de_conjuracao": "1 hora",
@@ -4005,7 +4005,7 @@
   {
     "magia_id": "334",
     "nome": "Revivificar",
-    "circulo": "3º Círculo",
+    "circulo": "3",
     "escola": "Necromancia",
     "classes": ["Clérigo", "Druida", "Guardião", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -4017,7 +4017,7 @@
   {
     "magia_id": "335",
     "nome": "Rogar Maldição",
-    "circulo": "3º Círculo",
+    "circulo": "3",
     "escola": "Necromancia",
     "classes": ["Bardo", "Clérigo", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4029,7 +4029,7 @@
   {
     "magia_id": "336",
     "nome": "Salto",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Transmutação",
     "classes": ["Druida", "Feiticeiro", "Guardião", "Mago"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -4042,7 +4042,7 @@
   {
     "magia_id": "337",
     "nome": "Santuário",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Abjuração",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -4054,7 +4054,7 @@
   {
     "magia_id": "338",
     "nome": "Santuário Particular de Mordenkainen",
-    "circulo": "4º Círculo",
+    "circulo": "4",
     "escola": "Abjuração",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "10 minutos",
@@ -4066,7 +4066,7 @@
   {
     "magia_id": "339",
     "nome": "Saraivada de Espinhos",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Invocação",
     "classes": ["Guardião"],
     "tempo_de_conjuracao": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com um ataque com arma à Distância",
@@ -4078,7 +4078,7 @@
   {
     "magia_id": "340",
     "nome": "Semiplano",
-    "circulo": "8º Círculo",
+    "circulo": "8",
     "escola": "Invocação",
     "classes": ["Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4090,7 +4090,7 @@
   {
     "magia_id": "341",
     "nome": "Sentido Feral",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Adivinhação",
     "classes": ["Druida", "Guardião"],
     "tempo_de_conjuracao": "Ação ou Ritual",
@@ -4102,7 +4102,7 @@
   {
     "magia_id": "342",
     "nome": "Servo Invisível",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Invocação",
     "classes": ["Bardo", "Bruxo", "Mago"],
     "tempo_de_conjuracao": "Ação ou Ritual",
@@ -4114,7 +4114,7 @@
   {
     "magia_id": "343",
     "nome": "Sexto Sentido",
-    "circulo": "9º Círculo",
+    "circulo": "9",
     "escola": "Adivinhação",
     "classes": ["Bardo", "Bruxo", "Druida", "Mago"],
     "tempo_de_conjuracao": "1 minuto",
@@ -4126,7 +4126,7 @@
   {
     "magia_id": "344",
     "nome": "Silêncio",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Ilusão",
     "classes": ["Bardo", "Clérigo", "Guardião"],
     "tempo_de_conjuracao": "Ação ou Ritual",
@@ -4138,7 +4138,7 @@
   {
     "magia_id": "345",
     "nome": "Símbolo",
-    "circulo": "7º Círculo",
+    "circulo": "7",
     "escola": "Abjuração",
     "classes": ["Bardo", "Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "1 minuto",
@@ -4150,7 +4150,7 @@
   {
     "magia_id": "346",
     "nome": "Similaridade",
-    "circulo": "5º Círculo",
+    "circulo": "5",
     "escola": "Ilusão",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4162,7 +4162,7 @@
   {
     "magia_id": "347",
     "nome": "Simulacro",
-    "circulo": "7º Círculo",
+    "circulo": "7",
     "escola": "Ilusão",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "12 horas",
@@ -4174,7 +4174,7 @@
   {
     "magia_id": "348",
     "nome": "Simular Morte",
-    "circulo": "3º Círculo",
+    "circulo": "3",
     "escola": "Necromancia",
     "classes": ["Bardo", "Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "Ação ou Ritual",
@@ -4186,7 +4186,7 @@
   {
     "magia_id": "349",
     "nome": "Sinal de Esperança",
-    "circulo": "3º Círculo",
+    "circulo": "3",
     "escola": "Abjuração",
     "classes": ["Clérigo"],
     "tempo_de_conjuracao": "Ação",
@@ -4198,7 +4198,7 @@
   {
     "magia_id": "350",
     "nome": "Sonho",
-    "circulo": "5º Círculo",
+    "circulo": "5",
     "escola": "Ilusão",
     "classes": ["Bardo", "Bruxo", "Mago"],
     "tempo_de_conjuracao": "1 minuto",
@@ -4210,7 +4210,7 @@
   {
     "magia_id": "351",
     "nome": "Sono",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Encantamento",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4222,7 +4222,7 @@
   {
     "magia_id": "352",
     "nome": "Sopro de Dragão",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -4234,7 +4234,7 @@
   {
     "magia_id": "353",
     "nome": "Sopro de Dragão",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -4246,7 +4246,7 @@
   {
     "magia_id": "354",
     "nome": "Sugestão",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Encantamento",
     "classes": ["Bardo", "Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4258,7 +4258,7 @@
   {
     "magia_id": "355",
     "nome": "Sugestão em Massa",
-    "circulo": "6º Círculo",
+    "circulo": "6",
     "escola": "Encantamento",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4271,7 +4271,7 @@
   {
     "magia_id": "356",
     "nome": "Suplício",
-    "circulo": "8º Círculo",
+    "circulo": "8",
     "escola": "Encantamento",
     "classes": ["Bardo", "Bruxo", "Druida", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4283,7 +4283,7 @@
   {
     "magia_id": "357",
     "nome": "Sussurros Dissonantes",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Encantamento",
     "classes": ["Bardo"],
     "tempo_de_conjuracao": "Ação",
@@ -4319,7 +4319,7 @@
   {
     "magia_id": "360",
     "nome": "Teia",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Invocação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4331,7 +4331,7 @@
   ,{
     "magia_id": "361",
     "nome": "Telecinese",
-    "circulo": "5º Círculo",
+    "circulo": "5",
     "escola": "Transmutação",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4343,7 +4343,7 @@
   ,{
     "magia_id": "362",
     "nome": "Telepatia",
-    "circulo": "8º Círculo",
+    "circulo": "8",
     "escola": "Adivinhação",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4355,7 +4355,7 @@
   ,{
     "magia_id": "363",
     "nome": "Teleporte",
-    "circulo": "7º Círculo",
+    "circulo": "7",
     "escola": "Invocação",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4367,7 +4367,7 @@
   {
     "magia_id": "364",
     "nome": "Tempestade da Vingança",
-    "circulo": "9º Círculo",
+    "circulo": "9",
     "escola": "Invocação",
     "classes": ["Druida"],
     "tempo_de_conjuracao": "Ação",
@@ -4379,7 +4379,7 @@
   {
     "magia_id": "365",
     "nome": "Tempestade de Fogo",
-    "circulo": "7º Círculo",
+    "circulo": "7",
     "escola": "Evocação",
     "classes": ["Clérigo", "Druida", "Feiticeiro"],
     "tempo_de_conjuracao": "Ação",
@@ -4391,7 +4391,7 @@
   {
     "magia_id": "366",
     "nome": "Tempestade Glacial",
-    "circulo": "4º Círculo",
+    "circulo": "4",
     "escola": "Evocação",
     "classes": ["Druida", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4404,7 +4404,7 @@
   {
     "magia_id": "367",
     "nome": "Tempestade Radiante de Jallarzi",
-    "circulo": "5º Círculo",
+    "circulo": "5",
     "escola": "Evocação",
     "classes": ["Bruxo", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4416,7 +4416,7 @@
   {
     "magia_id": "368",
     "nome": "Tentáculos Negros de Evard",
-    "circulo": "4º Círculo",
+    "circulo": "4",
     "escola": "Invocação",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4428,7 +4428,7 @@
   {
     "magia_id": "369",
     "nome": "Terremoto",
-    "circulo": "8º Círculo",
+    "circulo": "8",
     "escola": "Transmutação",
     "classes": ["Clérigo", "Druida", "Feiticeiro"],
     "tempo_de_conjuracao": "Ação",
@@ -4440,7 +4440,7 @@
   {
     "magia_id": "370",
     "nome": "Terreno Alucinatório",
-    "circulo": "4º Círculo",
+    "circulo": "4",
     "escola": "Ilusão",
     "classes": ["Bardo", "Bruxo", "Druida", "Mago"],
     "tempo_de_conjuracao": "10 minutos",
@@ -4476,7 +4476,7 @@
   {
     "magia_id": "373",
     "nome": "Toque Vampírico",
-    "circulo": "3º Círculo",
+    "circulo": "3",
     "escola": "Necromancia",
     "classes": ["Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4488,7 +4488,7 @@
   {
     "magia_id": "374",
     "nome": "Tranca Arcana",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Abjuração",
     "classes": ["Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4500,7 +4500,7 @@
   {
     "magia_id": "375",
     "nome": "Transição Planar",
-    "circulo": "7º Círculo",
+    "circulo": "7",
     "escola": "Invocação",
     "classes": ["Bruxo", "Clérigo", "Druida", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4512,7 +4512,7 @@
   {
     "magia_id": "376",
     "nome": "Transporte via Plantas",
-    "circulo": "6º Círculo",
+    "circulo": "6",
     "escola": "Invocação",
     "classes": ["Druida"],
     "tempo_de_conjuracao": "Ação",
@@ -4536,7 +4536,7 @@
   {
     "magia_id": "378",
     "nome": "Tsunami",
-    "circulo": "8º Círculo",
+    "circulo": "8",
     "escola": "Invocação",
     "classes": ["Druida"],
     "tempo_de_conjuracao": "1 minuto",
@@ -4548,7 +4548,7 @@
   {
     "magia_id": "379",
     "nome": "Turvar",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Ilusão",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4560,7 +4560,7 @@
   {
     "magia_id": "380",
     "nome": "Ver o Invisível",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Adivinhação",
     "classes": ["Bardo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4572,7 +4572,7 @@
   {
     "magia_id": "381",
     "nome": "Vidência",
-    "circulo": "5º Círculo",
+    "circulo": "5",
     "escola": "Adivinhação",
     "classes": ["Bardo", "Bruxo", "Clérigo", "Druida", "Mago"],
     "tempo_de_conjuracao": "10 minutos",
@@ -4584,7 +4584,7 @@
   {
     "magia_id": "382",
     "nome": "Vigor Arcano",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Abjuração",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -4596,7 +4596,7 @@
   {
     "magia_id": "383",
     "nome": "Vínculo de Proteção",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Abjuração",
     "classes": ["Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",
@@ -4608,7 +4608,7 @@
   {
     "magia_id": "384",
     "nome": "Vinha Agarradora",
-    "circulo": "4º Círculo",
+    "circulo": "4",
     "escola": "Invocação",
     "classes": ["Druida", "Guardião"],
     "tempo_de_conjuracao": "Ação Bônus",
@@ -4620,7 +4620,7 @@
   {
     "magia_id": "385",
     "nome": "Visão da Verdade",
-    "circulo": "6º Círculo",
+    "circulo": "6",
     "escola": "Adivinhação",
     "classes": ["Bardo", "Bruxo", "Clérigo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4632,7 +4632,7 @@
   {
     "magia_id": "386",
     "nome": "Visão no Escuro",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Transmutação",
     "classes": ["Druida", "Feiticeiro", "Guardião", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4644,7 +4644,7 @@
   {
     "magia_id": "387",
     "nome": "Vitalidade Vazia",
-    "circulo": "1º Círculo",
+    "circulo": "1",
     "escola": "Necromancia",
     "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4656,7 +4656,7 @@
   {
     "magia_id": "388",
     "nome": "Voo",
-    "circulo": "3º Círculo",
+    "circulo": "3",
     "escola": "Transmutação",
     "classes": ["Bruxo", "Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
@@ -4680,7 +4680,7 @@
   {
     "magia_id": "390",
     "nome": "Zona da Verdade",
-    "circulo": "2º Círculo",
+    "circulo": "2",
     "escola": "Encantamento",
     "classes": ["Bardo", "Clérigo", "Paladino"],
     "tempo_de_conjuracao": "Ação",

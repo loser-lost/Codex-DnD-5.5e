@@ -3,7 +3,7 @@ import { Divider, Layout, List, ListItem} from '@ui-kitten/components';
 import { Text, TextCategory1, TextCategory2, TextCategory3, TitleText } from '@/components/StyledText';
 
 import magias from '@/assets/json/magias.json';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 //Typing JSON
 interface Item {
@@ -21,7 +21,8 @@ interface Item {
 
 
 export default function TabOneScreen() {
-  //const [filteredData, setFilteredData] = useState<Item[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredData, setFilteredData] = useState<Item[]>([]);
   //Organizando os dados
   const [data, setData] = useState<Item[]>([]);
   
@@ -30,67 +31,80 @@ export default function TabOneScreen() {
     setData(magias.magias);
   }, []);
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtered = data.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data); // Mostra todos os dados quando a pesquisa está vazia
+    }
+  };
   const handleFilter = () => {
     alert('filtro');
   };
 
 
-
-  const renderNivel = (): React.ReactElement => (
-    <Layout style={styles.nivelBar}>
-    <Text>
-      Nivel:
-      </Text>
-    <Text>
-      Total:
-      </Text>
-  </Layout>
+  const MyListHeader = () => (
+    <View style={styles.nivelBar}>
+      <Text>Nível 1</Text>
+      <Text>Magias: {data.length}</Text>
+    </View>
   );
+
+ 
   
   const renderItem = ({ item }: { item: Item }) => (
-  
-   <ListItem 
-      //title={item.nome}
+    <ListItem 
       title={() => (
         <Text category='h1'>
           {item.nome}
         </Text>
       )}
-       description={() => (
-        <><TextCategory1>
-           {item.duracao}
-         </TextCategory1><TextCategory2>
-             {item.tempo_de_conjuracao}
-           </TextCategory2></>
+      description={() => (
+        <>
+          <TextCategory1>
+            {item.duracao}
+          </TextCategory1>
+          <TextCategory2>
+            {item.tempo_de_conjuracao}
+          </TextCategory2>
+        </>
       )}
-      //accessoryLeft={renderIcon}
       accessoryRight={() => (
-        <TextCategory3 >
-          {item.circulo}
+        <TextCategory3>
+          {item.circulo}º Círculo"
         </TextCategory3>
       )}
-      />
-   
+    />
   );
 
+  
+  
   return (
+    
       <Layout style={styles.container}>
         <Layout style={styles.border} >
           <Layout style={styles.seachContainer}>
             <TextInput
             style={styles.input}
-              placeholder="Search..."/*
-              onChangeText={setSearchQuery}*/
+              placeholder="Search..."
+              value={searchQuery}
+              onChangeText={handleSearch}
+
             />
             <TouchableOpacity style={styles.filterButton} onPress={handleFilter}>
               <Text style={{ color: 'white' }} category='alternative'>Filtro</Text>
             </TouchableOpacity>
           </Layout>
-          {renderNivel()}
+          <Layout style={styles.magTitle}>
+            <TitleText category='h1'>Magias</TitleText>
+          </Layout>
 
           <List
           style={{ flex: 1 }}
-          data={data}
+          ListHeaderComponent={MyListHeader}
+          data={filteredData.length > 0 ? filteredData : data}
           renderItem={renderItem}
           ItemSeparatorComponent={Divider}
           />
@@ -104,7 +118,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',   
+    alignItems: 'center',  
     
   },
   text: {
@@ -144,16 +158,18 @@ const styles = StyleSheet.create({
   nivelBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    backgroundColor : 'black',
     width: '100%',
-    borderRadius: 8,
+    height: 40,
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
   icon: {
    
+  },
+  magTitle: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 32, //DB7610
