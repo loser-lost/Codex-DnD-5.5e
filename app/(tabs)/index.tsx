@@ -98,7 +98,7 @@ export default function TabOneScreen() {
             </TouchableOpacity>
           </Layout>
           <Layout style={styles.magTitle}>
-            <TitleText category='h1'>Magias</TitleText>
+            
           </Layout>
 
           <List

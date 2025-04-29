@@ -5,7 +5,6 @@ import React from 'react';
 //* Expo Imports
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Stack } from 'expo-router';
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 export { ErrorBoundary } from 'expo-router';
 
@@ -17,12 +16,9 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import { default as theme } from "../assets/theme/custom-theme.json";
 
 //* Third Party Imports
-import { AveriaSerifLibre_700Bold } from '@expo-google-fonts/averia-serif-libre/700Bold';
-import { AveriaSerifLibre_400Regular } from '@expo-google-fonts/averia-serif-libre/400Regular';
-import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
-import { Inter_700Bold } from '@expo-google-fonts/inter/700Bold';
-import { Inter_400Regular_Italic } from '@expo-google-fonts/inter/400Regular_Italic';
+import { AveriaSerifLibre_400Regular, AveriaSerifLibre_700Bold, useFonts } from '@expo-google-fonts/averia-serif-libre';
 import 'react-native-reanimated';
+import { Inter_400Regular, Inter_700Bold, Inter_400Regular_Italic } from '@expo-google-fonts/inter';
 
 
 export const unstable_settings = { initialRouteName: '(tabs)' };
@@ -32,7 +28,6 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     AveriaSerifLibre: AveriaSerifLibre_400Regular,
     AveriaSerifLibreBold: AveriaSerifLibre_700Bold,
     Inter: Inter_400Regular,

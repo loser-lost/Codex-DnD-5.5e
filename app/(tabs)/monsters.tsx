@@ -7,7 +7,7 @@ export default function MonsterScreen() {
 
   return (
     <Layout style={styles.container}>
-      <TitleText category='h1'>Monstros</TitleText>
+      <TitleText type='h2'>Monstros</TitleText>
       <Text>Tela em desenvolvimento...</Text>
     </Layout>
   );
