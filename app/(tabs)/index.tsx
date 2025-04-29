@@ -4,11 +4,11 @@ import { Text, TitleText } from '@/components/StyledText';
 
 
 export default function TabOneScreen() {
-  
+
   return (
     <Layout style={styles.container}>
-      <TitleText category='h1'>Magias</TitleText>
-      <Text >exempo de texto médio</Text>
+      <TitleText type='h2'>Magias</TitleText>
+      <Text>Exemplo de texto Médio</Text>
     </Layout>
   );
 }

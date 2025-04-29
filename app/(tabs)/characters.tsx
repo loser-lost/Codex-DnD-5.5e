@@ -6,7 +6,7 @@ import { Text, TitleText } from '@/components/StyledText';
 export default function TabTwoScreen() {
   return (
     <Layout style={styles.container}>
-      <TitleText category='h1'>Ficha para magias</TitleText>
+      <TitleText type='h2'>Ficha para magias</TitleText>
       <Text>Tela em desenvolvimento...</Text>
     </Layout>
   );

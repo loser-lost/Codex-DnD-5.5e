@@ -31,17 +31,7 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font",
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "node_modules/@expo-google-fonts/inter/Inter_400Regular.ttf",
-            "node_modules/@expo-google-fonts/averia-serif-libre/AveriaSerifLibre_400Regular.ttf",
-            "node_modules/@expo-google-fonts/averia-serif-libre/AveriaSerifLibre_700Bold.ttf"
-          ]
-        }
-      ]
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
