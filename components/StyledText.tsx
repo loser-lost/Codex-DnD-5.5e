@@ -8,3 +8,13 @@ export function TitleText(props: TextProps) {
 export function Text(props: TextProps) {
   return <DefaultText {...props} style={[props.style, { fontFamily: 'Inter', fontSize: 16 }]} />;
 }
+export function TextCategory1(props: TextProps) {
+  return <DefaultText {...props} style={[props.style, { fontFamily: 'Inter', fontSize: 14, color: '#808080' }]} />;
+}
+export function TextCategory2(props: TextProps) {
+  return <DefaultText {...props} style={[props.style, { fontFamily: 'Inter', fontSize: 12, color: '#808080' }]} />;
+}
+export function TextCategory3(props: TextProps) {
+  return <DefaultText {...props} style={[props.style, { fontFamily: 'Inter', fontSize: 14 }]} />;
+}
+//Tenho que retirar as colors das fontes

@@ -1,9 +1,11 @@
-import { Button, FlatList, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { Divider, Layout, List, ListItem} from '@ui-kitten/components';
-import { Text, TitleText } from '@/components/StyledText';
-import magias from '@/assets/json/magias.json';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Text, TextCategory1, TextCategory2, TextCategory3, TitleText } from '@/components/StyledText';
 
+import magias from '@/assets/json/magias.json';
+import React, { useEffect, useState } from 'react';
+
+//Typing JSON
 interface Item {
   magia_id: string;
   nome: string;
@@ -17,31 +19,63 @@ interface Item {
   efeito: string;
 }
 
+
 export default function TabOneScreen() {
-  const [filteredData, setFilteredData] = useState<Item[]>([]);
+  //const [filteredData, setFilteredData] = useState<Item[]>([]);
+  //Organizando os dados
   const [data, setData] = useState<Item[]>([]);
   
+  //Organizando os dados
+  useEffect(() => { 
+    setData(magias.magias);
+  }, []);
 
   const handleFilter = () => {
     alert('filtro');
   };
 
-  useEffect(() => { 
-    setData(magias.magias);
-  }, []);
+
+
+  const renderNivel = (): React.ReactElement => (
+    <Layout style={styles.nivelBar}>
+    <Text>
+      Nivel:
+      </Text>
+    <Text>
+      Total:
+      </Text>
+  </Layout>
+  );
   
   const renderItem = ({ item }: { item: Item }) => (
-   <Layout>
+  
    <ListItem 
-      title={item.nome}
-      description={item.circulo}
+      //title={item.nome}
+      title={() => (
+        <Text category='h1'>
+          {item.nome}
+        </Text>
+      )}
+       description={() => (
+        <><TextCategory1>
+           {item.duracao}
+         </TextCategory1><TextCategory2>
+             {item.tempo_de_conjuracao}
+           </TextCategory2></>
+      )}
+      //accessoryLeft={renderIcon}
+      accessoryRight={() => (
+        <TextCategory3 >
+          {item.circulo}
+        </TextCategory3>
+      )}
       />
-    </Layout>
+   
   );
 
   return (
       <Layout style={styles.container}>
-        <Layout>
+        <Layout style={styles.border} >
           <Layout style={styles.seachContainer}>
             <TextInput
             style={styles.input}
@@ -52,17 +86,10 @@ export default function TabOneScreen() {
               <Text style={{ color: 'white' }} category='alternative'>Filtro</Text>
             </TouchableOpacity>
           </Layout>
-            <Layout style={styles.nivelBar}>
-              <Text category='alternative'>
-                Nivel:
-                </Text>
-              <Text category='alternative'>
-                Total:
-                </Text>
-            </Layout>
-            <TitleText category='h1'>Magias</TitleText>
-            <Text >exemplo de texto médio</Text>
+          {renderNivel()}
+
           <List
+          style={{ flex: 1 }}
           data={data}
           renderItem={renderItem}
           ItemSeparatorComponent={Divider}
@@ -77,8 +104,16 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'center',   
     
+  },
+  text: {
+    margin: 2,
+  },
+  border: {
+    flex: 1,
+    marginRight: 20,
+    marginLeft: 20,
   },
   seachContainer:{
     marginTop: 20,
@@ -116,6 +151,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 5,
+  },
+  icon: {
+   
   },
   title: {
     fontSize: 32, //DB7610
