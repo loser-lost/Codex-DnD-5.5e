@@ -102,7 +102,7 @@ export default function TabOneScreen() {
           </Layout>
 
           <List
-          style={{ flex: 1 }}
+          style={styles.listSpells}
           ListHeaderComponent={MyListHeader}
           data={filteredData.length > 0 ? filteredData : data}
           renderItem={renderItem}
@@ -164,8 +164,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
-  icon: {
-   
+  listSpells: {
+    flex: 1,
+    width: 430
   },
   magTitle: {
     alignItems: 'center',
