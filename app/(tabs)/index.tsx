@@ -1,13 +1,13 @@
-import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
-import { Divider, Layout, List, ListItem} from '@ui-kitten/components';
-import { Text, TextCategory1, TextCategory2, TextCategory3 } from '@/components/StyledText';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Button, Divider, Input, Layout, List, ListItem, useTheme } from '@ui-kitten/components';
+import { Text, TitleText } from '@/components/StyledText';
 
 
-import magias from '@/assets/json/magias.json';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { magias } from '@/assets/json/magias.json';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 
 //Typing JSON
-interface Item {
+interface Spell {
   magia_id: string;
   nome: string;
   circulo: string;
@@ -20,8 +20,8 @@ interface Item {
   efeito: string;
 }
 
-function agruparEOrdenarMagias(magias: Item[]): Record<string, Item[]> {
-  const grupos: Record<string, Item[]> = {};
+function agruparEOrdenarMagias(magias: Spell[]): Record<string, Spell[]> {
+  const grupos: Record<string, Spell[]> = {};
 
 
   // Agrupamento
@@ -50,7 +50,7 @@ function agruparEOrdenarMagias(magias: Item[]): Record<string, Item[]> {
   );
 
   // Retorna os grupos já na ordem correta
-  const resultado: Record<string, Item[]> = {};
+  const resultado: Record<string, Spell[]> = {};
   circulosOrdenados.forEach(circulo => {
     resultado[circulo] = grupos[circulo];
   });
@@ -59,163 +59,127 @@ function agruparEOrdenarMagias(magias: Item[]): Record<string, Item[]> {
 }
 
 
-export default function TabOneScreen() {
+export default function SpellsScreen() {
+  const theme = useTheme();
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filteredData, setFilteredData] = useState<Item[]>([]);
+  const [filteredData, setFilteredData] = useState<Spell[]>([]);
   //Organizando os dados
-  const [data, setData] = useState<Item[]>([]);
-  
-  //Organizando os dados
-  useEffect(() => { 
-    setData(magias.magias);
-  }, []);
+  const [spells, setSpells] = useState<Spell[]>(magias);
+
+  const debounce = (func: (...args: string[]) => void, wait: number) => {
+    let timeout: number;
+    return (...args: string[]) => {
+      clearTimeout(timeout);
+      timeout = window.setTimeout(() => func(...args), wait);
+    };
+  };
+
+  const handleSearchDebounced = debounce((query: string) => {
+    const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
+    setFilteredData(filtered);
+  }, 500);
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      handleSearchDebounced(searchQuery);
+    } else {
+      setSpells(magias);
+    }
+  }, [searchQuery]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    if (query) {
-      const filtered = data.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(data); // Mostra todos os dados quando a pesquisa está vazia
-    }
   };
+
   const handleFilter = () => {
     alert('filtro');
   };
 
 
   const magiasAgrupadas = useMemo(() => {
-    const base = searchQuery ? filteredData : data;
+    const base = searchQuery ? filteredData : spells;
     return agruparEOrdenarMagias(base);
-  }, [searchQuery, filteredData, data]);
-  
-  const MyListHeader = () => (
-    <View style={styles.nivelBar}>
-      <Text>Nível 1</Text>
-      <Text>Magias: {data.length}</Text>
-    </View>
-  );
+  }, [searchQuery, filteredData, spells]);
 
- 
-  
-  const renderItem = ({ item }: { item: Item }) => (
-    <ListItem 
+  const renderItem = ({ item }: { item: Spell }) => (
+    <ListItem
       title={() => (
-        <Text category='h1'>
+        <TitleText type='h4'>
           {item.nome}
-        </Text>
-      )}
+        </TitleText>
+
+      )
+      }
       description={() => (
-        <>
-          <TextCategory1>
-            {item.duracao}
-          </TextCategory1>
-          <TextCategory2>
-            {item.tempo_de_conjuracao}
-          </TextCategory2>
-        </>
-      )}
+        <Fragment>
+          <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
+          <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>{item.tempo_de_conjuracao}</Text>
+        </Fragment>
+      )
+      }
       accessoryRight={() => (
-        <TextCategory3>
-          {item.circulo}º Círculo
-        </TextCategory3>
-      )}
+        <Text style={{ fontSize: 14 }}>
+          {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
+        </Text>
+      )
+      }
     />
   );
 
-  
-  
+
+
   return (
-    
-      <Layout style={styles.container}>
-        <Layout style={styles.border} >
-          <Layout style={styles.seachContainer}>
-            <TextInput
-            style={styles.input}
-              placeholder="Search..."
-              value={searchQuery}
-              onChangeText={handleSearch}
 
-            />
-            <TouchableOpacity style={styles.filterButton} onPress={handleFilter}>
-              <Text style={{ color: 'white' }} category='alternative'>Filtro</Text>
-            </TouchableOpacity>
-          </Layout>
-
-          <ScrollView style={{ flex: 1, width: 410 }}>
-            {Object.entries(magiasAgrupadas).map(([circulo, magias]) => (
-
-              <Layout  key={circulo}>
-                <Layout style={styles.nivelBar}>
-                  <Text>Nivel: {circulo}</Text>
-                  <Text>Total: {magias.length}</Text>
-                </Layout>
-                <List
-                style={styles.listSpells}
-                  data={magias}
-                  renderItem={renderItem}
-                  ItemSeparatorComponent={Divider}
-                />
-              </Layout>
-            ))}
-          </ScrollView>
-
-
-
-        
-       </Layout>
+    <Layout style={styles.container}>
+      <Layout style={styles.header}>
+        <Input
+          style={styles.input}
+          placeholder="Procurar..."
+          value={searchQuery}
+          onChangeText={handleSearch}
+          size='medium'
+        />
+        <Button onPress={() => handleFilter()} size='small' style={{ marginHorizontal: 4 }}>
+          FILTRO
+        </Button>
       </Layout>
-      
+      <ScrollView style={{ flex: 1 }}>
+        {Object.entries(magiasAgrupadas).map(([circulo, magias]) => (
+
+          <Layout key={circulo}>
+            <Layout style={styles.nivelBar}>
+              <Text>Nivel: {circulo}</Text>
+              <Text>Total: {magias.length}</Text>
+            </Layout>
+            <List
+              style={styles.listSpells}
+              data={magias}
+              renderItem={renderItem}
+              ItemSeparatorComponent={Divider}
+            />
+          </Layout>
+        ))}
+      </ScrollView>
+    </Layout>
+
   );
-  
+
 }
-/*   <List
-          style={styles.listSpells}
-          ListHeaderComponent={MyListHeader}
-          data={searchQuery ? filteredData : data}
-          rnderItem={renderItem}e
-          ItemSeparatorComponent={Divider}
-          />*/
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',  
-    width: "100%"
   },
-  text: {
-    margin: 2,
-  },
-  border: {
-    flex: 1,
-    marginRight: 20,
-    marginLeft: 20,
-  },
-  seachContainer:{
-    marginTop: 20,
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    width: "100%"
+    width: '100%',
+    paddingVertical: 8,
+    display: 'flex',
   },
   input: {
     flex: 1,
-    width: 250,
-    height: 35,
-    borderColor: 'gray',
-    color: 'white',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginRight: 10, // <- espaço entre o campo e o botão
-    borderRadius: 8,
-  },
-  filterButton: {
-    width: 70,
-    height: 35,
-    borderRadius: 8,
-    backgroundColor: '#DB7610',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
+    marginHorizontal: 4
   },
   nivelBar: {
     flexDirection: 'row',
@@ -226,7 +190,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     backgroundColor: "black"
-  
+
   },
   listSpells: {
     flex: 1,
