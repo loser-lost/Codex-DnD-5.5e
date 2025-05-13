@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Button, CheckBox, Layout, Text, useTheme } from '@ui-kitten/components';
 import { useRouter } from 'expo-router';
 
@@ -47,7 +47,7 @@ export default function FilterSpell() {
         <ScrollView contentContainerStyle={styles.container}>
             <Text category="h5">Filtrar por Escola</Text>
             {SCHOOLS.map((e, index) => (
-                <CheckBox key={index} checked={escolasSelecionadas?.includes(e)} onChange={() => toggleItem(e, escolasSelecionadas, setEscolasSelecionadas)}>
+                <CheckBox key={index} checked={escolasSelecionadas?.includes(e)} onChange={() => toggleItem(e, escolasSelecionadas, setEscolasSelecionadas)} >
                 {e}
                 </CheckBox>
             ))}
