@@ -5,6 +5,10 @@ import { Text, TitleText } from '@/components/StyledText';
 
 import { magias } from '@/assets/json/magias.json';
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'expo-router';
+
+import { useLocalSearchParams } from 'expo-router';
+
 
 //Typing JSON
 interface Spell {
@@ -60,12 +64,21 @@ function agruparEOrdenarMagias(magias: Spell[]): Record<string, Spell[]> {
 
 
 export default function SpellsScreen() {
+  //Importando o tema
   const theme = useTheme();
+  //Importando o JSON
   const [searchQuery, setSearchQuery] = useState<string>('');
+  //Estado para armazenar os dados filtrados
   const [filteredData, setFilteredData] = useState<Spell[]>([]);
   //Organizando os dados
   const [spells, setSpells] = useState<Spell[]>(magias);
+  //Pegando os parâmetros da URL
+  const params = useLocalSearchParams();
+  //Importando o roteador 
+  const router = useRouter();
 
+  //Função debounce para otimizar a busca
+  //A função debounce é usada para limitar a taxa de execução de uma função.
   const debounce = (func: (...args: string[]) => void, wait: number) => {
     let timeout: number;
     return (...args: string[]) => {
@@ -74,33 +87,60 @@ export default function SpellsScreen() {
     };
   };
 
+  //Função que filtra os dados de acordo com a busca
+  //A função handleSearchDebounced é uma versão otimizada da função handleSearch, que só é chamada após um atraso de 500ms.
   const handleSearchDebounced = debounce((query: string) => {
     const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
     setFilteredData(filtered);
   }, 500);
 
+
+  //Na primeira vez que a tela é carregada, ela vai pegar os dados do JSON e filtrar de acordo com as escolas e classes
+  //e depois vai filtrar de acordo com a busca 
+  //Sem efeito ainda 
+  useEffect(() => {
+    let base = magias;
+
+    if (params?.escolas || params?.classes) {
+      const escolas = params?.escolas ? JSON.parse(params.escolas as string) : [];
+      const classes = params?.classes ? JSON.parse(params.classes as string) : [];
+      
+
+      base = magias.filter(magia =>
+        (escolas.length === 0 || escolas.includes(magia.escola)) &&
+        (classes.length === 0 || magia.classes.some(classe => classes.includes(classe)))
+      );
+
+    }
+
+    setSpells(base);
+  }, [params]);
+
+  //Quando o usuário digitar algo na barra de busca, a função handleSearchDebounced vai ser chamada 
+  //e vai filtrar os dados de acordo com a busca
+  //Se a barra de busca estiver vazia, os dados vão ser os dados do JSON
+  //Se não, os dados vão ser os dados filtrados
   useEffect(() => {
     if (searchQuery.length > 0) {
       handleSearchDebounced(searchQuery);
-    } else {
-      setSpells(magias);
     }
   }, [searchQuery]);
 
+  //Função que vai ser chamada quando o usuário digitar algo na barra de busca
+  //Ela vai atualizar o estado da barra de busca
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
-
-  const handleFilter = () => {
-    alert('filtro');
-  };
-
-
+  
+  // Agrupando e ordenando as magias
+  //A função agruparEOrdenarMagias é chamada para agrupar e ordenar as magias de acordo com o círculo e o nome.
   const magiasAgrupadas = useMemo(() => {
     const base = searchQuery ? filteredData : spells;
     return agruparEOrdenarMagias(base);
   }, [searchQuery, filteredData, spells]);
 
+  //Renderizando os itens da lista
+  //A função renderItem é responsável por renderizar cada item da lista de magias.
   const renderItem = ({ item }: { item: Spell }) => (
     <ListItem
       title={() => (
@@ -127,7 +167,7 @@ export default function SpellsScreen() {
   );
 
 
-
+ 
   return (
 
     <Layout style={styles.container}>
@@ -139,7 +179,7 @@ export default function SpellsScreen() {
           onChangeText={handleSearch}
           size='medium'
         />
-        <Button onPress={() => handleFilter()} size='small' style={{ marginHorizontal: 4 }}>
+        <Button onPress={() =>  router.push('./filterSpell')} size='small' style={{ marginHorizontal: 4 }}>
           FILTRO
         </Button>
       </Layout>
