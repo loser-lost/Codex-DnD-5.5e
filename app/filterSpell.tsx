@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, CheckBox, Layout, Text, useTheme } from '@ui-kitten/components';
 import { useRouter } from 'expo-router';
+import { Drawer, DrawerGroup, DrawerItem, Icon, IconElement } from '@ui-kitten/components';
 
 
 const SCHOOLS = ['Abjuração', 'Evocação', 'Ilusão', 'Transmutação', 'Conjuração', 'Necromancia', 'Encantamento', 'Adivinhação'];
@@ -28,7 +29,8 @@ export default function FilterSpell() {
     // e redirecionar para a página inicial
     const applyFilter = () => {
         if (escolasSelecionadas.length === 0 && classesSelecionadas.length === 0) {
-            alert('Selecione pelo menos uma escola ou classe para filtrar.');
+            //alert('Selecione pelo menos uma escola ou classe para filtrar.');
+            router.push('/')
         }else {
             router.push({
                 pathname: '/',
@@ -45,18 +47,40 @@ export default function FilterSpell() {
     return (
     <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
         <ScrollView contentContainerStyle={styles.container}>
-            <Text category="h5">Filtrar por Escola</Text>
-            {SCHOOLS.map((e, index) => (
-                <CheckBox key={index} checked={escolasSelecionadas?.includes(e)} onChange={() => toggleItem(e, escolasSelecionadas, setEscolasSelecionadas)} >
-                {e}
-                </CheckBox>
-            ))}
-            <Text category="h5" style={{ marginTop: 20 }}>Filtrar por Classe</Text>
-            {CLASS.map((c, index) => (
-                <CheckBox key={index} checked={classesSelecionadas?.includes(c)} onChange={() => toggleItem(c, classesSelecionadas, setClassesSelecionadas)}>
-                {c}
-                </CheckBox>
-            ))}
+        <Drawer>
+               <DrawerGroup title='Escola'>
+                    {SCHOOLS.map((e, index) => (
+                        <DrawerItem
+                        key={index}
+                        title={() => (
+                            <CheckBox
+                            checked={escolasSelecionadas?.includes(e)}
+                            onChange={() => toggleItem(e, escolasSelecionadas, setEscolasSelecionadas)}
+                            >
+                            {e}
+                            </CheckBox>
+                        )}
+                        />
+                    ))}
+                </DrawerGroup>
+
+                <DrawerGroup title='Classe'>
+                    {CLASS.map((c, index) => (
+                        <DrawerItem
+                        key={index}
+                        title={() => (
+                            <CheckBox
+                            checked={classesSelecionadas?.includes(c)}
+                            onChange={() => toggleItem(c, classesSelecionadas, setClassesSelecionadas)}
+                            >
+                            {c}
+                            </CheckBox>
+                        )}
+                        />
+                    ))}
+                </DrawerGroup>
+        </Drawer>
+        
             <Layout style={{  
                 backgroundColor: theme['color-basic-1000'],  
                 flexDirection: 'row',
@@ -66,7 +90,7 @@ export default function FilterSpell() {
                 alignSelf: 'center'
                 }}>
             <Button onPress={applyFilter}>Aplicar</Button>
-            <Button onPress={() => router.push('/')} >Voltar</Button>
+            <Button onPress={() => router.back()}>Voltar</Button>
             </Layout>
         </ScrollView>
     </Layout>
