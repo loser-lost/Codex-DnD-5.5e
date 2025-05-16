@@ -88,7 +88,6 @@ export default function SpellsScreen() {
   };
 
   //Função que filtra os dados de acordo com a busca
-  //A função handleSearchDebounced é uma versão otimizada da função handleSearch, que só é chamada após um atraso de 500ms.
   const handleSearchDebounced = debounce((query: string) => {
     const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
     setFilteredData(filtered);
@@ -96,19 +95,22 @@ export default function SpellsScreen() {
 
 
   //Na primeira vez que a tela é carregada, ela vai pegar os dados do JSON e filtrar de acordo com as escolas e classes
-  //e depois vai filtrar de acordo com a busca 
-  //Sem efeito ainda 
   useEffect(() => {
     let base = magias;
 
-    if (params?.escolas || params?.classes) {
+    if (params?.escolas || params?.classes /*|| params?.circles*/|| params?.range) {
       const escolas = params?.escolas ? JSON.parse(params.escolas as string) : [];
       const classes = params?.classes ? JSON.parse(params.classes as string) : [];
+      const range = params?.range ? JSON.parse(params.range as string) : [];
       
-
+      //const circles = params?.circles ? JSON.parse(params.circles as string) : [];
+      
       base = magias.filter(magia =>
         (escolas.length === 0 || escolas.includes(magia.escola)) &&
-        (classes.length === 0 || magia.classes.some(classe => classes.includes(classe)))
+        (classes.length === 0 || magia.classes.some(classe => classes.includes(classe)))&& 
+        (range.length === 0 || range.includes(magia.alcance))
+
+        //(circles.length === 0 || magia.circulo === '0' || magia.circulo === '1' || magia.circulo === '2' || magia.circulo === '3' || magia.circulo === '4' || magia.circulo === '5' || magia.circulo === '6' || magia.circulo === '7' || magia.circulo === '8' || magia.circulo === '9')
       );
 
     }

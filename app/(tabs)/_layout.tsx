@@ -47,7 +47,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />
         }} />
     </Tabs><Stack.Screen
-        name="filterSpell"
+        name="Filter"
         options={{ 
           presentation: 'modal', 
           headerShown: false
