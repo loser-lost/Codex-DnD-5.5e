@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Divider, Input, Layout, List, ListItem, useTheme } from '@ui-kitten/components';
 import { Text, TitleText } from '@/components/StyledText';
 
@@ -125,28 +125,29 @@ export default function SpellsScreen() {
   }, [searchQuery, filteredData, spells]);
 
   const renderItem = ({ item }: { item: Spell }) => (
-    <ListItem
-      title={() => (
-        <TitleText type='h4'>
-          {item.nome}
-        </TitleText>
-
-      )
-      }
-      description={() => (
-        <Fragment>
-          <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
-          <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>{item.tempo_de_conjuracao}</Text>
-        </Fragment>
-      )
-      }
-      accessoryRight={() => (
-        <Text style={{ fontSize: 14 }}>
-          {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
-        </Text>
-      )
-      }
-    />
+      <ListItem
+        title={() => (
+          <TouchableOpacity onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}>
+            <TitleText type='h4'>{item.nome}</TitleText>
+          </TouchableOpacity>
+        )
+        }
+        description={() => (
+          <Fragment>
+            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
+            <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>{item.tempo_de_conjuracao}</Text>
+            
+          </Fragment>
+        )
+        }
+        accessoryRight={() => (
+          <Text style={{ fontSize: 14 }}>
+            {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
+          </Text>
+        )
+        }
+      />
+    
   );
 
   return (
@@ -174,6 +175,7 @@ export default function SpellsScreen() {
             <List
               style={styles.listSpells}
               data={magias}
+              keyExtractor={(item) => item.magia_id}
               renderItem={renderItem}
               ItemSeparatorComponent={Divider}
             />

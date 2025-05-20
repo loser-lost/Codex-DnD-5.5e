@@ -46,11 +46,22 @@ export default function TabLayout() {
           tabBarLabelStyle: { fontFamily: 'Inter' },
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />
         }} />
-    </Tabs><Stack.Screen
-        name="Filter"
-        options={{ 
-          presentation: 'modal', 
+    </Tabs>
+        <Stack.Screen
+          name="Filter"
+          options={{ 
+            presentation: 'modal', 
+            headerShown: false
+        }} />
+        <Stack.Screen
+          name="SpellDetails"
+          options={{ presentation: 'modal',
           headerShown: false
-          }} /></>
+        }} />
+        
+      </>
+          
+  
   );
+
 }

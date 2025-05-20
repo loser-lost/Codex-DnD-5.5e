@@ -56,8 +56,9 @@ export default function FilterSpell() {
 
         }
     };
-   
+
     
+   
     // Função para renderizar o ícone da Classe
     const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => (
     <FontAwesome5
@@ -111,7 +112,9 @@ export default function FilterSpell() {
         <ScrollView contentContainerStyle={styles.container}>
             <Drawer>
                     <DrawerGroup title='Circulo'
-                        accessoryLeft={circuloIcon}>
+                        accessoryLeft={circuloIcon}
+                        >
+                        
                         {CIRCLES.map((e, index) => (
                             <DrawerItem
                             key={index}
@@ -215,3 +218,8 @@ export default function FilterSpell() {
         gap: 10
     }
     });
+/*accessoryRight={() => (
+    <Text category="label" appearance="hint">
+    {selectCircle.length}
+    </Text>
+)}*/
