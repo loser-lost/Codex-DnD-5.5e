@@ -24,10 +24,9 @@ const SpellDetails:React.FC = () => {
     const router = useRouter();
     const theme = useTheme();
     const {magia_id} = useLocalSearchParams();
-    //console.log('itemId', magia_id );
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
-    //const item = magias.magias.find(((m: Spell) => m.magia_id === magia_id));
+    
     const backIcon = (props: any) => (
         <Icon {...props} name="arrow-back" />
         //<AntDesign name="back" size={24} color="black" />
@@ -46,9 +45,10 @@ const SpellDetails:React.FC = () => {
         
         <Layout style={styles.header}>
             <AntDesign name="back" size={24} color={theme['color-basic-500']} onPress={() => router.back()} />
-        </Layout>   
+        </Layout>  
+        <ScrollView >   
         <Layout style={styles.content}>
-            <ScrollView >   
+             
             <Text category="h4">
                 {item.nome}
             </Text>
@@ -85,9 +85,9 @@ const SpellDetails:React.FC = () => {
                 
                 {item.efeito}
             </Text>
-             </ScrollView>
+            
         </Layout> 
-       
+        </ScrollView>
         
     </Layout>
 
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 20,  
+    padding: 35,  
     width: '100%'
   },
 });

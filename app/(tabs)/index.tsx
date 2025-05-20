@@ -125,28 +125,34 @@ export default function SpellsScreen() {
   }, [searchQuery, filteredData, spells]);
 
   const renderItem = ({ item }: { item: Spell }) => (
-      <ListItem
-        title={() => (
-          <TouchableOpacity onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}>
-            <TitleText type='h4'>{item.nome}</TitleText>
-          </TouchableOpacity>
-        )
-        }
-        description={() => (
-          <Fragment>
-            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
-            <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>{item.tempo_de_conjuracao}</Text>
+    <>
+      
+          <ListItem
+          onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}
+          title={() => (
             
-          </Fragment>
-        )
-        }
-        accessoryRight={() => (
-          <Text style={{ fontSize: 14 }}>
-            {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
-          </Text>
-        )
-        }
-      />
+              <TitleText type='h4'>{item.nome}</TitleText>
+            
+          )
+          }
+          description={() => (
+            <Fragment>
+              <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
+              <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>Tempo de Conjuracao: {item.tempo_de_conjuracao}</Text>
+              
+            </Fragment>
+          )
+          }
+          accessoryRight={() => (
+            <Text style={{ fontSize: 14 }}>
+              {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
+            </Text>
+          )
+          }
+          
+        />
+      
+    </>
     
   );
 
