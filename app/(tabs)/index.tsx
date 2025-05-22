@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Divider, Input, Layout, List, ListItem, useTheme } from '@ui-kitten/components';
 import { Text, TitleText } from '@/components/StyledText';
+import { SectionList } from 'react-native';
 
 
 import { magias } from '@/assets/json/magias.json';
@@ -77,10 +78,11 @@ export default function SpellsScreen() {
     };
   };
 
-  const handleSearchDebounced = debounce((query: string) => {
-    const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
-    setFilteredData(filtered);
-  }, 500);
+const handleSearchDebounced = useMemo(() => debounce((query: string) => {
+  const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
+  setFilteredData(filtered);
+}, 500), [spells]);
+
 
   useEffect(() => {
     let base = magias;
@@ -91,13 +93,13 @@ export default function SpellsScreen() {
       const range = params?.range ? JSON.parse(params.range as string) : [];
       const tempo = params?.tempo ? JSON.parse(params.tempo as string) : [];
       const circle = params?.circle ? JSON.parse(params.circle as string) : [];
-
+/*
       console.log('escolas', escolas);      
       console.log('classes', classes);
       console.log('tempo', tempo);
       console.log('range', range);
       console.log('circle', circle);
-      
+   */   
       base = magias.filter(magia =>
         (escolas.length === 0 || escolas.includes(magia.escola)) &&
         (classes.length === 0 || magia.classes.some(classe => classes.includes(classe)))&& 
@@ -124,6 +126,12 @@ export default function SpellsScreen() {
     return agruparEOrdenarMagias(base);
   }, [searchQuery, filteredData, spells]);
 
+
+  // teste
+    const magiasEmSecoes = Object.entries(magiasAgrupadas).map(([circulo, data]) => ({
+      title: circulo,
+      data,
+    }));
   const renderItem = ({ item }: { item: Spell }) => (
     <>
       
@@ -170,24 +178,21 @@ export default function SpellsScreen() {
           FILTRO
         </Button>
       </Layout>
-      <ScrollView style={{ flex: 1 }}>
-        {Object.entries(magiasAgrupadas).map(([circulo, magias]) => (
-
-          <Layout key={circulo}>
-            <Layout style={styles.nivelBar}>
-              <Text>Nivel: {circulo}</Text>
-              <Text>Total: {magias.length}</Text>
-            </Layout>
-            <List
-              style={styles.listSpells}
-              data={magias}
-              keyExtractor={(item) => item.magia_id}
-              renderItem={renderItem}
-              ItemSeparatorComponent={Divider}
-            />
+      <SectionList
+        sections={magiasEmSecoes}
+        keyExtractor={(item) => item.magia_id}
+        renderItem={renderItem}
+        renderSectionHeader={({ section: { title, data } }) => (
+          <Layout style={styles.nivelBar}>
+            <Text>Nível: {title}</Text>
+            <Text>Total: {data.length}</Text>
           </Layout>
-        ))}
-      </ScrollView>
+        )}
+        ItemSeparatorComponent={Divider}
+      />
+      
+
+      
     </Layout>
   );
 }
@@ -225,3 +230,20 @@ const styles = StyleSheet.create({
     fontFamily: 'AveriaSerifLibreBold',
   }
 });
+/*
+      {Object.entries(magiasAgrupadas).map(([circulo, magias]) => (
+
+        <Layout key={circulo}>
+          <Layout style={styles.nivelBar}>
+            <Text>Nivel: {circulo}</Text>
+            <Text>Total: {magias.length}</Text>
+          </Layout>
+          <List
+            style={styles.listSpells}
+            data={magias}
+            keyExtractor={(item) => item.magia_id}
+            renderItem={renderItem}
+            ItemSeparatorComponent={Divider}
+          />
+        </Layout>
+      ))}*/

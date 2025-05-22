@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, CheckBox, Layout, useTheme, Text } from '@ui-kitten/components';
 import { Stack, useRouter } from 'expo-router';
@@ -26,41 +26,40 @@ export default function FilterSpell() {
     const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
 
 
-    const saveFiltersToStorage = async () => {
-        const data = {
-            selectCircle,
-            schoolsSelected,
-            selectedClasses,
-            selectedRange,
-            selectedTempo,
-        };
-        try {
-            await AsyncStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(data));
-        } catch (error) {
-            console.error('Erro ao salvar filtros:', error);
-        }
+    const saveFiltersToStorage = useCallback(async () => {
+    const data = {
+        selectCircle,
+        schoolsSelected,
+        selectedClasses,
+        selectedRange,
+        selectedTempo,
     };
+    try {
+        await AsyncStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(data));
+    } catch (error) {
+        console.error('Erro ao salvar filtros:', error);
+    }
+    }, [selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
 
-    const loadFiltersFromStorage = async () => {
+
+
+   const loadFiltersFromStorage = async () => {
         try {
             const data = await AsyncStorage.getItem(FILTER_STORAGE_KEY);
             if (data) {
-                const parsed = JSON.parse(data);
-                setSelectCircle(parsed.selectCircle || []);
-                setSchoolsSelected(parsed.schoolsSelected || []);
-                setSelectedClasses(parsed.selectedClasses || []);
-                setSelectedRange(parsed.selectedRange || []);
-                setSelectedTempo(parsed.selectedTempo || []);
+            const parsed = JSON.parse(data);
+            setSelectCircle(Array.isArray(parsed.selectCircle) ? parsed.selectCircle : []);
+            setSchoolsSelected(Array.isArray(parsed.schoolsSelected) ? parsed.schoolsSelected : []);
+            setSelectedClasses(Array.isArray(parsed.selectedClasses) ? parsed.selectedClasses : []);
+            setSelectedRange(Array.isArray(parsed.selectedRange) ? parsed.selectedRange : []);
+            setSelectedTempo(Array.isArray(parsed.selectedTempo) ? parsed.selectedTempo : []);
             }
         } catch (error) {
             console.error('Erro ao carregar filtros:', error);
         }
     };
 
-    useEffect(() => {
-        loadFiltersFromStorage();
-    }, []);
-
+/*
     const toggleItem = (item: string, list: string[], setList: (val: string[]) => void) => {
         if (list.includes(item)) {
             setList(list.filter(i => i !== item));
@@ -68,6 +67,24 @@ export default function FilterSpell() {
             setList([...list, item]);
         }
     };
+    */
+
+    useEffect(() => {
+    const load = async () => {
+        await loadFiltersFromStorage();
+    };
+    load();
+    }, []);
+
+
+    const toggleItem = useCallback((item: string, list: string[], setList: (val: string[]) => void) => {
+        if (list.includes(item)) {
+            setList(list.filter(i => i !== item));
+        } else {
+            setList([...list, item]);
+        }
+    }, []);
+
 
     const applyFilter = async () => {
         await saveFiltersToStorage();
@@ -93,6 +110,13 @@ export default function FilterSpell() {
             });
         }
     };
+    const totalFiltros = [
+        selectCircle.length,
+        schoolsSelected.length,
+        selectedClasses.length,
+        selectedRange.length,
+        selectedTempo.length,
+    ].reduce((a, b) => a + b, 0);
     const clearFilters = async () => {
         try {
          
@@ -161,7 +185,7 @@ export default function FilterSpell() {
     return (
         <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
             <Stack.Screen options={{ headerShown: false }} />
-            <ScrollView contentContainerStyle={styles.container}>
+            <Layout style={styles.container}>
                 <Drawer>
                     <DrawerGroup 
                     title={`Círculo (${selectCircle.length})`}
@@ -268,11 +292,14 @@ export default function FilterSpell() {
                     width: '50%',
                     alignSelf: 'center'
                 }}>
-                    <Button onPress={applyFilter} status='success'>Aplicar</Button>
+                    
+                    <Button onPress={applyFilter}>
+                    {totalFiltros > 0 ? `Aplicar (${totalFiltros})` : 'Sem filtros'}
+                    </Button>
                     <Button onPress={() => router.back()}>Voltar</Button>
                     <Button onPress={clearFilters} status='danger'>Limpar</Button>
                 </Layout>
-            </ScrollView>
+            </Layout>
         </Layout>
     );
 }
