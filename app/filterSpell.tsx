@@ -25,57 +25,40 @@ export default function FilterSpell() {
     const [selectedRange, setSelectedRange] = useState<string[]>([]);
     const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
 
-
     const saveFiltersToStorage = useCallback(async () => {
-    const data = {
-        selectCircle,
-        schoolsSelected,
-        selectedClasses,
-        selectedRange,
-        selectedTempo,
-    };
-    try {
-        await AsyncStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(data));
-    } catch (error) {
-        console.error('Erro ao salvar filtros:', error);
-    }
+        const data = {
+            selectCircle,
+            schoolsSelected,
+            selectedClasses,
+            selectedRange,
+            selectedTempo,
+        };
+        try {
+            await AsyncStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(data));
+        } catch (error) {
+            console.error('Erro ao salvar filtros:', error);
+        }
     }, [selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
 
-
-
-   const loadFiltersFromStorage = async () => {
+    const loadFiltersFromStorage = async () => {
         try {
             const data = await AsyncStorage.getItem(FILTER_STORAGE_KEY);
             if (data) {
-            const parsed = JSON.parse(data);
-            setSelectCircle(Array.isArray(parsed.selectCircle) ? parsed.selectCircle : []);
-            setSchoolsSelected(Array.isArray(parsed.schoolsSelected) ? parsed.schoolsSelected : []);
-            setSelectedClasses(Array.isArray(parsed.selectedClasses) ? parsed.selectedClasses : []);
-            setSelectedRange(Array.isArray(parsed.selectedRange) ? parsed.selectedRange : []);
-            setSelectedTempo(Array.isArray(parsed.selectedTempo) ? parsed.selectedTempo : []);
+                const parsed = JSON.parse(data);
+                setSelectCircle(Array.isArray(parsed.selectCircle) ? parsed.selectCircle : []);
+                setSchoolsSelected(Array.isArray(parsed.schoolsSelected) ? parsed.schoolsSelected : []);
+                setSelectedClasses(Array.isArray(parsed.selectedClasses) ? parsed.selectedClasses : []);
+                setSelectedRange(Array.isArray(parsed.selectedRange) ? parsed.selectedRange : []);
+                setSelectedTempo(Array.isArray(parsed.selectedTempo) ? parsed.selectedTempo : []);
             }
         } catch (error) {
             console.error('Erro ao carregar filtros:', error);
         }
     };
 
-/*
-    const toggleItem = (item: string, list: string[], setList: (val: string[]) => void) => {
-        if (list.includes(item)) {
-            setList(list.filter(i => i !== item));
-        } else {
-            setList([...list, item]);
-        }
-    };
-    */
-
     useEffect(() => {
-    const load = async () => {
-        await loadFiltersFromStorage();
-    };
-    load();
-    }, []);
-
+        loadFiltersFromStorage();
+    }, []); // Certifique-se de que o array de dependências está vazio
 
     const toggleItem = useCallback((item: string, list: string[], setList: (val: string[]) => void) => {
         if (list.includes(item)) {
@@ -84,7 +67,6 @@ export default function FilterSpell() {
             setList([...list, item]);
         }
     }, []);
-
 
     const applyFilter = async () => {
         await saveFiltersToStorage();
@@ -110,6 +92,7 @@ export default function FilterSpell() {
             });
         }
     };
+
     const totalFiltros = [
         selectCircle.length,
         schoolsSelected.length,
@@ -117,24 +100,20 @@ export default function FilterSpell() {
         selectedRange.length,
         selectedTempo.length,
     ].reduce((a, b) => a + b, 0);
+
     const clearFilters = async () => {
         try {
-         
-          setSelectCircle([]);
-          setSchoolsSelected([]);
-          setSelectedClasses([]);
-          setSelectedRange([]);
-          setSelectedTempo([]);
-      
-         
-          await AsyncStorage.removeItem(FILTER_STORAGE_KEY);
-      
-         
-          router.push('/');
+            setSelectCircle([]);
+            setSchoolsSelected([]);
+            setSelectedClasses([]);
+            setSelectedRange([]);
+            setSelectedTempo([]);
+            await AsyncStorage.removeItem(FILTER_STORAGE_KEY);
+            router.push('/');
         } catch (error) {
-          console.error('Erro ao limpar filtros:', error);
+            console.error('Erro ao limpar filtros:', error);
         }
-      };
+    };
 
     const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => (
         <FontAwesome5
@@ -179,7 +158,6 @@ export default function FilterSpell() {
             size={18}
             color={theme['color-primary-500']}
         />
-        
     );
 
     return (
@@ -190,7 +168,6 @@ export default function FilterSpell() {
                     <DrawerGroup 
                     title={`Círculo (${selectCircle.length})`}
                     accessoryLeft={circuloIcon}
-                    
                     >
                         {CIRCLES.map((e, index) => (
                             <DrawerItem
@@ -292,9 +269,8 @@ export default function FilterSpell() {
                     width: '50%',
                     alignSelf: 'center'
                 }}>
-                    
                     <Button onPress={applyFilter}>
-                    {totalFiltros > 0 ? `Aplicar (${totalFiltros})` : 'Sem filtros'}
+                        {totalFiltros > 0 ? `Aplicar (${totalFiltros})` : 'Sem filtros'}
                     </Button>
                     <Button onPress={() => router.back()}>Voltar</Button>
                     <Button onPress={clearFilters} status='danger'>Limpar</Button>
@@ -310,3 +286,16 @@ const styles = StyleSheet.create({
         gap: 10
     }
 });
+
+
+
+
+/*
+    const toggleItem = (item: string, list: string[], setList: (val: string[]) => void) => {
+        if (list.includes(item)) {
+            setList(list.filter(i => i !== item));
+        } else {
+            setList([...list, item]);
+        }
+    };
+    */
