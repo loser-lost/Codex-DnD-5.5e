@@ -58,15 +58,7 @@ export default function FilterSpell() {
 
     useEffect(() => {
         loadFiltersFromStorage();
-    }, []); // Certifique-se de que o array de dependências está vazio
-
-    const toggleItem = useCallback((item: string, list: string[], setList: (val: string[]) => void) => {
-        if (list.includes(item)) {
-            setList(list.filter(i => i !== item));
-        } else {
-            setList([...list, item]);
-        }
-    }, []);
+    }, []); 
 
     const applyFilter = async () => {
         await saveFiltersToStorage();
@@ -114,6 +106,50 @@ export default function FilterSpell() {
             console.error('Erro ao limpar filtros:', error);
         }
     };
+
+    const toggleCircle = useCallback((item: string) => {
+        setSelectCircle(prev =>
+            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+        );
+    }, []);
+
+    const toggleClass = useCallback((item: string) => {
+        setSelectedClasses(prev =>
+            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+        );
+    }, []);
+
+    const toggleSchool = useCallback((item: string) => {
+        setSchoolsSelected(prev =>
+            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+        );
+    }, []);
+
+    const toggleRange = useCallback((item: string) => {
+        setSelectedRange(prev =>
+            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+        );
+    }, []);
+
+    const toggleTempo = useCallback((item: string) => {
+        setSelectedTempo(prev =>
+            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+        );
+    }, []);
+
+    const FilterItem = React.memo(({ label, checked, onChange }: {
+        label: string;
+        checked: boolean;
+        onChange: () => void;
+        }) => (
+        <DrawerItem
+            title={() => (
+            <CheckBox checked={checked} onChange={onChange}>
+                {label}
+            </CheckBox>
+            )}
+        />
+    ));
 
     const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => (
         <FontAwesome5
@@ -175,7 +211,7 @@ export default function FilterSpell() {
                                 title={() => (
                                     <CheckBox
                                         checked={selectCircle.includes(e)}
-                                        onChange={() => toggleItem(e, selectCircle, setSelectCircle)}
+                                        onChange={() => toggleCircle(e)}
                                     >
                                         {e}
                                     </CheckBox>
@@ -194,7 +230,7 @@ export default function FilterSpell() {
                                 title={() => (
                                     <CheckBox
                                         checked={selectedClasses.includes(c)}
-                                        onChange={() => toggleItem(c, selectedClasses, setSelectedClasses)}
+                                        onChange={() => toggleClass(c)}
                                     >
                                         {c}
                                     </CheckBox>
@@ -213,7 +249,7 @@ export default function FilterSpell() {
                                 title={() => (
                                     <CheckBox
                                         checked={schoolsSelected.includes(e)}
-                                        onChange={() => toggleItem(e, schoolsSelected, setSchoolsSelected)}
+                                        onChange={() => toggleSchool(e)}
                                     >
                                         {e}
                                     </CheckBox>
@@ -232,7 +268,7 @@ export default function FilterSpell() {
                                 title={() => (
                                     <CheckBox
                                         checked={selectedRange.includes(e)}
-                                        onChange={() => toggleItem(e, selectedRange, setSelectedRange)}
+                                        onChange={() => toggleRange(e)}
                                     >
                                         {e}
                                     </CheckBox>
@@ -251,7 +287,7 @@ export default function FilterSpell() {
                                 title={() => (
                                     <CheckBox
                                         checked={selectedTempo.includes(e)}
-                                        onChange={() => toggleItem(e, selectedTempo, setSelectedTempo)}
+                                        onChange={() => toggleTempo(e)}
                                     >
                                         {e}
                                     </CheckBox>
@@ -259,8 +295,10 @@ export default function FilterSpell() {
                             />
                         ))}
                     </DrawerGroup>
+                    
                 </Drawer>
-
+                
+               
                 <Layout style={{
                     backgroundColor: theme['color-basic-1000'],
                     flexDirection: 'row',
