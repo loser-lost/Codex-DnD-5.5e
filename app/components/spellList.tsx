@@ -1,12 +1,7 @@
 import { Button, Divider, Input, Layout, List, ListItem, useTheme } from '@ui-kitten/components';
 import { Text, TitleText } from '@/components/StyledText';
-import { SectionList } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
 import { useRouter } from 'expo-router';
-import { StyleSheet } from 'react-native';
-
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
-import { magias } from '@/assets/json/magias.json';
 
 //Typing JSON
 interface Spell {
@@ -21,14 +16,12 @@ interface Spell {
   duracao: string;
   efeito: string;
 }
-
-export default function renderSpells() {
+/*
+const spellList = ({ item }: { item: Spell }) => {
     const router = useRouter();
     const theme = useTheme();
-    
- const renderItem = ({ item }: { item: Spell }) => {
-  return (
-    <ListItem
+return (
+      <ListItem
         onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}
         title={() => (
             <TitleText type={'h4'}>{item.nome}</TitleText>
@@ -45,36 +38,5 @@ export default function renderSpells() {
             </Text>
     )}  
     />
-  );
-}
-
-  return (
-  <>
-    <SectionList
-      sections={}
-      keyExtractor={(item) => item.magia_id}
-      renderItem={renderItem}
-      renderSectionHeader={({ section: { title, data}}) => (
-        <Layout style={styles.nivelBar}>
-          <Text>Nível: {title}</Text>
-          <Text>Total: {data.length}</Text>
-        </Layout>
-
-      )}
-  
-      />
-  </> 
-  );
-}
-const styles = StyleSheet.create({
- nivelBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    height: 40,
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: "black"
-  }
-});
+);
+}; export default spellList;*/

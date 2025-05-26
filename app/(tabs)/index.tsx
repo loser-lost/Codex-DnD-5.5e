@@ -134,32 +134,30 @@ useEffect(() => {
     }));
   const renderItem = ({ item }: { item: Spell }) => (
     <>
-      
-          <ListItem
-          onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}
-          title={() => (
-            
-              <TitleText type='h4'>{item.nome}</TitleText>
-            
-          )
-          }
-          description={() => (
-            <Fragment>
-              <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
-              <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>Tempo de Conjuracao: {item.tempo_de_conjuracao}</Text>
-              
-            </Fragment>
-          )
-          }
-          accessoryRight={() => (
-            <Text style={{ fontSize: 14 }}>
-              {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
-            </Text>
-          )
-          }
+        <ListItem
+        onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}
+        title={() => (
           
-        />
-      
+            <TitleText type='h4'>{item.nome}</TitleText>
+          
+        )
+        }
+        description={() => (
+          <Fragment>
+            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
+            <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>Tempo de Conjuracao: {item.tempo_de_conjuracao}</Text>
+            
+          </Fragment>
+        )
+        }
+        accessoryRight={() => (
+          <Text style={{ fontSize: 14 }}>
+            {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
+          </Text>
+        )
+        }
+        
+      />
     </>
     
   );
