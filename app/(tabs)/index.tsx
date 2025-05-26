@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import {  StyleSheet } from 'react-native';
 import { Button, Divider, Input, Layout, List, ListItem, useTheme } from '@ui-kitten/components';
 import { Text, TitleText } from '@/components/StyledText';
 import { SectionList } from 'react-native';
@@ -83,33 +83,33 @@ const handleSearchDebounced = useMemo(() => debounce((query: string) => {
   setFilteredData(filtered);
 }, 500), [spells]);
 
+const parsedParams = useMemo(() => {
+  return {
+    escolas: params?.escolas ? JSON.parse(params.escolas as string) : [],
+    classes: params?.classes ? JSON.parse(params.classes as string) : [],
+    range: params?.range ? JSON.parse(params.range as string) : [],
+    tempo: params?.tempo ? JSON.parse(params.tempo as string) : [],
+    circle: params?.circle ? JSON.parse(params.circle as string) : []
+  };
+}, [params?.escolas, params?.classes, params?.range, params?.tempo, params?.circle]);
 
-  useEffect(() => {
-    let base = magias;
+useEffect(() => {
+  let base = magias;
 
-    if (params?.escolas || params?.classes|| params?.range || params?.tempo || params?.circle) {
-      const escolas = params?.escolas ? JSON.parse(params.escolas as string) : [];
-      const classes = params?.classes ? JSON.parse(params.classes as string) : [];
-      const range = params?.range ? JSON.parse(params.range as string) : [];
-      const tempo = params?.tempo ? JSON.parse(params.tempo as string) : [];
-      const circle = params?.circle ? JSON.parse(params.circle as string) : [];
-/*
-      console.log('escolas', escolas);      
-      console.log('classes', classes);
-      console.log('tempo', tempo);
-      console.log('range', range);
-      console.log('circle', circle);
-   */   
-      base = magias.filter(magia =>
-        (escolas.length === 0 || escolas.includes(magia.escola)) &&
-        (classes.length === 0 || magia.classes.some(classe => classes.includes(classe)))&& 
-        (range.length === 0 || range.includes(magia.alcance))&&
-        (tempo.length === 0 || tempo.includes(magia.tempo_de_conjuracao))
-        && (circle.length === 0 || circle.includes(magia.circulo))
-      );
-    }
-    setSpells(base);
-  }, [params]);
+  const { escolas, classes, range, tempo, circle } = parsedParams;
+
+  if (escolas.length || classes.length || range.length || tempo.length || circle.length) {
+    base = magias.filter(magia =>
+      (escolas.length === 0 || escolas.includes(magia.escola)) &&
+      (classes.length === 0 || magia.classes.some(classe => classes.includes(classe))) &&
+      (range.length === 0 || range.includes(magia.alcance)) &&
+      (tempo.length === 0 || tempo.includes(magia.tempo_de_conjuracao)) &&
+      (circle.length === 0 || circle.includes(magia.circulo))
+    );
+  }
+
+  setSpells(base);
+}, [parsedParams]);
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -178,6 +178,7 @@ const handleSearchDebounced = useMemo(() => debounce((query: string) => {
           FILTRO
         </Button>
       </Layout>
+
       <SectionList
         sections={magiasEmSecoes}
         keyExtractor={(item) => item.magia_id}
@@ -190,9 +191,7 @@ const handleSearchDebounced = useMemo(() => debounce((query: string) => {
         )}
         ItemSeparatorComponent={Divider}
       />
-      
-
-      
+          
     </Layout>
   );
 }
