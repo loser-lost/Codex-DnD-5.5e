@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import {  StyleSheet } from 'react-native';
 import { Button, CheckBox, Layout, useTheme, Text } from '@ui-kitten/components';
 import { Stack, useRouter } from 'expo-router';
-import { Drawer, DrawerGroup, DrawerItem, IconElement } from '@ui-kitten/components';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Drawer, DrawerGroup, DrawerItem } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ImageProps } from 'react-native';
+import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon} from '@/utils/useIcons';
 
 const SCHOOLS = ['Abjuração', 'Evocação', 'Ilusão', 'Transmutação', 'Conjuração', 'Necromancia', 'Encantamento', 'Adivinhação'];
 const CLASS = ['Mago', 'Feiticeiro', 'Clérigo', 'Guardião', 'Bardo', 'Druida', 'Bruxo'];
@@ -13,9 +12,8 @@ const RANGE = ['Pessoal', 'Toque', '3 metros', '4,5 metros', '9 metros', '18 met
 const TEMPO = ['Ação', 'Ação ou Ritual', 'Ação Bônus', '1 minuto ou Ritual', '10 minutos', '1 minuto', '1 hora', '8 horas', '24 horas', 'Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma'];
 const CIRCLES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-const FILTER_STORAGE_KEY = 'spellFilterSelections';
-
 export default function FilterSpell() {
+
     const router = useRouter();
     const theme = useTheme();
 
@@ -25,6 +23,7 @@ export default function FilterSpell() {
     const [selectedRange, setSelectedRange] = useState<string[]>([]);
     const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
 
+    const FILTER_STORAGE_KEY = 'spellFilterSelections';
     const saveFiltersToStorage = useCallback(async () => {
         const data = {
             selectCircle,
@@ -62,7 +61,6 @@ export default function FilterSpell() {
 
     const applyFilter = async () => {
         await saveFiltersToStorage();
-
         if (
             schoolsSelected.length === 0 &&
             selectedClasses.length === 0 &&
@@ -137,73 +135,15 @@ export default function FilterSpell() {
         );
     }, []);
 
-    const FilterItem = React.memo(({ label, checked, onChange }: {
-        label: string;
-        checked: boolean;
-        onChange: () => void;
-        }) => (
-        <DrawerItem
-            title={() => (
-            <CheckBox checked={checked} onChange={onChange}>
-                {label}
-            </CheckBox>
-            )}
-        />
-    ));
-
-    const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => (
-        <FontAwesome5
-            {...props}
-            name='magic'
-            size={18}
-            color={theme['color-primary-500']}
-        />
-    );
-
-    const schoolIcon = (props?: Partial<ImageProps>): IconElement => (
-        <FontAwesome5
-            {...props}
-            name='school'
-            size={18}
-            color={theme['color-primary-500']}
-        />
-    );
-
-    const rangeIcon = (props?: Partial<ImageProps>): IconElement => (
-        <FontAwesome5
-            {...props}
-            name="ruler"
-            size={18}
-            color={theme['color-primary-500']}
-        />
-    );
-
-    const tempoIcon = (props?: Partial<ImageProps>): IconElement => (
-        <FontAwesome5
-            {...props}
-            name="clock"
-            size={18}
-            color={theme['color-primary-500']}
-        />
-    );
-
-    const circuloIcon = (props?: Partial<ImageProps>): IconElement => (
-        <FontAwesome5
-            {...props}
-            name="sith"
-            size={18}
-            color={theme['color-primary-500']}
-        />
-    );
-
     return (
         <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
             <Stack.Screen options={{ headerShown: false }} />
             <Layout style={styles.container}>
+                <Layout>
                 <Drawer>
                     <DrawerGroup 
                     title={`Círculo (${selectCircle.length})`}
-                    accessoryLeft={circuloIcon}
+                    accessoryLeft={CirculoIcon}
                     >
                         {CIRCLES.map((e, index) => (
                             <DrawerItem
@@ -241,7 +181,7 @@ export default function FilterSpell() {
 
                     <DrawerGroup 
                     title={`Escola (${schoolsSelected.length})`}
-                    accessoryLeft={schoolIcon}
+                    accessoryLeft={SchoolIcon}
                     >
                         {SCHOOLS.map((e, index) => (
                             <DrawerItem
@@ -260,7 +200,7 @@ export default function FilterSpell() {
 
                     <DrawerGroup 
                     title={`Alcance (${selectedRange.length})`}
-                    accessoryLeft={rangeIcon}
+                    accessoryLeft={RangeIcon}
                     >
                         {RANGE.map((e, index) => (
                             <DrawerItem
@@ -279,7 +219,7 @@ export default function FilterSpell() {
 
                     <DrawerGroup 
                     title={`Tempo de Conjuração (${selectedTempo.length})`}
-                    accessoryLeft={tempoIcon}
+                    accessoryLeft={TempoIcon}
                     >
                         {TEMPO.map((e, index) => (
                             <DrawerItem
@@ -297,8 +237,7 @@ export default function FilterSpell() {
                     </DrawerGroup>
                     
                 </Drawer>
-                
-               
+                </Layout>
                 <Layout style={{
                     backgroundColor: theme['color-basic-1000'],
                     flexDirection: 'row',
@@ -316,24 +255,9 @@ export default function FilterSpell() {
             </Layout>
         </Layout>
     );
-}
-
-const styles = StyleSheet.create({
+}const styles = StyleSheet.create({
     container: {
         padding: 20,
         gap: 10
     }
 });
-
-
-
-
-/*
-    const toggleItem = (item: string, list: string[], setList: (val: string[]) => void) => {
-        if (list.includes(item)) {
-            setList(list.filter(i => i !== item));
-        } else {
-            setList([...list, item]);
-        }
-    };
-    */
