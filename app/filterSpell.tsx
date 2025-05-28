@@ -5,7 +5,8 @@ import { Stack, useRouter } from 'expo-router';
 import { Drawer, DrawerGroup, DrawerItem } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon} from '@/utils/useIcons';
-
+import {  AppliFilterButton, ClearFiltersButton} from '@/utils/checkBox';
+import BackButton from '@/utils/checkBox';
 const SCHOOLS = ['Abjuração', 'Evocação', 'Ilusão', 'Transmutação', 'Conjuração', 'Necromancia', 'Encantamento', 'Adivinhação'];
 const CLASS = ['Mago', 'Feiticeiro', 'Clérigo', 'Guardião', 'Bardo', 'Druida', 'Bruxo'];
 const RANGE = ['Pessoal', 'Toque', '3 metros', '4,5 metros', '9 metros', '18 metros', '27 metros', '36 metros', '45 metros', '90 metros', "1,5 km", "800 quilômetros", "Ilimitado", "Especial"];
@@ -246,11 +247,9 @@ export default function FilterSpell() {
                     width: '50%',
                     alignSelf: 'center'
                 }}>
-                    <Button onPress={applyFilter}>
-                        {totalFiltros > 0 ? `Aplicar (${totalFiltros})` : 'Sem filtros'}
-                    </Button>
-                    <Button onPress={() => router.back()}>Voltar</Button>
-                    <Button onPress={clearFilters} status='danger'>Limpar</Button>
+                    <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
+                    <ClearFiltersButton clearFilters={clearFilters} />
+                    <BackButton onBack={() => router.back()} />
                 </Layout>
             </Layout>
         </Layout>
