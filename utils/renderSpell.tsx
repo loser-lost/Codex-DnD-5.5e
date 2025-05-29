@@ -1,9 +1,8 @@
 import { ListItem, Text, useTheme, Layout } from "@ui-kitten/components";
 import { useRouter } from "expo-router";
-import { Fragment, useCallback } from "react";
+import { Fragment } from "react";
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
-
 
 import React from "react";
 

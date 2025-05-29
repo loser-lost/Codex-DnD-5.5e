@@ -1,36 +1,22 @@
 'use client';
 import React from "react";
 import { useRouter, useLocalSearchParams, Stack } from "expo-router";
-import { useTheme, Text, Layout, Icon, Button } from "@ui-kitten/components";
+import { useTheme, Text, Layout, Icon } from "@ui-kitten/components";
 import magias from '@/assets/json/magias.json'; 
 import { ScrollView, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
+import {Spell} from '../utils/groupMagic'; 
 
-interface Spell {
-  magia_id: string;
-  nome: string;
-  circulo: string;
-  escola: string;
-  classes: string[];
-  tempo_de_conjuracao: string;
-  alcance: string;
-  componentes: string[];
-  duracao: string;
-  efeito: string;
-}
-
-const SpellDetails:React.FC = () => {
+const SpellDetails = () => {
     const router = useRouter();
     const theme = useTheme();
     const {magia_id} = useLocalSearchParams();
+
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
     
-    const backIcon = (props: any) => (
-        <Icon {...props} name="arrow-back" />
-        //<AntDesign name="back" size={24} color="black" />
-    );
+ 
 
     if (!item) {
     return (

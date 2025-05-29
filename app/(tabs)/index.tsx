@@ -1,6 +1,5 @@
 import React, {  useCallback, useEffect, useMemo, useState } from 'react';
 
-
 import { SectionList } from 'react-native';
 
 import {  StyleSheet } from 'react-native';
@@ -91,10 +90,13 @@ export default function SpellsScreen() {
       <RenderSpell item={item} />
     ), []);
    
+    const handleOpenFilter = useMemo(() => debounce(() => {
+      router.push('/filterSpell');
+    }, 150), []);
 
     return (
       <Layout style={styles.container}>
-        <SeachBar value={searchQuery} onChangeText={handleSearch}/>
+        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter}/>
 
         <SectionList
           sections={magiasEmSecoes}

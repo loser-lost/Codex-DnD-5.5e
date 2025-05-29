@@ -13,17 +13,20 @@ import DrawerFilter from '../utils/drawerFilter'
 
 
 export default function FilterSpell() {
-
     const router = useRouter();
     const theme = useTheme();
-
     const [selectCircle, setSelectCircle] = useState<string[]>([]);
     const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     const [selectedRange, setSelectedRange] = useState<string[]>([]);
     const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
-
     const FILTER_STORAGE_KEY = 'spellFilterSelections';
+
+    
+    useEffect(() => {
+        loadFiltersFromStorage();
+    }, []); 
+
     const saveFiltersToStorage = useCallback(async () => {
         const data = {
             selectCircle,
@@ -54,11 +57,6 @@ export default function FilterSpell() {
             console.error('Erro ao carregar filtros:', error);
         }
     };
-
-    useEffect(() => {
-        loadFiltersFromStorage();
-    }, []); 
-
     const applyFilter = async () => {
         await saveFiltersToStorage();
         if (
@@ -99,7 +97,7 @@ export default function FilterSpell() {
             setSelectedRange([]);
             setSelectedTempo([]);
             await AsyncStorage.removeItem(FILTER_STORAGE_KEY);
-            router.push('/');
+            //router.push('/');
         } catch (error) {
             console.error('Erro ao limpar filtros:', error);
         }
@@ -138,8 +136,7 @@ export default function FilterSpell() {
     return (
         <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
             <Stack.Screen options={{ headerShown: false }} />
-            <Layout style={styles.container}>
-                <Layout>
+            <Layout style={styles.container}> 
                 <DrawerFilter
                     selectCircle={selectCircle}
                     selectedClasses={selectedClasses}
@@ -157,25 +154,31 @@ export default function FilterSpell() {
                     RangeIcon={RangeIcon}
                     TempoIcon={TempoIcon}                    
                 />
-                </Layout>
-                <Layout style={{
-                    backgroundColor: theme['color-basic-1000'],
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 20,
-                    width: '50%',
-                    alignSelf: 'center'
-                }}>
+            </Layout>
+            <Layout style={styles.buttons}>
                     <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
                     <ClearFiltersButton clearFilters={clearFilters} />
-                    <BackButton onBack={() => router.back()} />
-                </Layout>
+                    
             </Layout>
         </Layout>
     );
 }const styles = StyleSheet.create({
     container: {
-        padding: 20,
-        gap: 10
+        flex: 1,
+        padding: 1,
+        marginTop: 5,
+        borderRadius: 5,
+        marginHorizontal: 5,
+    },
+    buttons:{
+        
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 5,
+        marginBottom: 5,
+        paddingHorizontal: 5,
+        padding: 15,
+        borderRadius: 5,
+        marginHorizontal: 5,
     }
 });

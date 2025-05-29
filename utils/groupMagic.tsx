@@ -1,5 +1,4 @@
-import {useState, useMemo} from 'react';
-import { magias } from '@/assets/json/magias.json';
+
 
 //Typing JSON
 export interface Spell {
