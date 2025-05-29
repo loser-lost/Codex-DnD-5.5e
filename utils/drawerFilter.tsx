@@ -1,7 +1,7 @@
-import react from 'react';
+
 import { ReactElement } from 'react';
 import {Drawer, DrawerGroup, DrawerItem, CheckBox, IconProps,  Layout, useTheme  } from '@ui-kitten/components';
-import { RenderProp } from '@ui-kitten/components/devsupport';
+
 
 const SCHOOLS = ['Abjuração', 'Evocação', 'Ilusão', 'Transmutação', 'Conjuração', 'Necromancia', 'Encantamento', 'Adivinhação'];
 const CLASS = ['Mago', 'Feiticeiro', 'Clérigo', 'Guardião', 'Bardo', 'Druida', 'Bruxo'];

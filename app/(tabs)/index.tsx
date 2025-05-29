@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import React, {  useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Text, TitleText } from '@/components/StyledText';
+
 import { SectionList } from 'react-native';
 
 import {  StyleSheet } from 'react-native';
-import {  Divider, Layout, ListItem, useTheme } from '@ui-kitten/components';
+import {  Divider, Layout,  useTheme } from '@ui-kitten/components';
 
 import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
@@ -13,6 +13,8 @@ import { magias } from '@/assets/json/magias.json';
 import SeachBar from '../components/SeachBar';
 import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
+import RenderSpell from '../../utils/renderSpell';
+import {RenderSectionHeader} from '../../utils/renderSpell';
 
 
 export default function SpellsScreen() {
@@ -79,36 +81,16 @@ export default function SpellsScreen() {
       return groupSortSpells(base);
     }, [searchQuery, filteredData, spells]);
 
-
     // teste
     const magiasEmSecoes = Object.entries(magiasAgrupadas).map(([circulo, data]) => ({
       title: circulo,
       data,
     }));
 
-    const renderItem = ({ item }: { item: Spell }) => (
-      <>
-        <ListItem
-        onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}
-        title={() => (
-        <TitleText type='h4'>
-          {item.nome}
-        </TitleText>
-        )}
-        description={() => (
-          <Fragment>
-            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
-            <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>Tempo de Conjuracao: {item.tempo_de_conjuracao}</Text>
-          </Fragment>
-        )}
-        accessoryRight={() => (
-          <Text style={{ fontSize: 14 }}>
-            {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
-          </Text>
-        )}
-        />
-      </>   
-    );
+    const renderItem = useCallback(({ item }: { item: Spell }) => (
+      <RenderSpell item={item} />
+    ), []);
+   
 
     return (
       <Layout style={styles.container}>
@@ -116,15 +98,13 @@ export default function SpellsScreen() {
 
         <SectionList
           sections={magiasEmSecoes}
-          keyExtractor={(item) => item.magia_id}
+          keyExtractor={(item) => String(item.magia_id)}
           renderItem={renderItem}
-          renderSectionHeader={({ section: { title, data } }) => (
-            <Layout style={styles.nivelBar}>
-              <Text>Nível: {title}</Text>
-              <Text>Total: {data.length}</Text>
-            </Layout>
-          )}
+          renderSectionHeader={({ section }) => (<RenderSectionHeader title={section.title} data={section.data} />)}
           ItemSeparatorComponent={Divider}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
+          windowSize={5}
         />  
       </Layout>
     );
