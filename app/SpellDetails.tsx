@@ -7,6 +7,8 @@ import { ScrollView, StyleSheet } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 import {Spell} from '../utils/groupMagic'; 
+import {NotFound} from '../utils/notFound';
+import {BackIcon } from '../utils/useIcons';
 
 const SpellDetails = () => {
     const router = useRouter();
@@ -16,13 +18,11 @@ const SpellDetails = () => {
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
     
- 
+ //back incon não funciona atuamente
 
     if (!item) {
     return (
-      <Layout style={[styles.container, { backgroundColor: theme['color-basic-1000'] }]}>
-        <Text>Item não encontrado.</Text>
-      </Layout>
+        <NotFound />
     );
     }
     return (
@@ -30,7 +30,7 @@ const SpellDetails = () => {
     <Stack.Screen options={{ headerShown: false }} />
         
         <Layout style={styles.header}>
-            <AntDesign name="back" size={24} color={theme['color-basic-500']} onPress={() => router.back()} />
+            <BackIcon />
         </Layout>  
         <ScrollView >   
         <Layout style={styles.content}>

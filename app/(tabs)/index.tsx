@@ -92,7 +92,7 @@ export default function SpellsScreen() {
    
     const handleOpenFilter = useMemo(() => debounce(() => {
       router.push('/filterSpell');
-    }, 150), []);
+    }, 300), []);
 
     return (
       <Layout style={styles.container}>

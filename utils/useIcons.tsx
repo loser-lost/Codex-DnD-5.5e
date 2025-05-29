@@ -1,8 +1,19 @@
+
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { IconElement, useTheme } from "@ui-kitten/components";
-import { ImageProps } from 'react-native';
-    
+import { router, useRouter } from "expo-router";
+import { useMemo } from "react";
+import { ImageProps, TextStyle } from 'react-native';
+import AntDesign from "@expo/vector-icons/AntDesign";
 
+
+const debounce = (func: (...args: string[]) => void, wait: number) => {
+      let timeout: number;
+      return (...args: string[]) => {
+        clearTimeout(timeout);
+        timeout = window.setTimeout(() => func(...args), wait);
+      };
+};
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
         const theme = useTheme(); 
@@ -64,3 +75,18 @@ import { ImageProps } from 'react-native';
         />
     );
     };
+
+    export const BackIcon = (props?: Partial<TextStyle>): IconElement => {
+    const theme = useTheme();
+    const router = useRouter();
+
+    return (
+        <AntDesign
+            name="back"
+            size={24}
+            color={theme['color-basic-500']}
+            onPress={() => debounce(() => router.back(), 300)}
+            style={props}
+        />
+    );
+};
