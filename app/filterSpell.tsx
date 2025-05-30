@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {  StyleSheet } from 'react-native';
 import {  Layout, useTheme } from '@ui-kitten/components';
@@ -7,7 +7,7 @@ import { TitleText } from "@/components/StyledText";
 import { Stack, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon} from '../utils/useIcons';
+import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon, StarIcon, BackIcon} from '../utils/useIcons';
 import {  AppliFilterButton, ClearFiltersButton} from '../utils/buttons';
 import BackButton from '../utils/buttons';
 import DrawerFilter from '../utils/drawerFilter'
@@ -133,14 +133,22 @@ export default function FilterSpell() {
             prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
         );
     }, []);
-
+      const debounce = (func: (...args: string[]) => void, wait: number) => {
+            let timeout: number;
+            return (...args: string[]) => {
+                clearTimeout(timeout);
+                timeout = window.setTimeout(() => func(...args), wait);
+            };
+        };
+        const BackFunction = useMemo(() => debounce(() => {
+            router.back();
+        }, 300), []);
     return (
         <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
             <Stack.Screen options={{ headerShown: false }} />
             <Layout style={styles.header}>
-                <TitleText type='h4' style={styles.Text}>
-                    Escolha os filtros:
-                </TitleText>
+                <BackIcon onBackPress={BackFunction} />
+                <StarIcon />
             </Layout>
             <Layout style={styles.container}> 
                 <DrawerFilter
@@ -194,8 +202,12 @@ export default function FilterSpell() {
         marginRight: 5,
         borderRadius: 5,
         flexDirection: 'row', 
+        justifyContent: 'space-between',
+        
+       
+        
     },
     Text:{
         marginLeft: 5
-    }
+    },
 });

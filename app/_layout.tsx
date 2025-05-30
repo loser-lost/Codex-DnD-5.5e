@@ -60,9 +60,9 @@ function RootLayoutNav() {
   return (
     <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="SpellDetails" options={{ presentation: 'modal'}} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false,animation: 'fade_from_bottom' }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal' ,animation: 'fade_from_bottom', }} />
+        <Stack.Screen name="SpellDetails" options={{ presentation: 'modal', animation: 'fade_from_bottom', }} />
       </Stack>
     </ApplicationProvider>
   );

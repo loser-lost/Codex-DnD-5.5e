@@ -91,7 +91,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
     return (
         <AntDesign
             name="back"
-            size={24}
+            size={26}
             color={theme['color-basic-500']}
             onPress={onBackPress}
         />
@@ -103,7 +103,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         return(
             <MaterialCommunityIcons 
             name="star-four-points" 
-            size={24}
+            size={26}
             color={theme['color-primary-500']}
             />
         );
@@ -116,7 +116,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         return (
             <AntDesign
                 name="pluscircleo"
-                size={23}
+                size={26}
                 color={theme['color-basic-500']}
                 onPress={addOnCharacter}
             />
@@ -128,7 +128,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         return (
             <FontAwesome 
                 name="font"
-                size={24}
+                size={26}
                 color={theme['color-basic-500']}
                 onPress={fontModify}
             />

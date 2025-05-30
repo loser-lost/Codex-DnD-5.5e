@@ -27,7 +27,7 @@ const SpellDetails = () => {
             clearTimeout(timeout);
             timeout = window.setTimeout(() => func(...args), wait);
         };
-    };
+    }; 
     const BackFunction = useMemo(() => debounce(() => {
         router.back();
     }, 300), []);
@@ -35,7 +35,7 @@ const SpellDetails = () => {
     const addOnCharacter = () => {
         alert('Adicionar ao personagem');
     }
-    
+    //headerIconsLeft
     const fontModify = () => {
        setFontSize(prev => (prev < 18 ? prev + 2 : 14)); // loop entre 14 e 24
     }
@@ -54,10 +54,8 @@ const SpellDetails = () => {
             <Layout style={styles.headerIcons}>
                 <BackIcon onBackPress={BackFunction} />
                 <StarIcon />
-                <Layout style={styles.headerIconsLeft}>
-                    <AlterFont fontModify={fontModify} />
-                    <AddIcon addOnCharacter={addOnCharacter} />
-                </Layout>
+                <AlterFont fontModify={fontModify} />
+             
             </Layout>
         </Layout>  
          
@@ -69,6 +67,7 @@ const SpellDetails = () => {
     </Layout>
     <Layout style={styles.headerIcons}>
         <Text>{item.magia_id}</Text>
+        <AddIcon addOnCharacter={addOnCharacter} />
     </Layout>
     </>
     );
@@ -98,11 +97,13 @@ const styles = StyleSheet.create({
   headerIcons: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    padding: 5
   },
   headerIconsLeft: {
     width: '15%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+        
   }
 });

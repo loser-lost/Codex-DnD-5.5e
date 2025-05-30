@@ -25,19 +25,19 @@ export default function Description({item,fontSize}: descriptionProps) {
                         : item.classes.length === 1
                             ? item.classes[0]
                             : ''
-                    }
+                    }.
                 </Text>
                 <Text style={{ fontSize: fontSize + 1 }}>Escola da magia: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-500'] }}>
-                    {item.escola}
+                    {item.escola}.
                 </Text>
                 <Text style={{ fontSize: fontSize + 1 }}>Duração da magia: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-500'] }}>
-                    {item.duracao}
+                    {item.duracao}.
                 </Text>
                 <Text style={{ fontSize: fontSize + 1 }}>Tempo de Conutração da magia </Text>
                 <Text style={{ fontSize, color: theme['color-basic-500'] }}>
-                    {item.tempo_de_conjuracao}
+                    {item.tempo_de_conjuracao}.
                 </Text>
                 <Text style={{ fontSize: fontSize + 1 }}>Componentes da magia: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-500'] }}>
@@ -46,11 +46,11 @@ export default function Description({item,fontSize}: descriptionProps) {
                         : item.componentes.length === 1
                             ? item.componentes[0]
                             : ''
-                    }
+                    }.
                 </Text>
                 <Text style={{ fontSize: fontSize + 1 }}>Alcance da magia: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-500'] }}>
-                    {item.alcance}
+                    {item.alcance}.
                 </Text>
                 <Text style={{ fontSize: fontSize + 1 }}>Efeito: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-500'], textAlign: 'justify' }}>
