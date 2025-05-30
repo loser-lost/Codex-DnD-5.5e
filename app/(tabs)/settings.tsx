@@ -1,14 +1,21 @@
 import { Text, TitleText } from "@/components/StyledText";
-import { Layout } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
+import { Button, Layout } from '@ui-kitten/components';
+import React from "react";
+
+
+
+  
 
 
 export default function MonsterScreen() {
+  
 
   return (
     <Layout style={styles.container}>
       <TitleText type='h2'>Configurações</TitleText>
       <Text>Tela em desenvolvimento...</Text>
+      
     </Layout>
   );
 }

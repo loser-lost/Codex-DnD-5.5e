@@ -15,6 +15,7 @@ import { ApplicationProvider } from '@ui-kitten/components';
 //* Assets Imports
 import { default as theme } from "../assets/theme/custom-theme.json";
 
+
 //* Third Party Imports
 import { AveriaSerifLibre_400Regular, AveriaSerifLibre_700Bold, useFonts } from '@expo-google-fonts/averia-serif-libre';
 import 'react-native-reanimated';

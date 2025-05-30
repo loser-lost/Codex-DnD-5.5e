@@ -9,7 +9,7 @@ import {  StyleSheet, ScrollView } from 'react-native';
 import {Spell} from '../utils/groupMagic'; 
 import {NotFound} from '../utils/notFound';
 import {BackIcon, StarIcon, AddIcon, AlterFont } from '../utils/useIcons';
-import DescriptionDescription from '../utils/description';
+import Description from '../utils/description';
 
 
 const SpellDetails = () => {
@@ -19,7 +19,7 @@ const SpellDetails = () => {
 
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
-    
+    const [fontSize, setFontSize] = React.useState(14);
 
     const debounce = (func: (...args: string[]) => void, wait: number) => {
         let timeout: number;
@@ -37,7 +37,7 @@ const SpellDetails = () => {
     }
     
     const fontModify = () => {
-        alert('Alterar fonte');
+       setFontSize(prev => (prev < 18 ? prev + 2 : 14)); // loop entre 14 e 24
     }
 
     if (!item) {
@@ -63,7 +63,7 @@ const SpellDetails = () => {
          
         <Layout style={styles.content}>
             <ScrollView>
-                <DescriptionDescription item={item} />
+                <Description item={item} fontSize={fontSize} />
             </ScrollView>
         </Layout>         
     </Layout>
