@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import {  StyleSheet } from 'react-native';
 import {  Layout, useTheme } from '@ui-kitten/components';
+import { TitleText } from "@/components/StyledText";
 
 import { Stack, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -136,6 +137,11 @@ export default function FilterSpell() {
     return (
         <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
             <Stack.Screen options={{ headerShown: false }} />
+            <Layout style={styles.header}>
+                <TitleText type='h4' style={styles.Text}>
+                    Escolha os filtros:
+                </TitleText>
+            </Layout>
             <Layout style={styles.container}> 
                 <DrawerFilter
                     selectCircle={selectCircle}
@@ -171,7 +177,6 @@ export default function FilterSpell() {
         marginHorizontal: 5,
     },
     buttons:{
-        
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         marginTop: 5,
@@ -180,5 +185,17 @@ export default function FilterSpell() {
         padding: 15,
         borderRadius: 5,
         marginHorizontal: 5,
+    },
+    header: {
+        padding: 10,
+        display: 'flex',
+        marginTop: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        borderRadius: 5,
+        flexDirection: 'row', 
+    },
+    Text:{
+        marginLeft: 5
     }
 });

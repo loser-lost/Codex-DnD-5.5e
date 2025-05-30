@@ -5,15 +5,24 @@ import { router, useRouter } from "expo-router";
 import { useMemo } from "react";
 import { ImageProps, TextStyle } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 
-const debounce = (func: (...args: string[]) => void, wait: number) => {
-      let timeout: number;
-      return (...args: string[]) => {
-        clearTimeout(timeout);
-        timeout = window.setTimeout(() => func(...args), wait);
-      };
-};
+    type BackIconProps = {
+        onBackPress: () => void;
+        style?: Partial<TextStyle>;
+    };
+
+    type addIconProps = {
+        addOnCharacter: () => void;
+        style?: Partial<TextStyle>;
+    };
+
+    type fontIconProps = {
+        fontModify: () => void;
+        style?: Partial<TextStyle>;
+    };
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
         const theme = useTheme(); 
@@ -76,17 +85,52 @@ const debounce = (func: (...args: string[]) => void, wait: number) => {
     );
     };
 
-    export const BackIcon = (props?: Partial<TextStyle>): IconElement => {
+    export const BackIcon = ({ onBackPress, style }: BackIconProps): JSX.Element => {
     const theme = useTheme();
-    const router = useRouter();
-
+   
     return (
         <AntDesign
             name="back"
             size={24}
             color={theme['color-basic-500']}
-            onPress={() => debounce(() => router.back(), 300)}
-            style={props}
+            onPress={onBackPress}
         />
     );
-};
+    };
+
+    export const StarIcon = (props?: Partial<ImageProps> ): IconElement =>{
+         const theme = useTheme();
+        return(
+            <MaterialCommunityIcons 
+            name="star-four-points" 
+            size={24}
+            color={theme['color-primary-500']}
+            />
+        );
+        
+    };
+    
+    export const AddIcon = ({ addOnCharacter, style }: addIconProps): JSX.Element => {
+        const theme = useTheme();
+    
+        return (
+            <AntDesign
+                name="pluscircleo"
+                size={23}
+                color={theme['color-basic-500']}
+                onPress={addOnCharacter}
+            />
+        );
+    };
+      export const AlterFont = ({ fontModify, style }: fontIconProps): JSX.Element => {
+        const theme = useTheme();
+    
+        return (
+            <FontAwesome 
+                name="font"
+                size={24}
+                color={theme['color-basic-500']}
+                onPress={fontModify}
+            />
+        );
+    };

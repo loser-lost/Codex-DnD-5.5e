@@ -1,14 +1,16 @@
 'use client';
-import React from "react";
+import React, {  useMemo } from "react";
+
 import { useRouter, useLocalSearchParams, Stack } from "expo-router";
-import { useTheme, Text, Layout, Icon } from "@ui-kitten/components";
+import { useTheme, Text, Layout } from "@ui-kitten/components";
 import magias from '@/assets/json/magias.json'; 
-import { ScrollView, StyleSheet } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import {  StyleSheet, ScrollView } from 'react-native';
 
 import {Spell} from '../utils/groupMagic'; 
 import {NotFound} from '../utils/notFound';
-import {BackIcon } from '../utils/useIcons';
+import {BackIcon, StarIcon, AddIcon, AlterFont } from '../utils/useIcons';
+import DescriptionDescription from '../utils/description';
+
 
 const SpellDetails = () => {
     const router = useRouter();
@@ -18,7 +20,25 @@ const SpellDetails = () => {
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
     
- //back incon não funciona atuamente
+
+    const debounce = (func: (...args: string[]) => void, wait: number) => {
+        let timeout: number;
+        return (...args: string[]) => {
+            clearTimeout(timeout);
+            timeout = window.setTimeout(() => func(...args), wait);
+        };
+    };
+    const BackFunction = useMemo(() => debounce(() => {
+        router.back();
+    }, 300), []);
+
+    const addOnCharacter = () => {
+        alert('Adicionar ao personagem');
+    }
+    
+    const fontModify = () => {
+        alert('Alterar fonte');
+    }
 
     if (!item) {
     return (
@@ -26,57 +46,31 @@ const SpellDetails = () => {
     );
     }
     return (
+        <>
     <Layout style={[styles.container, { backgroundColor: theme['color-basic-1000'] }]}>
     <Stack.Screen options={{ headerShown: false }} />
         
         <Layout style={styles.header}>
-            <BackIcon />
+            <Layout style={styles.headerIcons}>
+                <BackIcon onBackPress={BackFunction} />
+                <StarIcon />
+                <Layout style={styles.headerIconsLeft}>
+                    <AlterFont fontModify={fontModify} />
+                    <AddIcon addOnCharacter={addOnCharacter} />
+                </Layout>
+            </Layout>
         </Layout>  
-        <ScrollView >   
+         
         <Layout style={styles.content}>
-             
-            <Text category="h4">
-                {item.nome}
-            </Text>
-            <Text>Circulo de magia: </Text>
-            <Text style={{ fontSize: 14, color: theme['color-basic-500'], marginTop: 2}}>
-                {item.circulo}
-            </Text>
-            <Text>Classe Da magia </Text>
-            <Text style={{ fontSize: 14, color: theme['color-basic-500'] }}>
-                {item.classes}
-            </Text>
-            <Text>Escola da magia: </Text>
-            <Text style={{ fontSize: 14, color: theme['color-basic-500'] }}>
-                {item.escola}
-            </Text>
-            <Text>Duração da magia: </Text>
-            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>
-                {item.duracao}
-            </Text>
-            <Text>Tempo de Conutração da magia </Text>
-            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>
-                {item.tempo_de_conjuracao}
-            </Text>
-            <Text>Componentes da magia: </Text>
-            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>
-                {item.componentes}
-            </Text>
-            <Text>Alcance da magia: </Text>
-            <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>
-                {item.alcance}
-            </Text>
-            <Text>Efeito: </Text>
-            <Text style={{ fontSize: 14, color: theme['color-basic-500'], textAlign: 'justify' }}>
-                
-                {item.efeito}
-            </Text>
-            
-        </Layout> 
-        </ScrollView>
-        
+            <ScrollView>
+                <DescriptionDescription item={item} />
+            </ScrollView>
+        </Layout>         
     </Layout>
-
+    <Layout style={styles.headerIcons}>
+        <Text>{item.magia_id}</Text>
+    </Layout>
+    </>
     );
 };
 
@@ -85,7 +79,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
-  
   },
    header: {
     flexDirection: 'row',
@@ -93,10 +86,23 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 8,
     display: 'flex',
-  },
+    borderRadius: 10
+},
   content: {
     flex: 1,
     padding: 35,  
-    width: '100%'
+    width: '100%',
+    marginTop: 5,
+    borderRadius: 10
   },
+  headerIcons: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  headerIconsLeft: {
+    width: '15%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
 });

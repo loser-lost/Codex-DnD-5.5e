@@ -16,6 +16,8 @@ import RenderSpell from '../../utils/renderSpell';
 import {RenderSectionHeader} from '../../utils/renderSpell';
 
 
+
+
 export default function SpellsScreen() {
     const theme = useTheme();
     const [searchQuery, setSearchQuery] = useState<string>('');
