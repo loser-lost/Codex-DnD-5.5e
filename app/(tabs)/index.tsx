@@ -16,8 +16,6 @@ import RenderSpell from '../../utils/renderSpell';
 import {RenderSectionHeader} from '../../utils/renderSpell';
 
 
-
-
 export default function SpellsScreen() {
     const theme = useTheme();
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -25,6 +23,7 @@ export default function SpellsScreen() {
     const [spells, setSpells] = useState<Spell[]>(magias);
     const params = useLocalSearchParams();
     const router = useRouter();
+    const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
 
     const debounce = (func: (...args: string[]) => void, wait: number) => {
       let timeout: number;
@@ -82,15 +81,18 @@ export default function SpellsScreen() {
       return groupSortSpells(base);
     }, [searchQuery, filteredData, spells]);
 
-    // teste
-    const magiasEmSecoes = Object.entries(magiasAgrupadas).map(([circulo, data]) => ({
-      title: circulo,
-      data,
-    }));
+    const spellInSections = useMemo(()=>{
+      return Object.entries(magiasAgrupadas).map(([circulo, data]) => ({
+          title: circulo,
+          data,
+      }));
+    }, [magiasAgrupadas]);
 
     const renderItem = useCallback(({ item }: { item: Spell }) => (
       <RenderSpell item={item} />
     ), []);
+
+    
    
     const handleOpenFilter = useMemo(() => debounce(() => {
       router.push('/filterSpell');
@@ -101,8 +103,8 @@ export default function SpellsScreen() {
         <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter}/>
 
         <SectionList
-          sections={magiasEmSecoes}
-          keyExtractor={(item) => String(item.magia_id)}
+          sections={spellInSections}
+          keyExtractor={keyExtractor}
           renderItem={renderItem}
           renderSectionHeader={({ section }) => (<RenderSectionHeader title={section.title} data={section.data} />)}
           ItemSeparatorComponent={Divider}

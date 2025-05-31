@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {  StyleSheet } from 'react-native';
-import {  Layout, useTheme } from '@ui-kitten/components';
+import {  Layout, useTheme, Text } from '@ui-kitten/components';
 import { TitleText } from "@/components/StyledText";
 
 import { Stack, useRouter } from 'expo-router';
@@ -147,10 +147,14 @@ export default function FilterSpell() {
         <Layout style={{ flex: 1, backgroundColor: theme['color-basic-1000'] }}>
             <Stack.Screen options={{ headerShown: false }} />
             <Layout style={styles.header}>
-                <BackIcon onBackPress={BackFunction} />
-                <StarIcon />
+                <Layout style={styles.headerIcons}>
+                    <BackIcon onBackPress={BackFunction} />                
+                    <StarIcon />
+                </Layout>
             </Layout>
+            
             <Layout style={styles.container}> 
+                <Text style={styles.Text}>Selecione os filtros:</Text>
                 <DrawerFilter
                     selectCircle={selectCircle}
                     selectedClasses={selectedClasses}
@@ -208,6 +212,14 @@ export default function FilterSpell() {
         
     },
     Text:{
-        marginLeft: 5
+        paddingTop: 10,
+        marginLeft: 15,
+        
     },
+    headerIcons:{
+        width: '50%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 5
+    }
 });

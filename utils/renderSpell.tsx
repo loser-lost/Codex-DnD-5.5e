@@ -3,21 +3,17 @@ import { useRouter } from "expo-router";
 import { Fragment } from "react";
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
-
+import { Spell } from "../utils/groupMagic";
 import React from "react";
 
 interface RenderSpellProps {
   item: Spell;
 }
 
-interface Spell {
-    magia_id: string;
-    nome: string;
-    circulo: string;
-    duracao: string;
-    tempo_de_conjuracao: string;
+export interface Section {
+  title: string;
+  data: Spell[];
 }
-
 
 const RenderSpell = React.memo(({ item }: RenderSpellProps) => {
     const theme = useTheme();
@@ -46,19 +42,12 @@ const RenderSpell = React.memo(({ item }: RenderSpellProps) => {
 });
 export default RenderSpell;
 
-
-interface Section {
-  title: string;
-  data: Spell[];
-}
-
-
 const RenderSectionHeader = (( {title,data}: Section) => {
     const theme = useTheme();
     return (
         <Layout style={styles.nivelBar}>
-                     <Text>Nível: {title}</Text>
-                     <Text>Total: {data.length}</Text>
+          <Text>Nível: {title}</Text>
+          <Text>Total: {data.length}</Text>
         </Layout>
     );
 });
