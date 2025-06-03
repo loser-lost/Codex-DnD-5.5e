@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon, StarIcon, BackIcon} from '../utils/useIcons';
 import {  AppliFilterButton, ClearFiltersButton} from '../utils/buttons';
-import BackButton from '../utils/buttons';
+
 import DrawerFilter from '../utils/drawerFilter'
 
 
@@ -58,6 +58,9 @@ export default function FilterSpell() {
             console.error('Erro ao carregar filtros:', error);
         }
     };
+
+
+    
     const applyFilter = async () => {
         await saveFiltersToStorage();
         if (
@@ -104,35 +107,21 @@ export default function FilterSpell() {
         }
     };
 
-    const toggleCircle = useCallback((item: string) => {
-        setSelectCircle(prev =>
-            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-        );
-    }, []);
+   
+    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
+    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
+    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), []);
+    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), []);
+    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), []);
 
-    const toggleClass = useCallback((item: string) => {
-        setSelectedClasses(prev =>
-            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-        );
-    }, []);
+    const toggleItem = (
+        item: string,
+        setter: React.Dispatch<React.SetStateAction<string[]>>
+    ) => {
+        setter(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]);
+    };
 
-    const toggleSchool = useCallback((item: string) => {
-        setSchoolsSelected(prev =>
-            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-        );
-    }, []);
 
-    const toggleRange = useCallback((item: string) => {
-        setSelectedRange(prev =>
-            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-        );
-    }, []);
-
-    const toggleTime = useCallback((item: string) => {
-        setSelectedTempo(prev =>
-            prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
-        );
-    }, []);
       const debounce = (func: (...args: string[]) => void, wait: number) => {
             let timeout: number;
             return (...args: string[]) => {

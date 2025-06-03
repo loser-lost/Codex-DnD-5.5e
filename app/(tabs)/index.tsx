@@ -3,7 +3,7 @@ import React, {  useCallback, useEffect, useMemo, useState } from 'react';
 import { SectionList } from 'react-native';
 
 import {  StyleSheet } from 'react-native';
-import {  Divider, Layout,  useTheme } from '@ui-kitten/components';
+import {  Divider, Layout,  useTheme, Text, Modal, Card, Button } from '@ui-kitten/components';
 
 import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
@@ -14,6 +14,11 @@ import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
 import RenderSpell from '../../utils/renderSpell';
 import {RenderSectionHeader} from '../../utils/renderSpell';
+import DrawerFilter from '../../utils/drawerFilter'
+import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
+import { ClearFiltersButton } from '@/utils/buttons';
+
+
 
 
 export default function SpellsScreen() {
@@ -24,6 +29,13 @@ export default function SpellsScreen() {
     const params = useLocalSearchParams();
     const router = useRouter();
     const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
+    const [showFilter, setShowFilter] = useState(false);
+
+    const [selectCircle, setSelectCircle] = useState<string[]>([]);
+    const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
+    const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+    const [selectedRange, setSelectedRange] = useState<string[]>([]);
+    const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
 
     const debounce = (func: (...args: string[]) => void, wait: number) => {
       let timeout: number;
@@ -38,6 +50,57 @@ export default function SpellsScreen() {
       setFilteredData(filtered);
     }, 500), [spells]);
 
+
+    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
+    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
+    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), []);
+    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), []);
+    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), []);
+    
+    const toggleItem = (
+        item: string,
+        setter: React.Dispatch<React.SetStateAction<string[]>>
+    ) => {
+        setter(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]);
+    };
+     const clearFilters = async () => {
+        try {
+            setSelectCircle([]);
+            setSchoolsSelected([]);
+            setSelectedClasses([]);
+            setSelectedRange([]);
+            setSelectedTempo([]);
+            
+        } catch (error) {
+            console.error('Erro ao limpar filtros:', error);
+        }
+    };
+
+    const applyFilter = async () => {
+        if (
+            schoolsSelected.length === 0 &&
+            selectedClasses.length === 0 &&
+            selectedRange.length === 0 &&
+            selectedTempo.length === 0 &&
+            selectCircle.length === 0
+        ) {
+            alert('Nenhum filtro selecionado.');
+        } else {
+            router.push({
+                pathname: '/',
+                params: {
+                    escolas: JSON.stringify(schoolsSelected),
+                    classes: JSON.stringify(selectedClasses),
+                    range: JSON.stringify(selectedRange),
+                    tempo: JSON.stringify(selectedTempo),
+                    circle: JSON.stringify(selectCircle),
+                }
+            });
+        }
+    };
+
+
+// onde e tirado os parametros da URL e transformado em um objeto devo modificar somente esse:
     const parsedParams = useMemo(() => {
       return {
         escolas: params?.escolas ? JSON.parse(params.escolas as string) : [],
@@ -95,7 +158,8 @@ export default function SpellsScreen() {
     
    
     const handleOpenFilter = useMemo(() => debounce(() => {
-      router.push('/filterSpell');
+      //router.push('/filterSpell');
+      setShowFilter(true); // muda o estado para mostrar o filtro modal
     }, 300), []);
 
     return (
@@ -111,10 +175,40 @@ export default function SpellsScreen() {
           initialNumToRender={10}
           maxToRenderPerBatch={10}
           windowSize={5}
-        />  
-      </Layout>
-    );
-  }
+        />
+       <Modal
+        visible={showFilter }
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setShowFilter(false)}
+      >
+        <Card disabled={true}>
+         <Text style={styles.Text}>Selecione os filtros:</Text>
+            <DrawerFilter
+                selectCircle={selectCircle}
+                selectedClasses={selectedClasses}
+                schoolsSelected={schoolsSelected}
+                selectedRange={selectedRange}
+                selectedTempo={selectedTempo}
+                toggleCircle={toggleCircle}
+                toggleClass={toggleClass}
+                toggleSchool={toggleSchool}
+                toggleRange={toggleRange}
+                toggleTime={toggleTime}
+                CirculoIcon={CirculoIcon}
+                ClassIcon={ClassIcon}
+                SchoolIcon={SchoolIcon}
+                RangeIcon={RangeIcon}
+                TempoIcon={TempoIcon}                    
+            />
+          <Button onPress={() => setShowFilter(false)}>
+            Fechar
+          </Button>
+          <ClearFiltersButton clearFilters={clearFilters} />
+        </Card>
+      </Modal>
+    
+    </Layout>
+  )}
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -147,5 +241,13 @@ export default function SpellsScreen() {
     title: {
       fontSize: 32, //DB7610
       fontFamily: 'AveriaSerifLibreBold',
-    }
+    },
+     backdrop: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+     Text:{
+        paddingTop: 10,
+        marginLeft: 15,
+        
+    },
   });
