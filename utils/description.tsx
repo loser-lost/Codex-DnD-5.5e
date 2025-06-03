@@ -1,25 +1,30 @@
 
-import { useTheme, Text} from "@ui-kitten/components";
+import { useTheme, Text, Layout } from "@ui-kitten/components";
 import { Spell } from "../utils/groupMagic";
+import { TitleText } from "@/components/StyledText";
+import { Fragment } from "react";
 
 interface descriptionProps {
     item: Spell;
     fontSize: number;
 }
 
-export default function Description({item,fontSize}: descriptionProps) {
+export default function Description({ item, fontSize }: descriptionProps) {
     const theme = useTheme();
-        return(
-            <>
-                <Text category="h4">
-                    {item.nome}
-                </Text>
+    return (
+        <Fragment>
+            <TitleText type='h2' color="primary">
+                {item.nome}
+            </TitleText>
+            <Layout style={{ marginTop: 20, flexDirection: 'row' }}>
                 <Text style={{ fontSize: fontSize + 1 }}>Circulo de magia: </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'], marginTop: 2}}>
+                <Text style={{ fontSize, color: theme['color-basic-400'], marginTop: 2 }}>
                     {item.circulo}
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Classe Da magia </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'] }}>
+            </Layout>
+            <Layout style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: fontSize + 1 }}>Classes: </Text>
+                <Text style={{ fontSize, color: theme['color-basic-400'] }}>
                     {item.classes.length > 1
                         ? item.classes.join(', ')
                         : item.classes.length === 1
@@ -27,20 +32,28 @@ export default function Description({item,fontSize}: descriptionProps) {
                             : ''
                     }.
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Escola da magia: </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'] }}>
+            </Layout>
+            <Layout style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: fontSize + 1 }}>Escola: </Text>
+                <Text style={{ fontSize, color: theme['color-basic-400'] }}>
                     {item.escola}.
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Duração da magia: </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'] }}>
+            </Layout>
+            <Layout style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: fontSize + 1 }}>Duração: </Text>
+                <Text style={{ fontSize, color: theme['color-basic-400'] }}>
                     {item.duracao}.
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Tempo de Conutração da magia </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'] }}>
+            </Layout>
+            <Layout style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: fontSize + 1 }}>Tempo de Conjuração: </Text>
+                <Text style={{ fontSize, color: theme['color-basic-400'] }}>
                     {item.tempo_de_conjuracao}.
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Componentes da magia: </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'] }}>
+            </Layout>
+            <Layout style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: fontSize + 1 }}>Componentes: </Text>
+                <Text style={{ fontSize, color: theme['color-basic-400'] }}>
                     {item.componentes.length > 1
                         ? item.componentes.join(', ')
                         : item.componentes.length === 1
@@ -48,14 +61,23 @@ export default function Description({item,fontSize}: descriptionProps) {
                             : ''
                     }.
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Alcance da magia: </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'] }}>
+            </Layout>
+            <Layout style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: fontSize + 1 }}>Alcance: </Text>
+                <Text style={{ fontSize, color: theme['color-basic-400'] }}>
                     {item.alcance}.
                 </Text>
-                <Text style={{ fontSize: fontSize + 1 }}>Efeito: </Text>
-                <Text style={{ fontSize, color: theme['color-basic-500'], textAlign: 'justify' }}>
-                    {item.efeito}
+
+            </Layout>
+            <Text style={{ fontSize: fontSize + 1 }}>Efeito: </Text>
+            <Text style={{ fontSize, color: theme['color-basic-400'], textAlign: 'justify' }}>
+                {item.efeito.split("O dano aumenta")[0]}
+            </Text>
+            {item.efeito.split("O dano aumenta")[1]?.length > 0 && (
+                <Text style={{ fontSize, color: theme['color-basic-400'], textAlign: 'justify' }}>
+                    O dano aumenta {item.efeito.split("O dano aumenta")[1]}
                 </Text>
-            </>
-        );
+            )}
+        </Fragment>
+    );
 };
