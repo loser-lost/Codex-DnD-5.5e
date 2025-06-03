@@ -1,3 +1,6 @@
+
+/*
+
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {  StyleSheet } from 'react-native';
@@ -212,3 +215,4 @@ export default function FilterSpell() {
         padding: 5
     }
 });
+*/

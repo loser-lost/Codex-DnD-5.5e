@@ -16,7 +16,7 @@ import RenderSpell from '../../utils/renderSpell';
 import {RenderSectionHeader} from '../../utils/renderSpell';
 import DrawerFilter from '../../utils/drawerFilter'
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
-import { ClearFiltersButton } from '@/utils/buttons';
+import { AppliFilterButton, ClearFiltersButton } from '@/utils/buttons';
 
 
 
@@ -75,59 +75,37 @@ export default function SpellsScreen() {
             console.error('Erro ao limpar filtros:', error);
         }
     };
-
-    const applyFilter = async () => {
-        if (
-            schoolsSelected.length === 0 &&
-            selectedClasses.length === 0 &&
-            selectedRange.length === 0 &&
-            selectedTempo.length === 0 &&
-            selectCircle.length === 0
-        ) {
-            alert('Nenhum filtro selecionado.');
-        } else {
-            router.push({
-                pathname: '/',
-                params: {
-                    escolas: JSON.stringify(schoolsSelected),
-                    classes: JSON.stringify(selectedClasses),
-                    range: JSON.stringify(selectedRange),
-                    tempo: JSON.stringify(selectedTempo),
-                    circle: JSON.stringify(selectCircle),
-                }
-            });
-        }
-    };
-
-
-// onde e tirado os parametros da URL e transformado em um objeto devo modificar somente esse:
-    const parsedParams = useMemo(() => {
-      return {
-        escolas: params?.escolas ? JSON.parse(params.escolas as string) : [],
-        classes: params?.classes ? JSON.parse(params.classes as string) : [],
-        range: params?.range ? JSON.parse(params.range as string) : [],
-        tempo: params?.tempo ? JSON.parse(params.tempo as string) : [],
-        circle: params?.circle ? JSON.parse(params.circle as string) : []
-      };
-    }, [params?.escolas, params?.classes, params?.range, params?.tempo, params?.circle]);
-
-    useEffect(() => {
+    const applyFilter = () => {
       let base = magias;
 
-      const { escolas, classes, range, tempo, circle } = parsedParams;
-
-      if (escolas.length || classes.length || range.length || tempo.length || circle.length) {
+      if (
+        schoolsSelected.length > 0 ||
+        selectedClasses.length > 0 ||
+        selectedRange.length > 0 ||
+        selectedTempo.length > 0 ||
+        selectCircle.length > 0
+      ) {
         base = magias.filter(magia =>
-          (escolas.length === 0 || escolas.includes(magia.escola)) &&
-          (classes.length === 0 || magia.classes.some(classe => classes.includes(classe))) &&
-          (range.length === 0 || range.includes(magia.alcance)) &&
-          (tempo.length === 0 || tempo.includes(magia.tempo_de_conjuracao)) &&
-          (circle.length === 0 || circle.includes(magia.circulo))
+          (schoolsSelected.length === 0 || schoolsSelected.includes(magia.escola)) &&
+          (selectedClasses.length === 0 || magia.classes.some(classe => selectedClasses.includes(classe))) &&
+          (selectedRange.length === 0 || selectedRange.includes(magia.alcance)) &&
+          (selectedTempo.length === 0 || selectedTempo.includes(magia.tempo_de_conjuracao)) &&
+          (selectCircle.length === 0 || selectCircle.includes(magia.circulo))
         );
       }
 
       setSpells(base);
-    }, [parsedParams]);
+      setShowFilter(false); // fecha o modal após aplicar
+    };
+    const totalFiltros = [
+        selectCircle.length,
+        schoolsSelected.length,
+        selectedClasses.length,
+        selectedRange.length,
+        selectedTempo.length,
+    ].reduce((a, b) => a + b, 0);
+
+
 
     useEffect(() => {
       if (searchQuery.length > 0) {
@@ -203,6 +181,7 @@ export default function SpellsScreen() {
           <Button onPress={() => setShowFilter(false)}>
             Fechar
           </Button>
+          <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
           <ClearFiltersButton clearFilters={clearFilters} />
         </Card>
       </Modal>
