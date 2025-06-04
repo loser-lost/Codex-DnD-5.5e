@@ -1,6 +1,6 @@
 
 import { useTheme, Text, Layout } from "@ui-kitten/components";
-import { Spell } from "../utils/groupMagic";
+import { Spell } from "../../utils/groupMagic";
 import { TitleText } from "@/components/StyledText";
 import { Fragment } from "react";
 

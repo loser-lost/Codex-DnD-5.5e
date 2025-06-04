@@ -48,12 +48,6 @@ export default function TabLayout() {
         }} />
     </Tabs>
         <Stack.Screen
-          name="Filter"
-          options={{ 
-            presentation: 'modal', 
-            headerShown: false
-        }} />
-        <Stack.Screen
           name="SpellDetails"
           options={{ presentation: 'modal',
           headerShown: false

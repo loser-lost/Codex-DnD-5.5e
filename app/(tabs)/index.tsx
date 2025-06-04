@@ -9,14 +9,15 @@ import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 
 import { magias } from '@/assets/json/magias.json';
-import SeachBar from '../components/SeachBar';
+import SeachBar from '../../components/comp/SeachBar';
 import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
-import RenderSpell from '../../utils/renderSpell';
-import {RenderSectionHeader} from '../../utils/renderSpell';
-import DrawerFilter from '../../utils/drawerFilter'
+import RenderSpell from '../../components/comp/renderSpell';
+import {RenderSectionHeader} from '../../components/comp/renderSpell';
+import DrawerFilter from '../../components/comp/drawerFilter'
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
-import { AppliFilterButton, ClearFiltersButton } from '@/utils/buttons';
+import { AppliFilterButton, ClearFiltersButton } from '@/components/comp/buttons';
+import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 
 
 
@@ -95,7 +96,7 @@ export default function SpellsScreen() {
       }
 
       setSpells(base);
-      setShowFilter(false); // fecha o modal após aplicar
+      setShowFilter(false); 
     };
     const totalFiltros = [
         selectCircle.length,
@@ -159,8 +160,9 @@ export default function SpellsScreen() {
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setShowFilter(false)}
       >
-        <Card disabled={true}>
+        <Card disabled={true} style={styles.filterList}>
          <Text style={styles.Text}>Selecione os filtros:</Text>
+        
             <DrawerFilter
                 selectCircle={selectCircle}
                 selectedClasses={selectedClasses}
@@ -176,13 +178,15 @@ export default function SpellsScreen() {
                 ClassIcon={ClassIcon}
                 SchoolIcon={SchoolIcon}
                 RangeIcon={RangeIcon}
-                TempoIcon={TempoIcon}                    
+                TempoIcon={TempoIcon} 
+                                   
             />
-          <Button onPress={() => setShowFilter(false)}>
-            Fechar
-          </Button>
-          <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
-          <ClearFiltersButton clearFilters={clearFilters} />
+           
+            <Layout style={styles.buttons}>
+              <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
+              <ClearFiltersButton clearFilters={clearFilters} />
+            </Layout>
+
         </Card>
       </Modal>
     
@@ -222,11 +226,27 @@ export default function SpellsScreen() {
       fontFamily: 'AveriaSerifLibreBold',
     },
      backdrop: {
+      flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
+ 
     },
      Text:{
         paddingTop: 10,
-        marginLeft: 15,
-        
+        marginLeft: 15, 
+    },
+    filterList: {
+      flex: 1,
+      justifyContent: 'center',
+    
+    },
+     buttons:{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 5,
+        marginBottom: 5,
+        paddingHorizontal: 5,
+        padding: 15,
+        borderRadius: 5,
+        marginHorizontal: 5,
     },
   });

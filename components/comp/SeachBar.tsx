@@ -1,9 +1,9 @@
 import { Text, TitleText } from '@/components/StyledText';
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import React, { Fragment, ReactElement, useEffect, useMemo, useState } from 'react';
 
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Layout, Input, Button, useTheme } from '@ui-kitten/components';
+import { Layout, Input, Button, useTheme,  } from '@ui-kitten/components';
 
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
     onChangeText: (text: string) => void;
     handleOpenFilter?: () => void;
 };
+
 
 export default  function SeachBar({ value, onChangeText, handleOpenFilter}: Props) {
     const router = useRouter();
@@ -45,3 +46,4 @@ header: {
     marginHorizontal: 4
   },
 })
+

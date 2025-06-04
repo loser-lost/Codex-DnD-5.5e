@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import { Fragment } from "react";
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
-import { Spell } from "../utils/groupMagic";
+import { Spell } from "../../utils/groupMagic";
 import React from "react";
 
 interface RenderSpellProps {
