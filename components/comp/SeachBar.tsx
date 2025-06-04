@@ -10,10 +10,11 @@ type Props = {
     value: string;
     onChangeText: (text: string) => void;
     handleOpenFilter?: () => void;
+    totalFiltros: number;
 };
 
 
-export default  function SeachBar({ value, onChangeText, handleOpenFilter}: Props) {
+export default  function SeachBar({ value, onChangeText, handleOpenFilter, totalFiltros}: Props) {
     const router = useRouter();
     const theme = useTheme();
 
@@ -27,7 +28,7 @@ return (
             size="medium"
         />
         <Button onPress={handleOpenFilter} size="small" style={{ marginHorizontal: 4 }}>
-            Filtrar
+            {totalFiltros > 0 ? `Filtros: ${totalFiltros}` : 'Filtrar'}
         </Button>
     </Layout>
     );

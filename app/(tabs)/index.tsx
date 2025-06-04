@@ -3,10 +3,7 @@ import React, {  useCallback, useEffect, useMemo, useState } from 'react';
 import { SectionList } from 'react-native';
 
 import {  StyleSheet } from 'react-native';
-import {  Divider, Layout,  useTheme, Text, Modal, Card, Button } from '@ui-kitten/components';
-
-import { useRouter } from 'expo-router';
-import { useLocalSearchParams } from 'expo-router';
+import {  Divider, Layout,  useTheme, Text, Modal, Card } from '@ui-kitten/components';
 
 import { magias } from '@/assets/json/magias.json';
 import SeachBar from '../../components/comp/SeachBar';
@@ -17,18 +14,12 @@ import {RenderSectionHeader} from '../../components/comp/renderSpell';
 import DrawerFilter from '../../components/comp/drawerFilter'
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
 import { AppliFilterButton, ClearFiltersButton } from '@/components/comp/buttons';
-import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
-
-
-
 
 export default function SpellsScreen() {
     const theme = useTheme();
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [filteredData, setFilteredData] = useState<Spell[]>([]);
     const [spells, setSpells] = useState<Spell[]>(magias);
-    const params = useLocalSearchParams();
-    const router = useRouter();
     const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
     const [showFilter, setShowFilter] = useState(false);
 
@@ -106,8 +97,6 @@ export default function SpellsScreen() {
         selectedTempo.length,
     ].reduce((a, b) => a + b, 0);
 
-
-
     useEffect(() => {
       if (searchQuery.length > 0) {
         handleSearchDebounced(searchQuery);
@@ -133,8 +122,6 @@ export default function SpellsScreen() {
     const renderItem = useCallback(({ item }: { item: Spell }) => (
       <RenderSpell item={item} />
     ), []);
-
-    
    
     const handleOpenFilter = useMemo(() => debounce(() => {
       //router.push('/filterSpell');
@@ -143,7 +130,7 @@ export default function SpellsScreen() {
 
     return (
       <Layout style={styles.container}>
-        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter}/>
+        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter} totalFiltros={totalFiltros}/>
 
         <SectionList
           sections={spellInSections}
@@ -158,11 +145,11 @@ export default function SpellsScreen() {
        <Modal
         visible={showFilter }
         backdropStyle={styles.backdrop}
+        style={styles.filterModal}
         onBackdropPress={() => setShowFilter(false)}
       >
         <Card disabled={true} style={styles.filterList}>
          <Text style={styles.Text}>Selecione os filtros:</Text>
-        
             <DrawerFilter
                 selectCircle={selectCircle}
                 selectedClasses={selectedClasses}
@@ -178,15 +165,12 @@ export default function SpellsScreen() {
                 ClassIcon={ClassIcon}
                 SchoolIcon={SchoolIcon}
                 RangeIcon={RangeIcon}
-                TempoIcon={TempoIcon} 
-                                   
+                TempoIcon={TempoIcon}                      
             />
-           
             <Layout style={styles.buttons}>
               <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
               <ClearFiltersButton clearFilters={clearFilters} />
             </Layout>
-
         </Card>
       </Modal>
     
@@ -228,7 +212,6 @@ export default function SpellsScreen() {
      backdrop: {
       flex: 1,
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
- 
     },
      Text:{
         paddingTop: 10,
@@ -237,16 +220,21 @@ export default function SpellsScreen() {
     filterList: {
       flex: 1,
       justifyContent: 'center',
-    
     },
      buttons:{
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         marginTop: 5,
-        marginBottom: 5,
-        paddingHorizontal: 5,
-        padding: 15,
+        padding: 5,
         borderRadius: 5,
         marginHorizontal: 5,
     },
+    filterModal:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 25,
+        maxWidth: '90%',
+        maxHeight: '90%',
+    }
   });
