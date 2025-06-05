@@ -7,6 +7,7 @@ import { ImageProps, TextStyle } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Feather from '@expo/vector-icons/Feather';
 
 
     type BackIconProps = {
@@ -23,6 +24,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
         fontModify: () => void;
         style?: Partial<TextStyle>;
     };
+    type deleteIconProps = {
+        deleteIcon: () => void;
+        style?: Partial<TextStyle>;
+    };
+  
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
         const theme = useTheme(); 
@@ -134,3 +140,17 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
             />
         );
     };
+
+     export const DeleteIcon = ({ deleteIcon, style }: deleteIconProps): IconElement=> {
+        const theme = useTheme();
+    
+        return (
+            <Feather 
+            name="x" 
+            size={16} 
+            color={theme['color-basic-500']}
+            onPress={deleteIcon}
+            />
+        );
+    };
+

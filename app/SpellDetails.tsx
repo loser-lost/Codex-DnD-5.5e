@@ -38,7 +38,7 @@ const SpellDetails = () => {
     }
     //headerIconsLeft
     const fontModify = () => {
-       setFontSize(prev => (prev < 18 ? prev + 2 : 14)); // loop entre 14 e 24
+       setFontSize(prev => (prev < 20 ? prev + 2 : 16)); // loop entre 14 e 24
     }
 
     if (!item) {

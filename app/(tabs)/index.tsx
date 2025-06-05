@@ -4,6 +4,7 @@ import { SectionList } from 'react-native';
 
 import {  StyleSheet } from 'react-native';
 import {  Divider, Layout,  useTheme, Text, Modal, Card } from '@ui-kitten/components';
+import { ScrollView } from 'react-native';
 
 import { magias } from '@/assets/json/magias.json';
 import SeachBar from '../../components/comp/SeachBar';
@@ -130,7 +131,7 @@ export default function SpellsScreen() {
 
     return (
       <Layout style={styles.container}>
-        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter} totalFiltros={totalFiltros}/>
+        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter} totalFiltros={totalFiltros} />
 
         <SectionList
           sections={spellInSections}
@@ -150,6 +151,7 @@ export default function SpellsScreen() {
       >
         <Card disabled={true} style={styles.filterList}>
          <Text style={styles.Text}>Selecione os filtros:</Text>
+         
             <DrawerFilter
                 selectCircle={selectCircle}
                 selectedClasses={selectedClasses}
@@ -167,6 +169,7 @@ export default function SpellsScreen() {
                 RangeIcon={RangeIcon}
                 TempoIcon={TempoIcon}                      
             />
+           
             <Layout style={styles.buttons}>
               <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
               <ClearFiltersButton clearFilters={clearFilters} />
@@ -218,8 +221,10 @@ export default function SpellsScreen() {
         marginLeft: 15, 
     },
     filterList: {
-      flex: 1,
-      justifyContent: 'center',
+      maxHeight: '90%',
+      width: '100%',
+      borderRadius: 8,
+      overflow: 'hidden',
     },
      buttons:{
         flexDirection: 'row',
@@ -234,7 +239,6 @@ export default function SpellsScreen() {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 25,
-        maxWidth: '90%',
-        maxHeight: '90%',
+   
     }
   });
