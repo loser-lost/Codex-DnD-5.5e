@@ -1,34 +1,34 @@
 import React, {  useCallback, useEffect, useMemo, useState } from 'react';
 
-import { SectionList } from 'react-native';
+import { SectionList, StyleSheet } from 'react-native';
 
-import {  StyleSheet } from 'react-native';
-import {  Divider, Layout,  useTheme, Text, Modal, Card } from '@ui-kitten/components';
-import { ScrollView } from 'react-native';
+import {  Divider, Layout,  Text, Modal, Card } from '@ui-kitten/components';
 
-import { magias } from '@/assets/json/magias.json';
 import SeachBar from '../../components/comp/SeachBar';
-import { groupSortSpells } from '../../utils/groupMagic';
-import { Spell } from '../../utils/groupMagic';
 import RenderSpell from '../../components/comp/renderSpell';
 import {RenderSectionHeader} from '../../components/comp/renderSpell';
-import DrawerFilter from '../../components/comp/drawerFilter'
-import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
+import DrawerFilter from '../../components/comp/drawerFilter';
 import { AppliFilterButton, ClearFiltersButton } from '@/components/comp/buttons';
 
-export default function SpellsScreen() {
-    const theme = useTheme();
-    const [searchQuery, setSearchQuery] = useState<string>('');
-    const [filteredData, setFilteredData] = useState<Spell[]>([]);
-    const [spells, setSpells] = useState<Spell[]>(magias);
-    const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
-    const [showFilter, setShowFilter] = useState(false);
+import { magias } from '@/assets/json/magias.json';
 
+import { groupSortSpells } from '../../utils/groupMagic';
+import { Spell } from '../../utils/groupMagic';
+import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
+
+
+export default function SpellsScreen() {
+    // State variables
+    const [filteredData, setFilteredData] = useState<Spell[]>([]);
     const [selectCircle, setSelectCircle] = useState<string[]>([]);
     const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     const [selectedRange, setSelectedRange] = useState<string[]>([]);
     const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [spells, setSpells] = useState<Spell[]>(magias);
+    const [showFilter, setShowFilter] = useState(false);
+    const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
 
     const debounce = (func: (...args: string[]) => void, wait: number) => {
       let timeout: number;
@@ -42,7 +42,6 @@ export default function SpellsScreen() {
       const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
       setFilteredData(filtered);
     }, 500), [spells]);
-
 
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
