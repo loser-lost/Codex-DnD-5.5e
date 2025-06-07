@@ -30,6 +30,17 @@ export default function SpellsScreen() {
     const [showFilter, setShowFilter] = useState(false);
     const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
 
+    //Search Functions 
+    useEffect(() => {
+      if (searchQuery.length > 0) {
+        handleSearchDebounced(searchQuery);
+      }
+    }, [searchQuery]);
+
+    const handleSearch = (query: string) => {
+      setSearchQuery(query);
+    };
+    
     const debounce = (func: (...args: string[]) => void, wait: number) => {
       let timeout: number;
       return (...args: string[]) => {
@@ -42,95 +53,95 @@ export default function SpellsScreen() {
       const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
       setFilteredData(filtered);
     }, 500), [spells]);
+    //End search Functions
 
+    // start filters functions
+    const allFilters = [ selectCircle.length, schoolsSelected.length, selectedClasses.length, selectedRange.length, selectedTempo.length,].reduce((a, b) => a + b, 0);
+    const hasSchools = schoolsSelected.length > 0;
+    const hasClass = selectedClasses.length > 0;
+    const hasRange = selectedRange.length > 0;
+    const hasTime = selectedTempo.length > 0;
+    const hasCircle = selectCircle.length > 0;
+    
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
     const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), []);
     const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), []);
     const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), []);
-    
+
+    const filterBySchool = (item: Spell) => !hasSchools || schoolsSelected.includes(item.escola);
+    const filterByClass = (item: Spell) => !hasClass || item.classes.some(classe =>  selectedClasses.includes(classe));
+    const filterByRange = (item: Spell) => !hasRange || selectedRange.includes(item.alcance);
+    const filterByTime = (item: Spell) => !hasTime || selectedTempo.includes(item.tempo_de_conjuracao);
+    const filterByCircle = (item: Spell) => !hasCircle || selectCircle.includes(item.circulo);
+
     const toggleItem = (
         item: string,
         setter: React.Dispatch<React.SetStateAction<string[]>>
     ) => {
         setter(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]);
     };
-     const clearFilters = async () => {
-        try {
-            setSelectCircle([]);
-            setSchoolsSelected([]);
-            setSelectedClasses([]);
-            setSelectedRange([]);
-            setSelectedTempo([]);
-            
-        } catch (error) {
-            console.error('Erro ao limpar filtros:', error);
-        }
+
+    const clearFilters = ()=>{
+      setSelectCircle([]);
+      setSchoolsSelected([]);
+      setSelectedClasses([]);
+      setSelectedRange([]);
+      setSelectedTempo([]);
     };
+
+    const filterTest = useMemo(() => {
+      if(!(hasSchools || hasClass || hasRange || hasTime || hasCircle)){
+        return magias;
+      }
+      return magias.filter(magia => filterBySchool(magia) &&
+      filterByClass(magia) &&
+      filterByRange(magia) &&
+      filterByTime(magia) &&
+      filterByCircle(magia)
+      );
+
+    },[selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo])
+
     const applyFilter = () => {
-      let base = magias;
+      setSpells(filterTest);
+      setShowFilter(false);
+    }
+    // End filters functions
 
-      if (
-        schoolsSelected.length > 0 ||
-        selectedClasses.length > 0 ||
-        selectedRange.length > 0 ||
-        selectedTempo.length > 0 ||
-        selectCircle.length > 0
-      ) {
-        base = magias.filter(magia =>
-          (schoolsSelected.length === 0 || schoolsSelected.includes(magia.escola)) &&
-          (selectedClasses.length === 0 || magia.classes.some(classe => selectedClasses.includes(classe))) &&
-          (selectedRange.length === 0 || selectedRange.includes(magia.alcance)) &&
-          (selectedTempo.length === 0 || selectedTempo.includes(magia.tempo_de_conjuracao)) &&
-          (selectCircle.length === 0 || selectCircle.includes(magia.circulo))
-        );
-      }
-
-      setSpells(base);
-      setShowFilter(false); 
-    };
-    const totalFiltros = [
-        selectCircle.length,
-        schoolsSelected.length,
-        selectedClasses.length,
-        selectedRange.length,
-        selectedTempo.length,
-    ].reduce((a, b) => a + b, 0);
-
-    useEffect(() => {
-      if (searchQuery.length > 0) {
-        handleSearchDebounced(searchQuery);
-      }
-    }, [searchQuery]);
-
-    const handleSearch = (query: string) => {
-      setSearchQuery(query);
-    };
-    
-    const magiasAgrupadas = useMemo(() => {
+    // Start groups functions
+    const groupedSpells = useMemo(() => {
       const base = searchQuery ? filteredData : spells;
       return groupSortSpells(base);
     }, [searchQuery, filteredData, spells]);
 
     const spellInSections = useMemo(()=>{
-      return Object.entries(magiasAgrupadas).map(([circulo, data]) => ({
+      return Object.entries(groupedSpells).map(([circulo, data]) => ({
           title: circulo,
           data,
       }));
-    }, [magiasAgrupadas]);
+    }, [groupedSpells]);
+    // End groups functions
 
+    // Start render functions
     const renderItem = useCallback(({ item }: { item: Spell }) => (
       <RenderSpell item={item} />
     ), []);
-   
-    const handleOpenFilter = useMemo(() => debounce(() => {
-      //router.push('/filterSpell');
-      setShowFilter(true); // muda o estado para mostrar o filtro modal
-    }, 300), []);
+    
+    /*
+    const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
+    */
+     
+    const handleOpenModalFilter = useCallback(
+      debounce(() =>{
+        setShowFilter(true)
+      }, 300),[]
+    );
+    // End render functions
 
     return (
       <Layout style={styles.container}>
-        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenFilter} totalFiltros={totalFiltros} />
+        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenModalFilter} allFilters={allFilters} />
 
         <SectionList
           sections={spellInSections}
@@ -170,7 +181,7 @@ export default function SpellsScreen() {
             />
            
             <Layout style={styles.buttons}>
-              <AppliFilterButton applyFilter={applyFilter} totalFiltros={totalFiltros} />
+              <AppliFilterButton applyFilter={applyFilter} allFilters={allFilters} />
               <ClearFiltersButton clearFilters={clearFilters} />
             </Layout>
         </Card>

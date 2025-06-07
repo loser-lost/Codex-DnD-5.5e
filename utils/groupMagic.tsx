@@ -1,5 +1,3 @@
-
-
 //Typing JSON
 export interface Spell {
   magia_id: string;
@@ -14,39 +12,91 @@ export interface Spell {
   efeito: string;
 }
 
+
+export function groupSortSpells(magias: Spell[]): Record<string, Spell[]> {
+  const groups: Record<string, Spell[]> = {};
+
+  // Order spells by circle
+  magias.forEach(magia => {
+    const circulo = magia.circulo;
+    if (!groups[circulo]) groups[circulo] = [];
+    groups[circulo].push(magia);
+  });
+
+  // Order spells by name
+  Object.keys(groups).forEach(circulo => {
+    groups[circulo].sort((a, b) => a.nome.localeCompare(b.nome));
+  });
+
+  // order circles by number
+  function getOrderCircle(c: string): number {
+    if (c.toLowerCase().includes('truque')) return 0;
+    const match = c.match(/\d+/);
+    return match ? parseInt(match[0], 10) : Infinity;
+  }
+
+  // order circles
+  const orderedCircles = Object.keys(groups).sort(
+    (a, b) => getOrderCircle(a) - getOrderCircle(b)
+  );
+
+  // Make the result
+  const result: Record<string, Spell[]> = {};
+  orderedCircles.forEach(circulo => {
+    result[circulo] = groups[circulo];
+  });
+
+  return result;
+}
+/*
 export function groupSortSpells(magias: Spell[]): Record<string, Spell[]>{
-    const grupos: Record<string, Spell[]> = {};
+
+    const groups: Record<string, Spell[]> = {};
+
     // Agrupar magias por círculo
     magias.forEach(magia => {
+
         const circulo = magia.circulo;
-        if (!grupos[circulo]) {
-        grupos[circulo] = [];
+        if (!groups[circulo]) {
+        groups[circulo] = [];
         }
-        grupos[circulo].push(magia);
+        groups[circulo].push(magia);
+
     });
 
     // Ordenar cada grupo por nome
-    Object.keys(grupos).forEach(circulo => {
-        grupos[circulo].sort((a, b) => a.nome.localeCompare(b.nome));
+    Object.keys(groups).forEach(circulo => {
+
+        groups[circulo].sort((a, b) => a.nome.localeCompare(b.nome));
+
     });
 
     // Função para ordenar corretamente "Truque", "1º", "2º", etc.
-    function obterOrdemCirculo(c: string): number {
+    function getOrderCircle(c: string): number {
+
         if (c.toLowerCase().includes('truque')) return 0;
         const match = c.match(/\d+/);
         return match ? parseInt(match[0], 10) : Infinity;
+
     }
 
-    const circulosOrdenados = Object.keys(grupos).sort(
-        (a, b) => obterOrdemCirculo(a) - obterOrdemCirculo(b)
-    );
+    const ordenedCircles = Object.keys(groups).sort(
 
+        (a, b) => getOrderCircle(a) - getOrderCircle(b)
+
+    );
+//
     // Retorna os grupos já na ordem correta
-    const resultado: Record<string, Spell[]> = {};
-        circulosOrdenados.forEach(circulo => {
-        resultado[circulo] = grupos[circulo];
+    const result: Record<string, Spell[]> = {};
+
+        ordenedCircles.forEach(circulo => {
+        result[circulo] = groups[circulo];
+
     });
 
-  return resultado;
+  return result;
 }
+*/
+
+
 

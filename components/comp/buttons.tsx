@@ -6,7 +6,7 @@ import React from "react";
 
 interface applyFilterButtonProps {
     applyFilter: () => void;
-    totalFiltros: number;
+    allFilters: number;
 }
 interface backButtonProps {
     onBack: () => void;
@@ -26,11 +26,11 @@ export default function BackButton({ onBack }: backButtonProps) {
     );
 };
 
-export function AppliFilterButton({ applyFilter, totalFiltros }: applyFilterButtonProps) {
+export function AppliFilterButton({ applyFilter, allFilters }: applyFilterButtonProps) {
     return (
         <>
         <Button onPress={applyFilter}>
-            {totalFiltros > 0 ? `Aplicar: ${totalFiltros}` : 'Sem filtros'}
+            {allFilters > 0 ? `Aplicar: ${allFilters}` : 'Sem filtros'}
         </Button>
         </>
     );

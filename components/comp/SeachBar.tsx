@@ -13,11 +13,11 @@ type Props = {
   value: string;
   onChangeText: (text: string) => void;
   handleOpenFilter?: () => void;
-  totalFiltros: number;
+  allFilters: number;
 };
 
    
- export default function SearchBar({ value, onChangeText, handleOpenFilter, totalFiltros }: Props) {
+ export default function SearchBar({ value, onChangeText, handleOpenFilter, allFilters }: Props) {
   const theme = useTheme();
 
   const handleClear = () => {
@@ -34,7 +34,7 @@ type Props = {
                 accessoryRight={() => <DeleteIcon deleteIcon={handleClear} />}
             />
             <Button onPress={handleOpenFilter} size="small" style={{ marginHorizontal: 4 }}>
-                {totalFiltros > 0 ? `Filtros: ${totalFiltros}` : 'Filtrar'}
+                {allFilters > 0 ? `Filtros: ${allFilters}` : 'Filtrar'}
             </Button>
         </Layout>
         );
