@@ -14,6 +14,7 @@ import { magias } from '@/assets/json/magias.json';
 
 import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
+import { toggleItem } from '@/utils/filterFunctions';
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
 
 
@@ -56,12 +57,12 @@ export default function SpellsScreen() {
     //End search Functions
 
     // start filters functions
-    const allFilters = [ selectCircle.length, schoolsSelected.length, selectedClasses.length, selectedRange.length, selectedTempo.length,].reduce((a, b) => a + b, 0);
-    const hasSchools = schoolsSelected.length > 0;
-    const hasClass = selectedClasses.length > 0;
-    const hasRange = selectedRange.length > 0;
-    const hasTime = selectedTempo.length > 0;
-    const hasCircle = selectCircle.length > 0;
+    const isActive = (array: any[]) => array.length > 0;
+    const hasCircle = isActive(selectCircle);
+    const hasSchool = isActive(schoolsSelected);
+    const hasClass = isActive(selectedClasses);
+    const hasRange = isActive(selectedRange);
+    const hasTime = isActive(selectedTempo);
     
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
@@ -69,29 +70,22 @@ export default function SpellsScreen() {
     const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), []);
     const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), []);
 
-    const filterBySchool = (item: Spell) => !hasSchools || schoolsSelected.includes(item.escola);
+    const filterBySchool = (item: Spell) => !hasSchool || schoolsSelected.includes(item.escola);
     const filterByClass = (item: Spell) => !hasClass || item.classes.some(classe =>  selectedClasses.includes(classe));
     const filterByRange = (item: Spell) => !hasRange || selectedRange.includes(item.alcance);
     const filterByTime = (item: Spell) => !hasTime || selectedTempo.includes(item.tempo_de_conjuracao);
+    
     const filterByCircle = (item: Spell) => !hasCircle || selectCircle.includes(item.circulo);
 
-    const toggleItem = (
-        item: string,
-        setter: React.Dispatch<React.SetStateAction<string[]>>
-    ) => {
-        setter(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]);
-    };
-
+    const allFilters = [selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo]
+    .reduce((total, arr) => total + arr.length, 0);
+    
     const clearFilters = ()=>{
-      setSelectCircle([]);
-      setSchoolsSelected([]);
-      setSelectedClasses([]);
-      setSelectedRange([]);
-      setSelectedTempo([]);
+       [setSelectCircle, setSchoolsSelected, setSelectedClasses, setSelectedRange, setSelectedTempo].forEach(fn => fn([]));
     };
 
     const filterTest = useMemo(() => {
-      if(!(hasSchools || hasClass || hasRange || hasTime || hasCircle)){
+      if(!(hasSchool || hasClass || hasRange || hasTime || hasCircle)){
         return magias;
       }
       return magias.filter(magia => filterBySchool(magia) &&
