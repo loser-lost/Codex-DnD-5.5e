@@ -14,9 +14,9 @@ import { magias } from '@/assets/json/magias.json';
 
 import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
-import { toggleItem } from '@/utils/filterFunctions';
+import { debounce } from '@/utils/debounce';
 import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
-
+import { filterSpels, toggleItem } from '../../utils/filterFunctions';
 
 export default function SpellsScreen() {
     // State variables
@@ -41,14 +41,6 @@ export default function SpellsScreen() {
     const handleSearch = (query: string) => {
       setSearchQuery(query);
     };
-    
-    const debounce = (func: (...args: string[]) => void, wait: number) => {
-      let timeout: number;
-      return (...args: string[]) => {
-        clearTimeout(timeout);
-        timeout = window.setTimeout(() => func(...args), wait);
-      };
-    };
 
     const handleSearchDebounced = useMemo(() => debounce((query: string) => {
       const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
@@ -56,51 +48,47 @@ export default function SpellsScreen() {
     }, 500), [spells]);
     //End search Functions
 
-    // start filters functions
-    const isActive = (array: any[]) => array.length > 0;
-    const hasCircle = isActive(selectCircle);
-    const hasSchool = isActive(schoolsSelected);
-    const hasClass = isActive(selectedClasses);
-    const hasRange = isActive(selectedRange);
-    const hasTime = isActive(selectedTempo);
-    
+    // start filters functions    
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
     const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), []);
     const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), []);
     const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), []);
 
-    const filterBySchool = (item: Spell) => !hasSchool || schoolsSelected.includes(item.escola);
-    const filterByClass = (item: Spell) => !hasClass || item.classes.some(classe =>  selectedClasses.includes(classe));
-    const filterByRange = (item: Spell) => !hasRange || selectedRange.includes(item.alcance);
-    const filterByTime = (item: Spell) => !hasTime || selectedTempo.includes(item.tempo_de_conjuracao);
-    
-    const filterByCircle = (item: Spell) => !hasCircle || selectCircle.includes(item.circulo);
-
-    const allFilters = [selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo]
-    .reduce((total, arr) => total + arr.length, 0);
+    const allFilters = [
+      selectCircle, 
+      schoolsSelected, 
+      selectedClasses, 
+      selectedRange, 
+      selectedTempo
+    ].reduce((total, arr) => total + arr.length, 0);
     
     const clearFilters = ()=>{
-       [setSelectCircle, setSchoolsSelected, setSelectedClasses, setSelectedRange, setSelectedTempo].forEach(fn => fn([]));
+       [setSelectCircle, 
+        setSchoolsSelected, 
+        setSelectedClasses, 
+        setSelectedRange, 
+        setSelectedTempo
+      ].forEach(fn => fn([]));
     };
 
+    const filters = useMemo(() => ({
+      selectCircle,
+      schoolsSelected,
+      selectedClasses,
+      selectedRange,
+      selectedTempo
+    }), [selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
+
     const filterTest = useMemo(() => {
-      if(!(hasSchool || hasClass || hasRange || hasTime || hasCircle)){
-        return magias;
+      const shouldFilter = Object.values(filters).some(arr => arr.length > 0);
+      return shouldFilter ? filterSpels(magias, filters) : magias;
+    }, [filters]);
+
+      const applyFilter = () => {
+        setSpells(filterTest);
+        setShowFilter(false);
       }
-      return magias.filter(magia => filterBySchool(magia) &&
-      filterByClass(magia) &&
-      filterByRange(magia) &&
-      filterByTime(magia) &&
-      filterByCircle(magia)
-      );
-
-    },[selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo])
-
-    const applyFilter = () => {
-      setSpells(filterTest);
-      setShowFilter(false);
-    }
     // End filters functions
 
     // Start groups functions
@@ -122,15 +110,16 @@ export default function SpellsScreen() {
       <RenderSpell item={item} />
     ), []);
     
-    /*
+    
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
-    */
-     
+    
+     /*
     const handleOpenModalFilter = useCallback(
       debounce(() =>{
         setShowFilter(true)
       }, 300),[]
     );
+    */
     // End render functions
 
     return (

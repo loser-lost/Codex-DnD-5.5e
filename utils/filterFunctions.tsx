@@ -1,3 +1,31 @@
+import { Spell } from "./groupMagic";
+
+export interface SpellFilters{
+    selectCircle: string[];
+    schoolsSelected: string[];
+    selectedClasses: string[];
+    selectedRange: string[];
+    selectedTempo: string[];
+}
+
+export function filterSpels(magias: Spell[], filters: SpellFilters): Spell[] {
+    const {
+        selectCircle,
+        schoolsSelected,
+        selectedClasses,
+        selectedRange,
+        selectedTempo
+    } = filters;
+
+    return magias.filter(magia =>{
+        const matchCircle = selectCircle.length === 0 || selectCircle.includes(magia.circulo);
+        const matchSchool = schoolsSelected.length === 0 || schoolsSelected.includes(magia.escola);
+        const matchClass = selectedClasses.length === 0 || magia.classes.some(classe => selectedClasses.includes(classe));
+        const matchRange = selectedRange.length === 0 || selectedRange.includes(magia.alcance);
+        const matchTempo = selectedTempo.length === 0 || selectedTempo.includes(magia.tempo_de_conjuracao);
+        return matchCircle && matchSchool && matchClass && matchRange && matchTempo;
+    });  
+}
 
 export const toggleItem = (
     item: string,
@@ -5,7 +33,4 @@ export const toggleItem = (
 ) => {
     setter(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]);
 };
-
-
-
   
