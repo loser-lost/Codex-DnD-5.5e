@@ -12,37 +12,30 @@ import {BackIcon, StarIcon, AddIcon, AlterFont } from '../utils/useIcons';
 import Description from '../components/comp/description';
 
 
+
 const SpellDetails = () => {
     const router = useRouter();
     const theme = useTheme();
     const {magia_id} = useLocalSearchParams();
-
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
     const [fontSize, setFontSize] = React.useState(14);
-
-    const debounce = (func: (...args: string[]) => void, wait: number) => {
-        let timeout: number;
-        return (...args: string[]) => {
-            clearTimeout(timeout);
-            timeout = window.setTimeout(() => func(...args), wait);
-        };
-    }; 
-    const BackFunction = useMemo(() => debounce(() => {
-        router.back();
-    }, 300), []);
-
     
+    const BackFunction = () => {
+        router.back();
+    }
+
     const addOnCharacter = () => {
         alert('Adicionar ao personagem');
     }
-    //headerIconsLeft
+   
     const fontModify = () => {
        setFontSize(prev => (prev < 20 ? prev + 2 : 16)); // loop entre 14 e 24
     }
 
     if (!item) {
     return (
+        
         <NotFound />
     );
     }

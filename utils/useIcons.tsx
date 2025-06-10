@@ -1,8 +1,6 @@
 
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { IconElement, useTheme } from "@ui-kitten/components";
-import { router, useRouter } from "expo-router";
-import { useMemo } from "react";
 import { ImageProps, TextStyle } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
@@ -106,6 +104,7 @@ import Feather from '@expo/vector-icons/Feather';
 
     export const StarIcon = (props?: Partial<ImageProps> ): IconElement =>{
          const theme = useTheme();
+         
         return(
             <MaterialCommunityIcons 
             name="star-four-points" 

@@ -11,6 +11,32 @@ interface descriptionProps {
 
 export default function Description({ item, fontSize }: descriptionProps) {
     const theme = useTheme();
+
+    const pontuationClass = (item: Spell) => {
+        return(
+            <>
+            {item.classes.length > 1
+                        ? item.classes.join(', ')
+                        : item.classes.length === 1
+                            ? item.classes[0]
+                            : ''
+            }.
+            </>
+        )
+    };
+
+    const pontuationComponent = (item: Spell) => {
+        return(
+            <>
+            {item.componentes.length > 1
+                    ? item.componentes.join(', ')
+                    : item.componentes.length === 1
+                        ? item.componentes[0]
+                        : ''
+            }.
+            </>
+        )
+    };
     return (
         <Fragment>
             <TitleText type='h2' color="primary">
@@ -25,12 +51,7 @@ export default function Description({ item, fontSize }: descriptionProps) {
             <Layout style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: fontSize + 1 }}>Classes: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-400'] }}>
-                    {item.classes.length > 1
-                        ? item.classes.join(', ')
-                        : item.classes.length === 1
-                            ? item.classes[0]
-                            : ''
-                    }.
+                    {pontuationClass(item)}
                 </Text>
             </Layout>
             <Layout style={{ flexDirection: 'row' }}>
@@ -54,12 +75,7 @@ export default function Description({ item, fontSize }: descriptionProps) {
             <Layout style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: fontSize + 1 }}>Componentes: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-400'] }}>
-                    {item.componentes.length > 1
-                        ? item.componentes.join(', ')
-                        : item.componentes.length === 1
-                            ? item.componentes[0]
-                            : ''
-                    }.
+                    {pontuationComponent(item)}
                 </Text>
             </Layout>
             <Layout style={{ flexDirection: 'row' }}>

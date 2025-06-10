@@ -28,13 +28,7 @@ interface DrawerFilterProps {
   TempoIcon: (props: IconProps) => ReactElement;
 }
 
-const FilterGroup = ({
-  title,
-  items,
-  selectedItems,
-  toggleItem,
-  Icon,
-}: {
+const FilterGroup = ({title, items, selectedItems, toggleItem, Icon}: {
   title: string;
   items: string[];
   selectedItems: string[];
@@ -58,22 +52,9 @@ const FilterGroup = ({
   </DrawerGroup>
 );
 
-function DrawerFilter({
-    selectCircle,
-  selectedClasses,
-  schoolsSelected,
-  selectedRange,
-  selectedTempo,
-  toggleCircle,
-  toggleClass,
-  toggleSchool,
-  toggleRange,
-  toggleTime,
-  CirculoIcon,
-  ClassIcon,
-  SchoolIcon,
-  RangeIcon,
-  TempoIcon,
+function DrawerFilter({selectCircle, selectedClasses, schoolsSelected, selectedRange, selectedTempo,
+  toggleCircle, toggleClass, toggleSchool, toggleRange, toggleTime, 
+  CirculoIcon, ClassIcon, SchoolIcon, RangeIcon, TempoIcon,
 }: DrawerFilterProps) {
   return (
     <Drawer>

@@ -1,5 +1,5 @@
 import { Button } from "@ui-kitten/components";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 
 import React from "react";
 
@@ -25,6 +25,9 @@ export default function BackButton({ onBack }: backButtonProps) {
         </>
     );
 };
+export const BackFunction = () => {
+        router.back();
+}
 
 export function AppliFilterButton({ applyFilter, allFilters }: applyFilterButtonProps) {
     return (

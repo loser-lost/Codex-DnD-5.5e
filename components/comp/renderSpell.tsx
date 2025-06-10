@@ -18,9 +18,21 @@ export interface Section {
 const RenderSpell = React.memo(({ item }: RenderSpellProps) => {
     const theme = useTheme();
     const router = useRouter();
+    const rotaSpells = () => {
+        router.push(`/SpellDetails?magia_id=${item.magia_id}`);
+    }
+    
+    const AccessorR =() => {
+      const itemCirculo = item.circulo === '0' ? 'Truque' : `${item.circulo}º Círculo`;
+      return(
+        <Text style={{ fontSize: 14 }}>
+            {itemCirculo}
+        </Text>
+        )
+    }
     return (
         <ListItem
-        onPress={() => router.push(`/SpellDetails?magia_id=${item.magia_id}`)}
+        onPress={rotaSpells}
         title={() => (
         <TitleText type='h4'>
           {item.nome}
@@ -33,9 +45,7 @@ const RenderSpell = React.memo(({ item }: RenderSpellProps) => {
           </Fragment>
         )}
         accessoryRight={() => (
-          <Text style={{ fontSize: 14 }}>
-            {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
-          </Text>
+          <AccessorR />
          )}
         />
       )
@@ -43,7 +53,6 @@ const RenderSpell = React.memo(({ item }: RenderSpellProps) => {
 export default RenderSpell;
 
 const RenderSectionHeader = (( {title,data}: Section) => {
-    const theme = useTheme();
     return (
         <Layout style={styles.nivelBar}>
           <Text>Nível: {title}</Text>
@@ -63,4 +72,8 @@ const styles =  StyleSheet.create({
       paddingVertical: 5,
       backgroundColor: "black"
     },
+    text:{
+
+
+    }
 });
