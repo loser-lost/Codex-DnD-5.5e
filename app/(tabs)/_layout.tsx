@@ -14,6 +14,7 @@ export default function TabLayout() {
         tabBarStyle: { backgroundColor: theme['color-basic-1000'] },
       }}
     >
+      
       <Tabs.Screen
         name="index"
         options={{
@@ -50,7 +51,7 @@ export default function TabLayout() {
         <Stack.Screen
           name="SpellDetails"
           options={{ presentation: 'modal',
-          headerShown: false
+          headerShown: false, animation: 'slide_from_bottom',
         }} />
         
       </>

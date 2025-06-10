@@ -47,9 +47,9 @@ const SpellDetails = () => {
     );
     }
     return (
-        <>
-        <Stack.Screen options={{ headerShown: false }} />
-            <Layout style={styles.headerIcons}>
+        <Layout style={[styles.container ]} level="1">
+            <Stack.Screen options={{ headerShown: false }} />
+            <Layout style={styles.headerIcons} >
                 <BackIcon onBackPress={BackFunction} />
                 <StarIcon />
                 <AlterFont fontModify={fontModify} />
@@ -65,7 +65,7 @@ const SpellDetails = () => {
                 <Text>{item.magia_id}</Text>
                 <AddIcon addOnCharacter={addOnCharacter} />
             </Layout>
-            </>
+        </Layout>
     );
 };
 

@@ -21,7 +21,7 @@ import { filterSpels, toggleItem } from '../../utils/filterFunctions';
 export default function SpellsScreen() {
     // State variables
     const [filteredData, setFilteredData] = useState<Spell[]>([]);
-    const [selectCircle, setSelectCircle] = useState<string[]>([]);
+    const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
     const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     const [selectedRange, setSelectedRange] = useState<string[]>([]);
@@ -32,15 +32,15 @@ export default function SpellsScreen() {
     const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
 
     //Search Functions 
+     const handleSearch = (query: string) => {
+      setSearchQuery(query);
+    };
+
     useEffect(() => {
       if (searchQuery.length > 0) {
         handleSearchDebounced(searchQuery);
       }
     }, [searchQuery]);
-
-    const handleSearch = (query: string) => {
-      setSearchQuery(query);
-    };
 
     const handleSearchDebounced = useMemo(() => debounce((query: string) => {
       const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
@@ -48,15 +48,15 @@ export default function SpellsScreen() {
     }, 500), [spells]);
     //End search Functions
 
-    // start filters functions    
-    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectCircle), []);
-    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
-    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), []);
-    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), []);
-    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), []);
+    // start filters functions  
+    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
+    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
+    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), [setSchoolsSelected]);
+    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), [setSelectedRange]);
+    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), [setSelectedTempo]);
 
     const allFilters = [
-      selectCircle, 
+      selectedCircle, 
       schoolsSelected, 
       selectedClasses, 
       selectedRange, 
@@ -64,7 +64,7 @@ export default function SpellsScreen() {
     ].reduce((total, arr) => total + arr.length, 0);
     
     const clearFilters = ()=>{
-       [setSelectCircle, 
+       [setSelectedCircle, 
         setSchoolsSelected, 
         setSelectedClasses, 
         setSelectedRange, 
@@ -73,20 +73,20 @@ export default function SpellsScreen() {
     };
 
     const filters = useMemo(() => ({
-      selectCircle,
+      selectedCircle,
       schoolsSelected,
       selectedClasses,
       selectedRange,
       selectedTempo
-    }), [selectCircle, schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
+    }), [selectedCircle , schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
 
-    const filterTest = useMemo(() => {
+    const filter = useMemo(() => {
       const shouldFilter = Object.values(filters).some(arr => arr.length > 0);
       return shouldFilter ? filterSpels(magias, filters) : magias;
     }, [filters]);
 
       const applyFilter = () => {
-        setSpells(filterTest);
+        setSpells(filter);
         setShowFilter(false);
       }
     // End filters functions
@@ -110,16 +110,7 @@ export default function SpellsScreen() {
       <RenderSpell item={item} />
     ), []);
     
-    
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
-    
-     /*
-    const handleOpenModalFilter = useCallback(
-      debounce(() =>{
-        setShowFilter(true)
-      }, 300),[]
-    );
-    */
     // End render functions
 
     return (
@@ -146,7 +137,7 @@ export default function SpellsScreen() {
          <Text style={styles.Text}>Selecione os filtros:</Text>
          
             <DrawerFilter
-                selectCircle={selectCircle}
+                selectCircle={selectedCircle}
                 selectedClasses={selectedClasses}
                 schoolsSelected={schoolsSelected}
                 selectedRange={selectedRange}

@@ -1,7 +1,7 @@
 import { Spell } from "./groupMagic";
 
 export interface SpellFilters{
-    selectCircle: string[];
+    selectedCircle: string[];
     schoolsSelected: string[];
     selectedClasses: string[];
     selectedRange: string[];
@@ -10,7 +10,7 @@ export interface SpellFilters{
 
 export function filterSpels(magias: Spell[], filters: SpellFilters): Spell[] {
     const {
-        selectCircle,
+        selectedCircle ,
         schoolsSelected,
         selectedClasses,
         selectedRange,
@@ -18,7 +18,7 @@ export function filterSpels(magias: Spell[], filters: SpellFilters): Spell[] {
     } = filters;
 
     return magias.filter(magia =>{
-        const matchCircle = selectCircle.length === 0 || selectCircle.includes(magia.circulo);
+        const matchCircle = selectedCircle.length === 0 || selectedCircle.includes(magia.circulo);
         const matchSchool = schoolsSelected.length === 0 || schoolsSelected.includes(magia.escola);
         const matchClass = selectedClasses.length === 0 || magia.classes.some(classe => selectedClasses.includes(classe));
         const matchRange = selectedRange.length === 0 || selectedRange.includes(magia.alcance);

@@ -59,7 +59,7 @@ const FilterGroup = ({
 );
 
 function DrawerFilter({
-  selectCircle,
+    selectCircle,
   selectedClasses,
   schoolsSelected,
   selectedRange,
