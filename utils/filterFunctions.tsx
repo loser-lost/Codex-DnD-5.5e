@@ -17,7 +17,7 @@ export function filterSpels(magias: Spell[], filters: SpellFilters): Spell[] {
         selectedTempo
     } = filters;
 
-    return magias.filter(magia =>{
+    return magias.filter((magia) =>{
         const matchCircle = selectedCircle.length === 0 || selectedCircle.includes(magia.circulo);
         const matchSchool = schoolsSelected.length === 0 || schoolsSelected.includes(magia.escola);
         const matchClass = selectedClasses.length === 0 || magia.classes.some(classe => selectedClasses.includes(classe));

@@ -40,14 +40,14 @@ const FilterGroup = ({title, items, selectedItems, toggleItem, Icon}: {
     accessoryLeft={Icon}
   >
     {items.map((item, idx) => (
-      <DrawerItem
+        <DrawerItem
         key={idx}
         title={() => (
           <CheckBox checked={selectedItems.includes(item)} onChange={() => toggleItem(item)}>
             {item}
           </CheckBox>
         )}
-      />
+        />
     ))}
   </DrawerGroup>
 );

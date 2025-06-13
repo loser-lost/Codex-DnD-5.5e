@@ -127,15 +127,14 @@ export default function SpellsScreen() {
           maxToRenderPerBatch={10}
           windowSize={5}
         />
-       <Modal
+        <Modal
         visible={showFilter }
         backdropStyle={styles.backdrop}
         style={styles.filterModal}
         onBackdropPress={() => setShowFilter(false)}
-      >
+        >
         <Card disabled={true} style={styles.filterList}>
          <Text style={styles.Text}>Selecione os filtros:</Text>
-         
             <DrawerFilter
                 selectCircle={selectedCircle}
                 selectedClasses={selectedClasses}
@@ -153,7 +152,6 @@ export default function SpellsScreen() {
                 RangeIcon={RangeIcon}
                 TempoIcon={TempoIcon}                      
             />
-           
             <Layout style={styles.buttons}>
               <AppliFilterButton applyFilter={applyFilter} allFilters={allFilters} />
               <ClearFiltersButton clearFilters={clearFilters} />

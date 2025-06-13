@@ -39,7 +39,6 @@ export function AppliFilterButton({ applyFilter, allFilters }: applyFilterButton
     );
 };
 
-
 export function ClearFiltersButton({ clearFilters }: clearFiltersButtonProps){
     return (
         <>

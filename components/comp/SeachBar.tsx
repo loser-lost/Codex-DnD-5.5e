@@ -11,8 +11,6 @@ type Props = {
 };
    
  export default function SearchBar({ value, onChangeText, handleOpenFilter, allFilters }: Props) {
-
-  const theme = useTheme();
   const handleClear = () => {
     onChangeText('');
   };
