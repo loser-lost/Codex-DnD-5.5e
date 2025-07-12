@@ -11,9 +11,11 @@ type Props = {
 };
    
  export default function SearchBar({ value, onChangeText, handleOpenFilter, allFilters }: Props) {
+
   const handleClear = () => {
     onChangeText('');
   };
+
     return (
         <Layout style={styles.header}>
             <Input
@@ -22,7 +24,7 @@ type Props = {
                 value={value}
                 onChangeText={onChangeText}
                 size="medium"
-                accessoryRight={() => <DeleteIcon deleteIcon={handleClear} />}
+                accessoryRight={() => value.length > 0 ? <DeleteIcon deleteIcon={handleClear} /> : <></>}
             />
             <Button onPress={handleOpenFilter} size="small" style={{ marginHorizontal: 4 }}>
                 {allFilters > 0 ? `Filtros: ${allFilters}` : 'Filtrar'}
