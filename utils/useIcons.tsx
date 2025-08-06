@@ -26,6 +26,11 @@ import Feather from '@expo/vector-icons/Feather';
         deleteIcon: () => void;
         style?: Partial<TextStyle>;
     };
+
+    type PlusIconProps = {
+        plusIcon: () => void;
+        style?: Partial<TextStyle>;
+    };
   
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
@@ -142,7 +147,6 @@ import Feather from '@expo/vector-icons/Feather';
 
      export const DeleteIcon = ({ deleteIcon, style }: deleteIconProps): IconElement=> {
         const theme = useTheme();
-    
         return (
             <Feather 
             name="x" 
@@ -153,3 +157,14 @@ import Feather from '@expo/vector-icons/Feather';
         );
     };
 
+    export const PlusIcon = ({plusIcon, style }: PlusIconProps): IconElement=> {
+        const theme = useTheme();
+        return (
+            <AntDesign 
+            name="pluscircle" 
+            size={24} 
+            color={theme['color-basic-500']}
+            onPress={plusIcon}
+            />
+        );
+    }

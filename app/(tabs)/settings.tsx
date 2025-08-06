@@ -1,6 +1,6 @@
 import { Text, TitleText } from "@/components/StyledText";
 import { StyleSheet } from "react-native";
-import { Button, Layout } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import React from "react";
 
 export default function MonsterScreen() {
