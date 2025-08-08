@@ -6,20 +6,18 @@ import { Text, TitleText } from '@/components/StyledText';
 import React, { useState, useCallback } from 'react';
 import { PlusIcon } from '../../utils/useIcons';
 
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+
 export default function TabTwoScreen() {
   const [showCaracter, setShowCaracter] = useState(false);
-  const [Name, setName] = useState('');
-  const [Class, setClass] = useState('');
-  const [level, setLevel] = useState('');
+
+
 
   const openCreateCharacter = useCallback(() => setShowCaracter(true), []);
 
-  const createCaracter = useCallback(() => {
-    localStorage.setItem('username', Name);
-    let username = localStorage.getItem('username');
-    console.log(username); // Output: JohnDoe
-    setShowCaracter(false);
-  }, []);
+  const createCaracter = useCallback(() => {setShowCaracter(false);}, []);
+
+
 
   return (
     <Layout style={styles.container}>
@@ -29,7 +27,7 @@ export default function TabTwoScreen() {
     <Layout style={styles.nivelBar}>
       <PlusIcon plusIcon={openCreateCharacter} style={styles.title} />
     </Layout>
-
+    
     <Modal visible={showCaracter}>
         <Card disabled={true}>
           <Text>
@@ -38,22 +36,16 @@ export default function TabTwoScreen() {
            <Input
                 style={styles.input}
                 placeholder='Name'
-                value={Name}
-                onChangeText={nextValue => setName(nextValue)}
-            />
-            <Input
-                style={styles.input}
-                placeholder='Class'
-                value={Class}
-                onChangeText={nextValue => setClass(nextValue)}
-            />
-            <Input
-                style={styles.input}
-                placeholder='Level'
-                value={level}
-                onChangeText={nextValue => setLevel(nextValue)}
+                onSubmitEditing={(e) => {}}
             />
 
+          <Button>
+            Ler Valor
+          </Button>
+          <Button>
+            remover Valor
+          </Button>
+      
           <Layout style={styles.buttons}>
           <Button onPress={() => setShowCaracter(false)}>
             Cancelar
