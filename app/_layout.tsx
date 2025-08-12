@@ -22,7 +22,7 @@ import { AveriaSerifLibre_400Regular, AveriaSerifLibre_700Bold, useFonts } from 
 import 'react-native-reanimated';
 import { Inter_400Regular, Inter_700Bold, Inter_400Regular_Italic } from '@expo-google-fonts/inter';
 import { SQLiteProvider } from 'expo-sqlite';
-import { initializeDatabase } from '../assets/database/initializeDatabase';
+import { initializeDatabase } from '../assets/_database/initializeDatabase';
 
 
 export const unstable_settings = { initialRouteName: '(tabs)' };
@@ -67,7 +67,8 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' ,animation: 'fade_from_bottom', }} />
-        <Stack.Screen name="SpellDetails" options={{ presentation: 'card', animation: 'slide_from_left', }} />
+        <Stack.Screen name="SpellDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
+        <Stack.Screen name="CreateCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
       </Stack>
       </SQLiteProvider>
     </ApplicationProvider>
