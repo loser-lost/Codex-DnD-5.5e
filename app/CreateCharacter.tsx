@@ -1,6 +1,6 @@
 
-import { Button, Input, Layout, useTheme } from "@ui-kitten/components";
-import React from "react";
+import { Button, Input, Layout, Select, SelectItem,IndexPath, useTheme } from "@ui-kitten/components";
+import React, { useMemo } from "react";
 import { Alert, StyleSheet } from "react-native";
 import {useCharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import { Stack, useRouter } from "expo-router";
@@ -10,27 +10,37 @@ const CreateCharacterScreen = () => {
     const theme = useTheme();
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
-    const [race, setrace] = React.useState('');
+    const [race, setrace] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
     const [classe, setClasse] = React.useState('');
     const [level, setLevel] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
     const [color, setcolor] = React.useState('');
     const [personagem, setPersonagem] = React.useState([]);
+    const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
+
+
+    const races = useMemo(() => ['Humano', 'Elfo', 'Anão', 'Orc'], []);
+
 
     const  characterDatabase  = useCharacterDatabase();
 
 
     const BackFunction = () => {router.back();}
-
+    
+    const displayValue = selectedRaceIndex
+    ? races[selectedRaceIndex.row]
+    : '';
+    
     async function saveCharacter(){
-
       try {
         if(isNaN(Number(level)) || !name || !classe || !color) {
           alert('Por favor, preencha todos os campos obrigatórios.');
           return;
         } 
+        const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
         const response = await characterDatabase.create({name, race, classe, level: Number(level), playerName, color})
         if (response && response.insertedRowId) {
+          
           return Alert.alert("Personagem salvo! ID: " + response.insertedRowId);
           
         } else {
@@ -42,6 +52,8 @@ const CreateCharacterScreen = () => {
       }
 
     }
+   
+    
 
 
     return(
@@ -54,12 +66,15 @@ const CreateCharacterScreen = () => {
                       placeholder='Nome*'
                       onChangeText={setname}
                     />
-                    <Input
-                      style={styles.input}
-                      value={race}
-                      placeholder='Raça'
-                      onChangeText={setrace}
-                    />
+                    
+                    <Select
+                      value={displayValue}
+                      selectedIndex={selectedRaceIndex}
+                      onSelect={index => setSelectedRaceIndex(index as IndexPath)}
+                      placeholder={'Raça*'}
+                    >
+                     {races.map(r => <SelectItem key={r} title={r} />)}
+                    </Select>
                     <Input
                       style={styles.input}
                       value={classe}

@@ -33,12 +33,36 @@ export function useCharacterDatabase() {
         } catch (error) {
             console.error('Erro ao criar personagem:', error);
             return;
+        } finally {
+            await statement.finalizeAsync();
         }
     }
 
-    async function read(){
-        // Lógica para ler os personagens do banco de dados
+    async function seachByName(name: string) {
+    try {
+        const query = 'SELECT * FROM caracter WHERE name LIKE ?';
+
+        const response = await db.getAllAsync<CharacterDatabase>(query, '%${name}%')
+
+        return response;
+    } catch (error) {
+        console.error('Erro ao buscar personagem por nome:', error);
+        throw error;  
     }
+    
+}
+
+    async function read(){
+        try {
+            const query = 'SELECT * FROM caracter';
+            const response = await db.getAllAsync<CharacterDatabase>(query);
+            return response;
+        } catch (error) {
+            console.error('Erro ao listar personagens:', error);
+            throw error;     
+        }
+    }
+    
     async function update(){
         // Lógica para atualizar os personagens do banco de dados
     }
@@ -46,9 +70,12 @@ export function useCharacterDatabase() {
         // Lógica para deletar os personagens do banco de dados
     }
     return {
+        
         create,
+        seachByName,
         read,
         update,
         remove
     }
 }
+
