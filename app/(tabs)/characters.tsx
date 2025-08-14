@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 
-import { Button, Card, Input, Layout, List, ListItem, Modal } from '@ui-kitten/components';
-import { Text, TitleText } from '@/components/StyledText';
-import React, { useState, useCallback, useEffect } from 'react';
+import {  Input, Layout, List, ListItem } from '@ui-kitten/components';
+
+import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
 import { PlusIcon } from '../../utils/useIcons';
 import { useRouter } from 'expo-router';
@@ -11,29 +11,34 @@ import { useRouter } from 'expo-router';
 
 
 export default function TabTwoScreen() {
-
   const [search, setSearch] = useState('');
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
-
   const  characterDatabase  = useCharacterDatabase();
   const router = useRouter();
   const newCharacter = () => {router.push('/CreateCharacter')}
 
+  /*
     async function seacrchlistCharacters(){
       try {
         const response = await characterDatabase.seachByName(search);
         setCharacters(response);
-
       } catch (error) {
         console.error('Erro ao listar personagens:', error);
-        alert('Erro ao listar personagens. Tente novamente.');
+        throw error;
       }
       
     }
-
     useEffect(() => {
       seacrchlistCharacters();
     }, [search]);
+
+    <Input
+            style={styles.search}
+            placeholder="Procurar..."  
+            value={search}
+            onChangeText={setSearch}
+          />
+    */
 
     async function listCharacters() {
       try {
@@ -49,36 +54,38 @@ export default function TabTwoScreen() {
       listCharacters();
     }, [listCharacters]);
 
-     const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => (
-    <ListItem
-      title={`${item.name}`}
-      description={`${item.race} - ${item.classe}`}
-     // accessoryLeft={renderItemIcon}
-     // accessoryRight={renderItemAccessory}
-    />
-  );
+    const roteCharacterDetails = (id: number) => {
+      router.push(`/CharacterDetails?character_id=${id}`);
+    }
 
+     const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => 
+      (
+        <ListItem
+          onPress={() => roteCharacterDetails(item.id)}
+          title={`${item.name}`}
+          description={`${item.race} - ${item.classe}`}
+        // accessoryLeft={renderItemIcon}
+        // accessoryRight={renderItemAccessory}
+        />
+      );
+
+      
+      
   return (
     <Layout style={styles.container}>
-    <Layout >
-      <Input
-        
-        placeholder="Procurar..."  
-        value={search}
-        onChangeText={setSearch}
-      />
-    </Layout>
-   
-      
-    <List
-      style={{flex: 1, marginTop: 20, width: '90%', height: '80%'}}
-      data={characters}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id.toString()}
-    />
-    <Layout style={styles.nivelBar}>
-      <PlusIcon plusIcon={newCharacter} style={styles.title} />
-    </Layout>
+      <Layout style={{width: '100%', alignItems: 'center'}}>
+
+        <List
+          style={{ marginTop: 20, width: '90%'}}
+          data={characters}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+         
+        />
+        <Layout style={styles.nivelBar}>
+          <PlusIcon plusIcon={newCharacter} />
+        </Layout>
+      </Layout>
     </Layout>
   );
 }
@@ -89,23 +96,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 32,
-    fontFamily: 'AveriaSerifLibreBold',
-  },
+ 
   nivelBar: {
-    flexDirection: 'row',
-    alignItems: 'center', 
+    flexDirection: 'row-reverse',
+    
     paddingVertical: 10,
     width: '90%', 
   },
-  input: {
-    flex: 1,
-    paddingVertical: 8,
-    marginHorizontal: 4,
+  search: {
+    width: '90%',
+    marginVertical: 10,
   },
-  buttons: {
-    paddingVertical: 8,
-    flexDirection: 'row', 
-    justifyContent: 'space-between'}
 });

@@ -69,6 +69,7 @@ function RootLayoutNav() {
         <Stack.Screen name="modal" options={{ presentation: 'modal' ,animation: 'fade_from_bottom', }} />
         <Stack.Screen name="SpellDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
         <Stack.Screen name="CreateCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
+        <Stack.Screen name="CharacterDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
       </Stack>
       </SQLiteProvider>
     </ApplicationProvider>

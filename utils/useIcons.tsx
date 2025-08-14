@@ -6,6 +6,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Feather from '@expo/vector-icons/Feather';
+import { JSX } from "react";
 
 
     type BackIconProps = {
@@ -32,6 +33,7 @@ import Feather from '@expo/vector-icons/Feather';
         style?: Partial<TextStyle>;
     };
   
+    
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
         const theme = useTheme(); 
@@ -162,7 +164,7 @@ import Feather from '@expo/vector-icons/Feather';
         return (
             <AntDesign 
             name="pluscircle" 
-            size={24} 
+            size={36} 
             color={theme['color-basic-500']}
             onPress={plusIcon}
             />

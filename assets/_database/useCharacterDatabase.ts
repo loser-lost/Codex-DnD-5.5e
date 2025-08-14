@@ -38,15 +38,13 @@ export function useCharacterDatabase() {
         }
     }
 
-    async function seachByName(name: string) {
+    async function seachById(id: string) {
     try {
-        const query = 'SELECT * FROM caracter WHERE name LIKE ?';
-
-        const response = await db.getAllAsync<CharacterDatabase>(query, '%${name}%')
-
+        const query = 'SELECT * FROM caracter WHERE id = ?';
+        const response = await db.getAllAsync<CharacterDatabase>(query, [id]);
         return response;
     } catch (error) {
-        console.error('Erro ao buscar personagem por nome:', error);
+        console.error('Erro ao buscar personagem por id:', error);
         throw error;  
     }
     
@@ -63,18 +61,37 @@ export function useCharacterDatabase() {
         }
     }
     
-    async function update(){
-        // Lógica para atualizar os personagens do banco de dados
-    }
+    /*async function update(date: CharacterDatabase) {
+        const statement = await db.prepareAsync(
+            "INSERT INTO caracter(name, race, classe, level, playerName, color) VALUES ($name, $race, $classe, $level, $playerName, $color)"
+        )
+        try {
+            const result = await statement.executeAsync({
+                $name: date.name,
+                $race: date.race,
+                $classe: date.classe,
+                $level: date.level,
+                $playerName: date.playerName,
+                $color: date.color
+            })
+            const insertedRowId = result.lastInsertRowId?.toString();
+            return { insertedRowId };
+        } catch (error) {
+            console.error('Erro ao criar personagem:', error);
+            return;
+        } finally {
+            await statement.finalizeAsync();
+        }
+    }*/
     async function remove(){
         // Lógica para deletar os personagens do banco de dados
     }
     return {
         
         create,
-        seachByName,
+        seachById,
         read,
-        update,
+       // update,
         remove
     }
 }
