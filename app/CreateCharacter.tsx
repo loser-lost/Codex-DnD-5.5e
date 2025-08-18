@@ -10,50 +10,56 @@ const CreateCharacterScreen = () => {
     const theme = useTheme();
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
-    const [race, setrace] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
+     
     const [classe, setClasse] = React.useState('');
     const [level, setLevel] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
     const [color, setcolor] = React.useState('');
-    const [personagem, setPersonagem] = React.useState([]);
+  
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
+    const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
+    const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
 
-
-    const races = useMemo(() => ['Humano', 'Elfo', 'Anão', 'Orc'], []);
-
+    //'Mago', 'Feiticeiro', 'Clérigo', 'Guardião', 'Bardo', 'Druida', 'Bruxo','Paladino'
+    const races = useMemo(() => ['Humano', 'Elfo', 'Anão', 'Orc', 'Assimar', 'Gnomo', 'Halfling', 'Golias', 'Tiferino', 'Draconato'], []);
+    const classees = useMemo(() => ['Mago', 'Feiticeiro', 'Clérigo', 'Ladino', 'Guardião', 'Bardo', 'Druida', 'Bruxo','Paladino'], []);
+    const levels = useMemo(() => [1, 2, 3, 4 ,5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], []);
 
     const  characterDatabase  = useCharacterDatabase();
-
-
     const BackFunction = () => {router.back();}
     
-    const displayValue = selectedRaceIndex
+
+    const displayValueRaça = selectedRaceIndex
     ? races[selectedRaceIndex.row]
     : '';
+    const displayValueClasse = selectedClassIndex
+    ? classees[selectedClassIndex.row]
+    : '';
+    const displayValueLevel = selectedLevelIndex
+    ? levels[selectedLevelIndex.row] 
+    : 0; 
     
     async function saveCharacter(){
+      const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
+      const classe = selectedClassIndex !== undefined ? classees[selectedClassIndex.row] : '';
+      const level = displayValueLevel;
       try {
         if(isNaN(Number(level)) || !name || !classe || !color) {
-          alert('Por favor, preencha todos os campos obrigatórios.');
-          return;
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
         } 
-        const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
         const response = await characterDatabase.create({name, race, classe, level: Number(level), playerName, color})
         if (response && response.insertedRowId) {
-          
-          return Alert.alert("Personagem salvo! ID: " + response.insertedRowId);
-          
+            return Alert.alert("Personagem salvo! ID: " + response.insertedRowId); 
         } else {
-          return Alert.alert("Erro ao salvar personagem.");
+            return Alert.alert("Erro ao salvar personagem.");
         }
       }catch (error) {
         console.error('Erro ao salvar personagem:', error);
         alert('Erro ao salvar personagem. Tente novamente.');
       }
-
     }
    
-    
 
 
     return(
@@ -68,25 +74,33 @@ const CreateCharacterScreen = () => {
                     />
                     
                     <Select
-                      value={displayValue}
+                      style={styles.input}
+                      value={displayValueRaça}
                       selectedIndex={selectedRaceIndex}
                       onSelect={index => setSelectedRaceIndex(index as IndexPath)}
-                      placeholder={'Raça*'}
+                      placeholder={'Raça'}
                     >
                      {races.map(r => <SelectItem key={r} title={r} />)}
                     </Select>
-                    <Input
+                    <Select
                       style={styles.input}
-                      value={classe}
-                      placeholder='Classe*'
-                      onChangeText={setClasse}
-                    />
-                    <Input
+                      value={displayValueClasse}
+                      selectedIndex={selectedClassIndex}
+                      onSelect={index => setSelectedClassIndex(index as IndexPath)}
+                      placeholder={'Classe'}
+                    >
+                     {classees.map(r => <SelectItem key={r} title={r} />)}
+                    </Select>
+                    <Select
                       style={styles.input}
-                      value={level}
-                      placeholder='Nivel*'
-                      onChangeText={setLevel}
-                    />
+                      value={displayValueLevel}
+                      selectedIndex={selectedLevelIndex}
+                      onSelect={index => setSelectedLevelIndex(index as IndexPath)}
+                      placeholder={'Nivel'}
+                    >
+                     {levels.map(r => <SelectItem key={r} title={r} />)}
+                    </Select>
+                   
                 
                     <Input
                       style={styles.input}
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
     
   },
    input: {
-    margin: 2,
+    margin: 4,
   },
   containerbottom: {
     flexDirection: 'row',

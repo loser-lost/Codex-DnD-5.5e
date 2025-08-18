@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 
-import {  Input, Layout, List, ListItem } from '@ui-kitten/components';
+import {   Layout, List, ListItem } from '@ui-kitten/components';
 
 import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
