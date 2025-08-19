@@ -35,6 +35,7 @@ type Props = {
     }
     const styles = StyleSheet.create({
     header: {
+        marginTop: 25,
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',

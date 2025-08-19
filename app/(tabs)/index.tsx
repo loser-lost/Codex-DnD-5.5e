@@ -115,7 +115,7 @@ export default function SpellsScreen() {
 
     return (
       <Layout style={styles.container}>
-        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenModalFilter} allFilters={allFilters} />
+        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenModalFilter} allFilters={allFilters}  />
 
         <SectionList
           sections={spellInSections}
@@ -163,9 +163,11 @@ export default function SpellsScreen() {
   )}
   const styles = StyleSheet.create({
     container: {
+      
       flex: 1,
     },
     header: {
+      
       flexDirection: 'row',
       alignItems: 'center',
       width: '100%',

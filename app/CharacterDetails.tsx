@@ -4,8 +4,10 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 
 import {  StyleSheet } from 'react-native';
-import { useEffect, useState } from "react";
+import { useEffect, useState,  } from "react";
 import React from "react";
+import { StarIcon } from "@/utils/useIcons";
+import { TabViewComponent } from "@/components/comp/tabView";
 
 
 
@@ -15,6 +17,7 @@ const CharacterDetails = () => {
     const {character_id} = useLocalSearchParams();
     const characterDb = useCharacterDatabase();
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     useEffect(() => {
         characterSearch();
@@ -32,12 +35,14 @@ const CharacterDetails = () => {
         }
     }
 
-    
-
     return (
         <Layout style={[styles.container, { backgroundColor: teme['background-basic-color-1'] }]}>
             <Stack.Screen options={{ headerShown: false }} />
-            <Layout>
+            <Layout style={styles.headerIcons}>
+                <StarIcon />
+            </Layout>
+            <Layout style={styles.header}>
+
             {character.length > 0 ? (
                 character.map((Char) => (
                     <Layout key={Char.id} style={{ marginBottom: 16 }}>
@@ -45,21 +50,34 @@ const CharacterDetails = () => {
                         <Text category="s1">{`Raça: ${Char.race}`}</Text>
                         <Text category="s1">{`Classe: ${Char.classe}`}</Text>
                         <Text category="s1">{`Nível: ${Char.level}`}</Text>
-                        <Text category="s1">{`Cor: ${Char.color}`}</Text>
                     </Layout>
                 ))
             ) : (
                 <Text category="s1">Nenhum personagem encontrado.</Text>
             )}
-            
+            <Text>Nivel de magia</Text>
             </Layout>
+
+            <TabViewComponent />
+            
         </Layout>
     )
 } 
 export default CharacterDetails;
 const styles = StyleSheet.create({
 container: {
-    flex: 1,
-    padding: 20,
+        flex: 1,
+        padding: 20,
   },
+headerIcons: { 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        padding: 15 
+  },
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });

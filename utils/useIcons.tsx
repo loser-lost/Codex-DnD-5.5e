@@ -5,6 +5,7 @@ import { ImageProps, TextStyle } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Feather from '@expo/vector-icons/Feather';
 import { JSX } from "react";
 
@@ -33,6 +34,10 @@ import { JSX } from "react";
         style?: Partial<TextStyle>;
     };
   
+    type DeleteIconXProps = {
+        deleteIconX: () => void;
+        style?: Partial<TextStyle>;
+    }
     
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
@@ -164,9 +169,21 @@ import { JSX } from "react";
         return (
             <AntDesign 
             name="pluscircle" 
-            size={36} 
+            size={24} 
             color={theme['color-basic-500']}
             onPress={plusIcon}
             />
         );
     }
+    export const DeleteIconX = ({ deleteIconX, style }: DeleteIconXProps): IconElement => {
+        const theme = useTheme();
+        return (
+            <FontAwesome6 
+            name="xmark" 
+            size={24} 
+            color={theme['color-basic-500']}
+            onPress={deleteIconX}
+            />
+        )
+    }
+//<FontAwesome6 name="xmark" size={24} color="black" />

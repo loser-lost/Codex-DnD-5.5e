@@ -7,7 +7,7 @@ export type CharacterDatabase = {
     classe: string;
     level: number;
     playerName: string;
-    color: string;
+    
 }
 
 
@@ -17,7 +17,7 @@ export function useCharacterDatabase() {
 
     async function create(date: Omit<CharacterDatabase, "id">){
         const statement = await db.prepareAsync(
-            "INSERT INTO caracter(name, race, classe, level, playerName, color) VALUES ($name, $race, $classe, $level, $playerName, $color)"
+            "INSERT INTO caracter(name, race, classe, level, playerName) VALUES ($name, $race, $classe, $level, $playerName)"
         )
         try {
             const result = await statement.executeAsync({
@@ -26,7 +26,7 @@ export function useCharacterDatabase() {
                 $classe: date.classe,
                 $level: date.level,
                 $playerName: date.playerName,
-                $color: date.color
+                
             })
             const insertedRowId = result.lastInsertRowId?.toString();
             return { insertedRowId };

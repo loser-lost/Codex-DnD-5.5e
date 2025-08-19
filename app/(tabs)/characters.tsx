@@ -5,13 +5,13 @@ import {   Layout, List, ListItem } from '@ui-kitten/components';
 
 import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
-import { PlusIcon } from '../../utils/useIcons';
+import { DeleteIconX, PlusIcon } from '../../utils/useIcons';
 import { useRouter } from 'expo-router';
 
 
 
 export default function TabTwoScreen() {
-  const [search, setSearch] = useState('');
+  //const [search, setSearch] = useState('');
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
   const  characterDatabase  = useCharacterDatabase();
   const router = useRouter();
@@ -58,6 +58,10 @@ export default function TabTwoScreen() {
       router.push(`/CharacterDetails?character_id=${id}`);
     }
 
+    const renderItemAccessory = (props: any) => (
+        <DeleteIconX deleteIconX={() => {}} />
+    );
+
      const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => 
       (
         <ListItem
@@ -65,26 +69,29 @@ export default function TabTwoScreen() {
           title={`${item.name}`}
           description={`${item.race} - ${item.classe}`}
         // accessoryLeft={renderItemIcon}
-        // accessoryRight={renderItemAccessory}
+         accessoryRight={renderItemAccessory}
         />
       );
 
       
-      
   return (
     <Layout style={styles.container}>
+      
+      <Layout style={styles.nivelBar}>
+          <PlusIcon plusIcon={newCharacter} />
+      </Layout>
       <Layout style={{width: '100%', alignItems: 'center'}}>
 
         <List
           style={{ marginTop: 20, width: '90%'}}
           data={characters}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id.toString()
+          
+          }
          
         />
-        <Layout style={styles.nivelBar}>
-          <PlusIcon plusIcon={newCharacter} />
-        </Layout>
+        
       </Layout>
     </Layout>
   );
@@ -94,17 +101,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    
   },
  
   nivelBar: {
-    flexDirection: 'row-reverse',
-    
-    paddingVertical: 10,
-    width: '90%', 
-  },
-  search: {
-    width: '90%',
-    marginVertical: 10,
-  },
+    padding: 10,
+    marginTop: 40,
+    flexDirection: 'row',
+    width: '85%', 
+  }, 
+  list:{
+     marginTop: 10,
+     width: '85%',
+     
+  }
+  
 });

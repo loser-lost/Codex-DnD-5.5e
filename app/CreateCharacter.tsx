@@ -8,14 +8,9 @@ import { Stack, useRouter } from "expo-router";
 const CreateCharacterScreen = () => {
     const router = useRouter();
     const theme = useTheme();
-    const [id, setId] = React.useState('');
+
     const [name, setname] = React.useState('');
-     
-    const [classe, setClasse] = React.useState('');
-    const [level, setLevel] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
-    const [color, setcolor] = React.useState('');
-  
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
@@ -28,7 +23,6 @@ const CreateCharacterScreen = () => {
     const  characterDatabase  = useCharacterDatabase();
     const BackFunction = () => {router.back();}
     
-
     const displayValueRaça = selectedRaceIndex
     ? races[selectedRaceIndex.row]
     : '';
@@ -44,13 +38,13 @@ const CreateCharacterScreen = () => {
       const classe = selectedClassIndex !== undefined ? classees[selectedClassIndex.row] : '';
       const level = displayValueLevel;
       try {
-        if(isNaN(Number(level)) || !name || !classe || !color) {
+        if(isNaN(Number(level)) || !name || !classe ) {
             alert('Por favor, preencha todos os campos obrigatórios.');
             return;
         } 
-        const response = await characterDatabase.create({name, race, classe, level: Number(level), playerName, color})
+        const response = await characterDatabase.create({name, race, classe, level: Number(level), playerName})
         if (response && response.insertedRowId) {
-            return Alert.alert("Personagem salvo! ID: " + response.insertedRowId); 
+            router.push('/characters');
         } else {
             return Alert.alert("Erro ao salvar personagem.");
         }
@@ -59,9 +53,6 @@ const CreateCharacterScreen = () => {
         alert('Erro ao salvar personagem. Tente novamente.');
       }
     }
-   
-
-
     return(
         <Layout style={[ { backgroundColor: theme['background-basic-color-1'] }]} level="1">
               <Stack.Screen options={{ headerShown: false }} />
@@ -101,20 +92,13 @@ const CreateCharacterScreen = () => {
                      {levels.map(r => <SelectItem key={r} title={r} />)}
                     </Select>
                    
-                
                     <Input
                       style={styles.input}
                       value={playerName}
                       placeholder='Nome do player'
                       onChangeText={setPlayer}
                     />
-                    <Input
-                      style={styles.input}
-                      value={color}
-                      placeholder='Cor*'
-                      onChangeText={setcolor}
-                    />
-        
+                   
                     <Layout style={styles.containerbottom}>
                       <Button style={styles.botton} onPress={saveCharacter}>Salvar</Button>
                       <Button style={styles.botton} onPress={BackFunction}>Cancelar</Button>
@@ -127,11 +111,10 @@ const CreateCharacterScreen = () => {
 export default CreateCharacterScreen;
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
     flexDirection: 'column',
-    marginTop: 50,
     padding: 15,
     height: '100%',
-    
   },
    input: {
     margin: 4,
