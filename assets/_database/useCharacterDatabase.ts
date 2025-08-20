@@ -61,37 +61,42 @@ export function useCharacterDatabase() {
         }
     }
     
-    /*async function update(date: CharacterDatabase) {
+    async function update(date: CharacterDatabase) {
         const statement = await db.prepareAsync(
-            "INSERT INTO caracter(name, race, classe, level, playerName, color) VALUES ($name, $race, $classe, $level, $playerName, $color)"
+            "UPDATE caracter SET name = $name, race = $race, classe = $classe, level = $level, playerName = $playerName WHERE id = $id"
         )
         try {
-            const result = await statement.executeAsync({
+            await statement.executeAsync({
+                $id: date.id,
                 $name: date.name,
                 $race: date.race,
                 $classe: date.classe,
                 $level: date.level,
                 $playerName: date.playerName,
-                $color: date.color
             })
-            const insertedRowId = result.lastInsertRowId?.toString();
-            return { insertedRowId };
         } catch (error) {
             console.error('Erro ao criar personagem:', error);
             return;
         } finally {
             await statement.finalizeAsync();
         }
-    }*/
-    async function remove(){
-        // Lógica para deletar os personagens do banco de dados
+    }
+    async function remove(id: Number) {
+        try {
+            //const query = "DELETE FROM caracter WHERE id = ";
+            await db.execAsync("DELETE FROM caracter WHERE id = " + id);
+            // Lógica para deletar os personagens do banco de dados
+        } catch (error) {
+            console.error('Erro ao listar personagens:', error);
+            throw error;    
+        }
     }
     return {
         
         create,
         seachById,
         read,
-       // update,
+        update,
         remove
     }
 }

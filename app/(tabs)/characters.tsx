@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 
 
 import {   Layout, List, ListItem } from '@ui-kitten/components';
@@ -17,6 +17,8 @@ export default function TabTwoScreen() {
   const router = useRouter();
   const newCharacter = () => {router.push('/CreateCharacter')}
 
+
+      
   /*
     async function seacrchlistCharacters(){
       try {
@@ -58,18 +60,28 @@ export default function TabTwoScreen() {
       router.push(`/CharacterDetails?character_id=${id}`);
     }
 
+    async function deleteCharacter(id: number) {
+      try {
+        await characterDatabase.remove(id)
+        listCharacters();
+      } catch (error) {
+        console.error('Erro ao deletar personagem:', error);
+        throw error;
+      }
+    }
+
     const renderItemAccessory = (props: any) => (
-        <DeleteIconX deleteIconX={() => {}} />
+        <DeleteIconX deleteIconX={() => deleteCharacter(props.item.id)} />
     );
 
-     const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => 
-      (
+
+     const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => (
         <ListItem
           onPress={() => roteCharacterDetails(item.id)}
           title={`${item.name}`}
           description={`${item.race} - ${item.classe}`}
         // accessoryLeft={renderItemIcon}
-         accessoryRight={renderItemAccessory}
+         accessoryRight={ <DeleteIconX deleteIconX={() => deleteCharacter(item.id)} />}
         />
       );
 

@@ -1,6 +1,6 @@
 
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { IconElement, useTheme } from "@ui-kitten/components";
+import { Icon, IconElement, useTheme } from "@ui-kitten/components";
 import { ImageProps, TextStyle } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
@@ -36,6 +36,11 @@ import { JSX } from "react";
   
     type DeleteIconXProps = {
         deleteIconX: () => void;
+        style?: Partial<TextStyle>;
+    }
+
+    type editIconProps = {
+        editIcon: () => void;
         style?: Partial<TextStyle>;
     }
     
@@ -186,4 +191,18 @@ import { JSX } from "react";
             />
         )
     }
-//<FontAwesome6 name="xmark" size={24} color="black" />
+
+    export const EditIcon = ({ editIcon, style }: editIconProps): IconElement => {
+        const theme = useTheme();
+        return (
+            <FontAwesome6 
+            name="edit" 
+            size={24} 
+            color={theme['color-basic-500']}
+            onPress={editIcon}
+            />
+        )
+    }
+
+
+//<FontAwesome6 name="edit" size={24} color="black" />
