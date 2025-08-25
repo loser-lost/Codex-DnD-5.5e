@@ -6,7 +6,7 @@ const DB_NAME = "codexDnd.db";
 
 // *** PASSO CRÍTICO: DEIXE TRUE APENAS NESTA PRIMEIRA EXECUÇÃO PARA RESETAR O DB ***
 // *** Isso irá APAGAR SEU BANCO DE DADOS LOCAL E TODOS OS DADOS ATUAIS. ***
-const RESET_DATABASE_ON_START = false; 
+const RESET_DATABASE_ON_START = true; 
 
 // --- Dados de Magias (Exemplo, importe seu JSON completo aqui) ---
 const spellsData = [
@@ -15,10 +15,10 @@ const spellsData = [
     "nome": "Bola de Fogo Adiável",
     "circulo": "7",
     "escola": "Evocação",
-    "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
     "alcance": "45 metros",
     "componentes": ["V", "S", "M","(uma bola de guano de morcego e enxofre)"],
+    "classes": ["Feiticeiro", "Mago"],
     "duracao": "Concentração, até 1 minuto",
     "efeito": "Um feixe de luz amarela dispara de você, depois se condensa em um ponto escolhido no alcance da magia. Se uma criatura tocar o grânulo brilhante antes da magia terminar, ela realiza uma salvaguarda de Destreza. Se falhar, a magia se encerra, fazendo com que o grânulo exploda. Em caso de sucesso, a criatura pode arremessar o grânulo até 12 metros. Se o arremesso atingir o espaço de uma criatura ou colidir com um objeto sólido, a magia se encerra e o grânulo explode. Quando o grânulo explode, objetos inflamáveis na explosão que não estão sendo usados ou carregados entram em combustão. Usando um Espaço de Magia de Círculo Superior. O dano base aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 7."
   },
@@ -27,10 +27,10 @@ const spellsData = [
     "nome": "Bolha Ácida",
     "circulo": "0",
     "escola": "Evocação",
-    "classes": ["Feiticeiro", "Mago"],
     "tempo_de_conjuracao": "Ação",
     "alcance": "18 metros",
     "componentes": ["V", "S"],
+    "classes": ["Feiticeiro", "Mago"],
     "duracao": "Instantânea",
     "efeito": "Você cria uma bolha ácida em um ponto no alcance da magia, onde ela explode em uma Esfera de 1,5 metro de raio. Cada criatura nessa Esfera deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 1d6 pontos de dano Ácido. Aprimoramento de Truque. O dano aumenta em 1d6 quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6)."
   },
@@ -87,7 +87,7 @@ export async function initializeDatabase(database: SQLiteDatabase) {
         casting_time TEXT NOT NULL,
         range TEXT NOT NULL,
         components TEXT NOT NULL, -- Para V, S, M (array stringificado)
-        material TEXT,            -- Para o componente material entre parênteses
+        classes TEXT,            -- Para o componente material entre parênteses
         duration TEXT NOT NULL,
         description TEXT NOT NULL
       );
@@ -117,7 +117,7 @@ export async function initializeDatabase(database: SQLiteDatabase) {
 
         // Insere a magia no banco de dados
         await database.runAsync(
-          `INSERT INTO spell (name, level, school, casting_time, range, components, material, duration, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          `INSERT INTO spell (name, level, school, casting_time, range, components, material, classes, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             spell.nome,
             Number(spell.circulo), // Converte o círculo para número (nível da magia)

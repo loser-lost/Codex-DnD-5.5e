@@ -99,7 +99,6 @@ export default function TabTwoScreen() {
           data={characters}
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()
-          
           }
          
         />

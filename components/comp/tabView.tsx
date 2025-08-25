@@ -1,16 +1,19 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useMemo } from "react";
+import { SectionList, StyleSheet } from "react-native";
 import { Layout, Tab, TabView,Text } from "@ui-kitten/components";
+import { RenderSectionHeader } from "./renderSpell";
 
 export const TabViewComponent: React.FC = () => {
 
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
+     
+
 
     return (
         <>
         <TabView
-            selectedIndex={selectedIndex}
-            onSelect={index => setSelectedIndex(index)}
+            selectedIndex={selectedIndexTab}
+            onSelect={index => setSelectedIndexTab(index)}
             >
             <Tab title='Magias Conhecidas'>
                 <Layout style={styles.tabContainer}>
@@ -19,10 +22,10 @@ export const TabViewComponent: React.FC = () => {
             </Tab>
             <Tab title='Todas as Magias'>
                 <Layout style={styles.tabContainer}>
-                    <Text>Todas as Magias</Text>
+                    <Text>Conteúdo de Todas as Magias</Text>
                 </Layout>
             </Tab>
-            </TabView>
+        </TabView>
         </>
     )
 };

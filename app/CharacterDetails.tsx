@@ -1,10 +1,11 @@
-import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath} from "@ui-kitten/components";
+import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, List, ListItem, TabView, Tab} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
+import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 
-import {  Alert, StyleSheet } from 'react-native';
-import { useEffect, useMemo, useState,  } from "react";
+import {  Alert, SectionList, StyleSheet } from 'react-native';
+import { use, useCallback, useEffect, useMemo, useState,  } from "react";
 import React from "react";
 import { EditIcon, StarIcon } from "@/utils/useIcons";
 import { TabViewComponent } from "@/components/comp/tabView";
@@ -16,6 +17,7 @@ const CharacterDetails = () => {
     const teme = useTheme();
     const {character_id} = useLocalSearchParams();
     const characterDb = useCharacterDatabase();
+    const spellDb = useSpellDatabase();
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
@@ -24,10 +26,13 @@ const CharacterDetails = () => {
     const races = useMemo(() => ['Humano', 'Elfo', 'Anão', 'Orc', 'Assimar', 'Gnomo', 'Halfling', 'Golias', 'Tiferino', 'Draconato'], []);
     const classees = useMemo(() => ['Mago', 'Feiticeiro', 'Clérigo', 'Ladino', 'Guardião', 'Bardo', 'Druida', 'Bruxo','Paladino'], []);
     const levels = useMemo(() => [1, 2, 3, 4 ,5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], []);
+    const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
-     const displayValueRaça = selectedRaceIndex
+    const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
+    const keyExtractor = useCallback((item: spellDatabase) => String(item.id), [])
+    const displayValueRaça = selectedRaceIndex
     ? races[selectedRaceIndex.row]
     : '';
     const displayValueClasse = selectedClassIndex
@@ -52,7 +57,38 @@ const CharacterDetails = () => {
             throw error; 
         }
     }
+
+    useEffect(() => {
+        spellSearch();
+    }, [ character_id ]);
+
+    async function spellSearch(){
+        try {
+            const response = await spellDb.read();
+            setSpels(response);
+            
+        } catch (error) {
+            console.error('Erro ao buscar magias:', error);
+            throw error;
+        }
+    }
+    const renderItemSpels = ({ item }: { item: spellDatabase }): React.ReactElement => (
+        <ListItem
+          title={`${item.name}`}
+          description={`${item.classes} - Círculo: ${item.level}`}
+        />
+    ); 
+
     /*
+      const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => (
+            <ListItem
+              onPress={() => roteCharacterDetails(item.id)}
+              title={`${item.name}`}
+              description={`${item.race} - ${item.classe}`}
+            // accessoryLeft={renderItemIcon}
+             accessoryRight={ <DeleteIconX deleteIconX={() => deleteCharacter(item.id)} />}
+            />
+          );
     const openModal = () => {
         if (character.length > 0) {
             const currentChar = character[0];
@@ -123,65 +159,86 @@ const CharacterDetails = () => {
                 setVisible(true);
             }} />
             </Layout>
-
-            <TabViewComponent />
-
             
+            <TabView
+                selectedIndex={selectedIndexTab}
+                onSelect={index => setSelectedIndexTab(index)}
+            >
+                        <Tab title='Magias Conhecidas'>
+                            <Layout style={styles.tabContainer}>
+                                <Text>Conteúdo de Magias Conhecidas</Text>
+                            </Layout>
+                        </Tab>
+                        <Tab title='Todas as Magias'>
+                            <Layout style={styles.tabContainer}>
+                                <List
+                                    style={styles.list}
+                                    data={spels}
+                                    keyExtractor={keyExtractor}
+                                    renderItem={renderItemSpels}
+                                    initialNumToRender={10}
+                                    maxToRenderPerBatch={10}
+                                    windowSize={5} 
+                                />
+                            </Layout>
+                        </Tab>
+                        
+                        
+            </TabView>
             <Modal
                 visible={visible}
                 backdropStyle={styles.backdrop}
                 onBackdropPress={() => setVisible(false)}
-                >
+            >
                     <Card>
                         <Text category="h5">Editar Personagem</Text>
-                    <Layout style={styles.container}>
-                        <Input
-                            style={styles.input}
-                            value={name}
-                            placeholder="Nome"
-                            onChangeText={setname}
-                        />
-                        <Input
-                            style={styles.input}
-                            value={playerName}
-                            placeholder="Nome do Jogador"
-                            onChangeText={setPlayer}
-                        />
-                        <Select
-                            style={styles.input}
-                            value={displayValueRaça}
-                            selectedIndex={selectedRaceIndex}
-                            onSelect={index => setSelectedRaceIndex(index as IndexPath)}
-                            placeholder="Raça"
-                        >
-                            {races.map((r, i) => <SelectItem key={i} title={r} />)}
-                        </Select>
-                        <Select
-                            style={styles.input}
-                            value={displayValueClasse}
-                            selectedIndex={selectedClassIndex}
-                            onSelect={index => setSelectedClassIndex(index as IndexPath)}
-                            placeholder="Classe"
-                        >
-                            {classees.map((r, i) => <SelectItem key={i} title={r} />)}
-                        </Select>
-                        <Select
-                            style={styles.input}
-                            value={displayValueLevel.toString()}
-                            selectedIndex={selectedLevelIndex}
-                            onSelect={index => setSelectedLevelIndex(index as IndexPath)}
-                            placeholder="Nível"
-                        >
-                            {levels.map((r, i) => <SelectItem key={i} title={r.toString()} />)}
-                        </Select>
-                        <Layout style={styles.containerbottom}>
-                            <Button style={styles.botton} onPress={updateCharacter}>Salvar</Button>
-                            <Button style={styles.botton} onPress={() => setVisible(false)}>Cancelar</Button>
-                        </Layout>
-                    </Layout>
-                        
+                        <Layout style={styles.container}>
+                            <Input
+                                style={styles.input}
+                                value={name}
+                                placeholder="Nome"
+                                onChangeText={setname}
+                            />
+                            <Input
+                                style={styles.input}
+                                value={playerName}
+                                placeholder="Nome do Jogador"
+                                onChangeText={setPlayer}
+                            />
+                            <Select
+                                style={styles.input}
+                                value={displayValueRaça}
+                                selectedIndex={selectedRaceIndex}
+                                onSelect={index => setSelectedRaceIndex(index as IndexPath)}
+                                placeholder="Raça"
+                            >
+                                {races.map((r, i) => <SelectItem key={i} title={r} />)}
+                            </Select>
+                            <Select
+                                style={styles.input}
+                                value={displayValueClasse}
+                                selectedIndex={selectedClassIndex}
+                                onSelect={index => setSelectedClassIndex(index as IndexPath)}
+                                placeholder="Classe"
+                            >
+                                {classees.map((r, i) => <SelectItem key={i} title={r} />)}
+                            </Select>
+                            <Select
+                                style={styles.input}
+                                value={displayValueLevel.toString()}
+                                selectedIndex={selectedLevelIndex}
+                                onSelect={index => setSelectedLevelIndex(index as IndexPath)}
+                                placeholder="Nível"
+                            >
+                                {levels.map((r, i) => <SelectItem key={i} title={r.toString()} />)}
+                            </Select>
+                            <Layout style={styles.containerbottom}>
+                                <Button style={styles.botton} onPress={updateCharacter}>Salvar</Button>
+                                <Button style={styles.botton} onPress={() => setVisible(false)}>Cancelar</Button>
+                            </Layout>
+                        </Layout>    
                     </Card>
-                </Modal>
+            </Modal>
         </Layout>
     )
 } 
@@ -215,5 +272,13 @@ const styles = StyleSheet.create({
     botton:{
         flex: 1,
         margin: 5,
-    }
+    },
+    tabContainer: {
+    height: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  list:{
+    width: '90%',
+  }
 });

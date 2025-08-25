@@ -92,7 +92,6 @@ export function useCharacterDatabase() {
         }
     }
     return {
-        
         create,
         seachById,
         read,
