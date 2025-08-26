@@ -2,143 +2,120 @@ import { type SQLiteDatabase } from "expo-sqlite";
 import * as FileSystem from "expo-file-system";
 import * as SQLite from "expo-sqlite";
 
+// nome da database
 const DB_NAME = "codexDnd.db";
+// Modo dev?
+const RESET_DATABASE_ON_START = true;
 
-// *** PASSO CRÍTICO: DEIXE TRUE APENAS NESTA PRIMEIRA EXECUÇÃO PARA RESETAR O DB ***
-// *** Isso irá APAGAR SEU BANCO DE DADOS LOCAL E TODOS OS DADOS ATUAIS. ***
-const RESET_DATABASE_ON_START = true; 
-
-// --- Dados de Magias (Exemplo, importe seu JSON completo aqui) ---
+// entrada do seed para spells
 const spellsData = [
-  {
-    "magia_id": "39",
-    "nome": "Bola de Fogo Adiável",
-    "circulo": "7",
-    "escola": "Evocação",
-    "tempo_de_conjuracao": "Ação",
-    "alcance": "45 metros",
-    "componentes": ["V", "S", "M","(uma bola de guano de morcego e enxofre)"],
-    "classes": ["Feiticeiro", "Mago"],
-    "duracao": "Concentração, até 1 minuto",
-    "efeito": "Um feixe de luz amarela dispara de você, depois se condensa em um ponto escolhido no alcance da magia. Se uma criatura tocar o grânulo brilhante antes da magia terminar, ela realiza uma salvaguarda de Destreza. Se falhar, a magia se encerra, fazendo com que o grânulo exploda. Em caso de sucesso, a criatura pode arremessar o grânulo até 12 metros. Se o arremesso atingir o espaço de uma criatura ou colidir com um objeto sólido, a magia se encerra e o grânulo explode. Quando o grânulo explode, objetos inflamáveis na explosão que não estão sendo usados ou carregados entram em combustão. Usando um Espaço de Magia de Círculo Superior. O dano base aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 7."
-  },
-  {
-    "magia_id": "40",
-    "nome": "Bolha Ácida",
-    "circulo": "0",
-    "escola": "Evocação",
-    "tempo_de_conjuracao": "Ação",
-    "alcance": "18 metros",
-    "componentes": ["V", "S"],
-    "classes": ["Feiticeiro", "Mago"],
-    "duracao": "Instantânea",
-    "efeito": "Você cria uma bolha ácida em um ponto no alcance da magia, onde ela explode em uma Esfera de 1,5 metro de raio. Cada criatura nessa Esfera deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 1d6 pontos de dano Ácido. Aprimoramento de Truque. O dano aumenta em 1d6 quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6)."
-  },
-  // ADICIONE SEU JSON COMPLETO DE MAGIAS AQUI!
+    {
+        "magia_id": "1",
+        "nome": "Acalmar Emoções",
+        "circulo": "2",
+        "escola": "Encantamento",
+        "classes": ["Bardo", "Clérigo"],
+        "tempo_de_conjuracao": "Ação",
+        "alcance": "18 metros",
+        "componentes": ["V", "S"],
+        "duracao": "Concentração, até 1 minuto",
+        "efeito": "Cada Humanoide em uma Esfera de 6 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedido em uma salvaguarda de Carisma ou é afetado por um dos seguintes efeitos (escolha um para cada criatura): A criatura tem Imunidade às condições Amedrontado e Enfeitiçado até que a magia termine. Se a criatura já estiver Amedrontada ou Enfeitiçada, essas condições são suprimidas pela duração da magia. A criatura se torna Indiferente às criaturas à sua escolha em relação às quais é Hostil. Essa indiferença encerra se o alvo sofrer dano ou testemunhar os aliados dela sofrendo dano. Quando a magia termina, a atitude da criatura volta ao normal."
+    },
+    {
+        "magia_id": "2",
+        "nome": "Acudir os Moribundos",
+        "circulo": "0",
+        "escola": "Necromancia",
+        "classes": ["Clérigo", "Druida"],
+        "tempo_de_conjuracao": "Ação",
+        "alcance": "4,5 metros",
+        "componentes": ["V", "S"],
+        "duracao": "Instantânea",
+        "efeito": "Escolha uma criatura no alcance da magia que tenha 0 Pontos de Vida e não esteja morta. A criatura fica Estável. Aprimoramento de Truque: O alcance da magia dobra quando você atinge os níveis 5 (9 metros), 11 (18 metros) e 17 (36 metros)."
+    }
 ];
-// --- Fim dos Dados de Magias ---
 
-/**
- * Abre (e opcionalmente recria) o banco de dados
- */
+
 export async function getDatabase(): Promise<SQLiteDatabase> {
   const sqliteDir = `${FileSystem.documentDirectory}SQLite`;
   await FileSystem.makeDirectoryAsync(sqliteDir, { intermediates: true });
 
   const dbPath = `${sqliteDir}/${DB_NAME}`;
+
   if (RESET_DATABASE_ON_START) {
-    const fileInfo = await FileSystem.getInfoAsync(dbPath);
-    if (fileInfo.exists) {
-      console.log("🗑 Apagando banco local para recriação...");
-      await FileSystem.deleteAsync(dbPath, { idempotent: true });
+    try {
+      const fileInfo = await FileSystem.getInfoAsync(dbPath);
+      if (fileInfo.exists) {
+        console.log("🗑 Apagando banco local para recriação...");
+        await FileSystem.deleteAsync(dbPath, { idempotent: true });
+      }
+    } catch (error) {
+      console.warn("⚠️ Não foi possível apagar o banco:", error);
     }
   }
 
-  // Agora sim, abre a conexão
-  const db = SQLite.openDatabaseSync(DB_NAME);
+  // garante que estamos abrindo o mesmo caminho que apagamos
+  const db = SQLite.openDatabaseSync(dbPath);
   return db;
 }
 
-/**
- * Cria as tabelas necessárias no banco e realiza a seed de magias
- */
 export async function initializeDatabase(database: SQLiteDatabase) {
-  try {
-    // Criar tabela de personagens
-    await database.execAsync(`
-      CREATE TABLE IF NOT EXISTS caracter ( 
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        race TEXT NOT NULL,
-        classe TEXT NOT NULL,
-        level INTEGER NOT NULL,
-        playerName TEXT
-      );
-    `);
+    try {
+        // tabela personagens
+        await database.execAsync(`
+        CREATE TABLE IF NOT EXISTS caracter ( 
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            race TEXT NOT NULL,
+            classe TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            playerName TEXT
+        );
+        `);
 
-    // Criar tabela de magias
-    // A COLUNA 'id_caracter' E A FOREIGN KEY FORAM REMOVIDAS AQUI.
-    await database.execAsync(`
-      CREATE TABLE IF NOT EXISTS spell (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        level INTEGER NOT NULL CHECK (level >= 0 AND level <= 9),
-        school TEXT NOT NULL,
-        casting_time TEXT NOT NULL,
-        range TEXT NOT NULL,
-        components TEXT NOT NULL, -- Para V, S, M (array stringificado)
-        classes TEXT,            -- Para o componente material entre parênteses
-        duration TEXT NOT NULL,
-        description TEXT NOT NULL
-      );
-    `);
+        // tabela spells
+        await database.execAsync(`
+        CREATE TABLE IF NOT EXISTS spell (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            level INTEGER NOT NULL CHECK (level >= 0 AND level <= 9),
+            school TEXT NOT NULL,
+            classe TEXT NOT NULL,
+            castingTime TEXT NOT NULL,
+            range TEXT NOT NULL,
+            components TEXT NOT NULL,
+            duration TEXT NOT NULL,
+            description TEXT NOT NULL
+        );        
+        `);
 
-    // --- Lógica de Seed para Magias ---
-    const result = await database.getFirstAsync<{ count: number }>('SELECT COUNT(*) as count FROM spell;');
-    
-    // Verifica se a tabela 'spell' está vazia
-    if (result && result.count === 0) {
-      console.log("ℹ️ Tabela 'spell' vazia. Iniciando seed de magias...");
-      
-      for (const spell of spellsData) {
-        let verbalSomaticComponents = [];
-        let materialComponent = null;
+        await database.execAsync(`
+        CREATE TABLE IF NOT EXISTS character_spell (
+            character_id INTEGER NOT NULL,
+            spell_id INTEGER NOT NULL,
+            PRIMARY KEY (character_id, spell_id),
+            FOREIGN KEY (character_id) REFERENCES caracter(id) ON DELETE CASCADE,
+            FOREIGN KEY (spell_id) REFERENCES spell(id) ON DELETE CASCADE
+        );
+        `);
 
-        // Processa os componentes para separar o material
-        if (spell.componentes) {
-          for (const comp of spell.componentes) {
-            if (comp.startsWith('(') && comp.endsWith(')')) {
-              materialComponent = comp;
-            } else {
-              verbalSomaticComponents.push(comp);
+        // verifica se spells está vazia
+        const result = await database.getFirstAsync<{ count: number }>('SELECT COUNT(*) as count FROM spell;');
+        if (result && result.count === 0) {
+            console.log("ℹ️ Tabela 'spell' vazia. Iniciando seed de magias...");
+
+            for (const spell of spellsData) {
+               await database.execAsync(
+                    `INSERT INTO spell (name, level, school, classe, castingTime, range, components, duration, description) 
+                     VALUES ('${spell.nome}', ${Number(spell.circulo)}, '${spell.escola}', '${spell.classes.join(",")}', '${spell.tempo_de_conjuracao}', '${spell.alcance}', '${spell.componentes.join(",")}', '${spell.duracao}', '${spell.efeito}');`
+                );
             }
-          }
+            console.log("✅ Seed de magias concluído!");
+        } else {
+            console.log("ℹ️ Tabela 'spell' já contém dados, seed ignorado.");
         }
 
-        // Insere a magia no banco de dados
-        await database.runAsync(
-          `INSERT INTO spell (name, level, school, casting_time, range, components, material, classes, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            spell.nome,
-            Number(spell.circulo), // Converte o círculo para número (nível da magia)
-            spell.escola,
-            spell.tempo_de_conjuracao,
-            spell.alcance,
-            JSON.stringify(verbalSomaticComponents), // Armazena como string JSON
-            materialComponent,
-            spell.duracao,
-            spell.efeito
-          ]
-        );
-      }
-      console.log("✅ Seed de magias concluído!");
-    } else {
-      console.log("ℹ️ Tabela 'spell' já contém dados, seed ignorado.");
+    } catch (error) {
+        console.error("❌ Erro ao inicializar o banco de dados:", error);
     }
-    // --- Fim da Lógica de Seed ---
-
-    console.log("✅ Banco de dados inicializado com sucesso!");
-  } catch (error) {
-    console.error("❌ Erro ao inicializar o banco de dados:", error);
-  }
 }

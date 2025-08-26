@@ -5,11 +5,10 @@ export type spellDatabase ={
     name: string;
     level: number;
     school: string;
-    classes: string;
-    casting_time: string;
+    classe: string[];
+    castingTime: string;
     range: string;
-    components: string;
-    
+    components: string[];
     duration: string;
     description: string;
 }

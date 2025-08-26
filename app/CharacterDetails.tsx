@@ -5,10 +5,11 @@ import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCh
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 
 import {  Alert, SectionList, StyleSheet } from 'react-native';
-import { use, useCallback, useEffect, useMemo, useState,  } from "react";
+import { Fragment, use, useCallback, useEffect, useMemo, useState,  } from "react";
 import React from "react";
 import { EditIcon, StarIcon } from "@/utils/useIcons";
 import { TabViewComponent } from "@/components/comp/tabView";
+import { TitleText } from "@/components/StyledText";
 
 
 
@@ -61,7 +62,6 @@ const CharacterDetails = () => {
     useEffect(() => {
         spellSearch();
     }, [ character_id ]);
-
     async function spellSearch(){
         try {
             const response = await spellDb.read();
@@ -72,35 +72,32 @@ const CharacterDetails = () => {
             throw error;
         }
     }
+    
     const renderItemSpels = ({ item }: { item: spellDatabase }): React.ReactElement => (
         <ListItem
-          title={`${item.name}`}
-          description={`${item.classes} - Círculo: ${item.level}`}
+          title={() => (
+                  <TitleText type='h4'>
+                    {item.name}
+                  </TitleText>
+                  )}
+          
+          description={() => (
+                    <Fragment>
+                      <Text style={{ fontSize: 13, color: teme['color-basic-500'] }}>Duração: {item.duration}</Text>
+                      <Text style={{ fontSize: 11, color: teme['color-basic-500'] }}>Tempo de Conjuracao: {item.castingTime}</Text>
+                    </Fragment>
+                  )}
+          accessoryRight={() => {
+                const itemCirculo = item.level === 0 ? 'Truque' : `${item.level}º Círculo`;
+                return(
+                  <Text style={{ fontSize: 14 }}>
+                      {itemCirculo}
+                  </Text>
+                  )
+              }}
         />
     ); 
 
-    /*
-      const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => (
-            <ListItem
-              onPress={() => roteCharacterDetails(item.id)}
-              title={`${item.name}`}
-              description={`${item.race} - ${item.classe}`}
-            // accessoryLeft={renderItemIcon}
-             accessoryRight={ <DeleteIconX deleteIconX={() => deleteCharacter(item.id)} />}
-            />
-          );
-    const openModal = () => {
-        if (character.length > 0) {
-            const currentChar = character[0];
-            setId(currentChar.id.toString()); // Convertendo para string para o estado
-            setname(currentChar.name);
-            setPlayer(currentChar.playerName);
-            setSelectedRaceIndex(new IndexPath(races.indexOf(currentChar.race)));
-            setSelectedClassIndex(new IndexPath(classees.indexOf(currentChar.classe)));
-            setSelectedLevelIndex(new IndexPath(levels.indexOf(currentChar.level)));
-        }
-        setVisible(true);
-    }*/
 
     async function updateCharacter(){
         const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
