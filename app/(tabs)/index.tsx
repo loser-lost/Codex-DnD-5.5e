@@ -103,7 +103,7 @@ export default function SpellsScreen() {
           data,
       }));
     }, [groupedSpells]);
-    // End groups functions
+    // End groups functions 
 
     // Start render functions
     const renderItem = useCallback(({ item }: { item: Spell }) => (

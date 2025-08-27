@@ -1,38 +1,36 @@
-import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, List, ListItem, TabView, Tab} from "@ui-kitten/components";
-import { useTheme } from "@ui-kitten/components/theme";
+import React from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import {  Alert, SectionList, StyleSheet } from 'react-native';
+import { useCallback, useEffect, useMemo, useState,  } from "react";
+import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, ListItem, TabView, Tab} from "@ui-kitten/components";
+import { useTheme } from "@ui-kitten/components/theme";
+import { EditIcon, StarIcon } from "@/utils/useIcons";
+import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
+import { RenderSectionHeaderDb, races, classees, levels } from "../components/comp/sectionComponents";
 
-import {  Alert, SectionList, StyleSheet } from 'react-native';
-import { Fragment, use, useCallback, useEffect, useMemo, useState,  } from "react";
-import React from "react";
-import { EditIcon, StarIcon } from "@/utils/useIcons";
-import { TabViewComponent } from "@/components/comp/tabView";
-import { TitleText } from "@/components/StyledText";
-
-
-
+import {RenderSpell} from "../components/comp/sectionComponents";
 const CharacterDetails = () => {
-    const router = useRouter();
+
     const teme = useTheme();
-    const {character_id} = useLocalSearchParams();
     const characterDb = useCharacterDatabase();
-    const spellDb = useSpellDatabase();
+    const spellDb = useSpellDatabase(); //useSpellDatabase();
+    const {character_id} = useLocalSearchParams();
+    const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
     const [visible, setVisible] = React.useState(false);
-    const races = useMemo(() => ['Humano', 'Elfo', 'Anão', 'Orc', 'Assimar', 'Gnomo', 'Halfling', 'Golias', 'Tiferino', 'Draconato'], []);
-    const classees = useMemo(() => ['Mago', 'Feiticeiro', 'Clérigo', 'Ladino', 'Guardião', 'Bardo', 'Druida', 'Bruxo','Paladino'], []);
-    const levels = useMemo(() => [1, 2, 3, 4 ,5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], []);
-    const [spels, setSpels] = useState<spellDatabase[]>([]);
+
+   
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
-    const keyExtractor = useCallback((item: spellDatabase) => String(item.id), [])
+
+    // functios to display selected values
     const displayValueRaça = selectedRaceIndex
     ? races[selectedRaceIndex.row]
     : '';
@@ -43,14 +41,31 @@ const CharacterDetails = () => {
     ? levels[selectedLevelIndex.row] 
     : 0; 
 
+    // hooks
     useEffect(() => {
-        characterSearch();
-    }, [character_id]);
+        characterSearch();    
+    }, []);
 
+    useEffect(() => {
+        spellSearch();
+    }, []);
+
+    // group spells by level
+    const grupedSpells = useMemo(() =>{
+        return groupSortSpells(spels);
+    }, [spels]);
+
+    const spellInSections = useMemo(()=>{
+          return Object.entries(grupedSpells).map(([circulo, data]) => ({
+              title: circulo,
+              data,
+          }));
+    }, [grupedSpells]);
+
+    // functions to fetch data
     async function characterSearch(){
         try {
             const response = await characterDb.seachById(character_id as string);
-            //console.log(response);
             setCharacter(response);
     
         } catch (error) {
@@ -59,45 +74,22 @@ const CharacterDetails = () => {
         }
     }
 
-    useEffect(() => {
-        spellSearch();
-    }, [ character_id ]);
     async function spellSearch(){
         try {
             const response = await spellDb.read();
             setSpels(response);
-            
         } catch (error) {
             console.error('Erro ao buscar magias:', error);
             throw error;
         }
     }
-    
-    const renderItemSpels = ({ item }: { item: spellDatabase }): React.ReactElement => (
-        <ListItem
-          title={() => (
-                  <TitleText type='h4'>
-                    {item.name}
-                  </TitleText>
-                  )}
-          
-          description={() => (
-                    <Fragment>
-                      <Text style={{ fontSize: 13, color: teme['color-basic-500'] }}>Duração: {item.duration}</Text>
-                      <Text style={{ fontSize: 11, color: teme['color-basic-500'] }}>Tempo de Conjuracao: {item.castingTime}</Text>
-                    </Fragment>
-                  )}
-          accessoryRight={() => {
-                const itemCirculo = item.level === 0 ? 'Truque' : `${item.level}º Círculo`;
-                return(
-                  <Text style={{ fontSize: 14 }}>
-                      {itemCirculo}
-                  </Text>
-                  )
-              }}
-        />
-    ); 
 
+    // render item for SectionList
+    const renderItemSpels = useCallback(({ item }: { item: spellDatabase }) => (
+      <RenderSpell item={item} />
+    ), []);
+    // key extractor for SectionList
+    const keyExtractor = useCallback((item: spellDatabase, index: number) => String(item.id) + index, [])
 
     async function updateCharacter(){
         const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
@@ -115,7 +107,6 @@ const CharacterDetails = () => {
             characterSearch()
             Alert.alert("Personagem editado com sucesso.");
             setVisible(false);
-            
         }catch (error) {
           console.error('Erro ao editar personagem:', error);
           alert('Erro ao editar personagem. Tente novamente.');
@@ -129,15 +120,10 @@ const CharacterDetails = () => {
                 <StarIcon />
             </Layout>
             <Layout style={styles.header}>
-
             {character.length > 0 ? (
                 character.map((Char) => (
                     <Layout key={Char.id} style={{ marginBottom: 16 }}>
                         <Text category="h5">{Char.name}</Text>
-                        <Text category="s1">{`Raça: ${Char.race}`}</Text>
-                        <Text category="s1">{`Classe: ${Char.classe}`}</Text>
-                        <Text category="s1">{`Nível: ${Char.level}`}</Text>
-                        <Text category="s1">{`Jogador: ${Char.playerName}`}</Text>
                     </Layout>
                 ))
             ) : (
@@ -156,31 +142,29 @@ const CharacterDetails = () => {
                 setVisible(true);
             }} />
             </Layout>
-            
             <TabView
                 selectedIndex={selectedIndexTab}
                 onSelect={index => setSelectedIndexTab(index)}
             >
-                        <Tab title='Magias Conhecidas'>
-                            <Layout style={styles.tabContainer}>
-                                <Text>Conteúdo de Magias Conhecidas</Text>
-                            </Layout>
-                        </Tab>
-                        <Tab title='Todas as Magias'>
-                            <Layout style={styles.tabContainer}>
-                                <List
-                                    style={styles.list}
-                                    data={spels}
-                                    keyExtractor={keyExtractor}
-                                    renderItem={renderItemSpels}
-                                    initialNumToRender={10}
-                                    maxToRenderPerBatch={10}
-                                    windowSize={5} 
-                                />
-                            </Layout>
-                        </Tab>
-                        
-                        
+                <Tab title='Magias Conhecidas'>
+                    <Layout style={styles.tabContainer}>
+                        <Text>Conteúdo de Magias Conhecidas</Text>
+                    </Layout>
+                </Tab>
+                <Tab title='Todas as Magias'>
+                    <Layout style={styles.tabContainer}>
+                        <SectionList
+                            style={styles.list}
+                            sections={spellInSections}
+                            keyExtractor={keyExtractor}
+                            renderSectionHeader={({ section }) => (<RenderSectionHeaderDb title={section.title} data={section.data} />)}
+                            renderItem={renderItemSpels}
+                            initialNumToRender={10}
+                            maxToRenderPerBatch={10}
+                            windowSize={5} 
+                        />
+                    </Layout>
+                </Tab>           
             </TabView>
             <Modal
                 visible={visible}
@@ -271,7 +255,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     tabContainer: {
-    height: 64,
+    
     alignItems: 'center',
     justifyContent: 'center',
   },

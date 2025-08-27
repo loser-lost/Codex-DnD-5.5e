@@ -24,13 +24,12 @@ export function useSpellDatabase() {
         try {
             const query = 'SELECT * FROM spell'
             const response = await db.getAllAsync<spellDatabase>(query);
+            console.log('Magias retornadas do banco de dados:'); // Adicione este log
             return response;
-            
         } catch (error) {
             console.error('Erro ao listar magias:', error);
             throw error;
         }
-
     }
     
     async function update() {
