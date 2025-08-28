@@ -1,5 +1,5 @@
 import { ListItem, Text, useTheme, Layout, IndexPath } from "@ui-kitten/components";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import { Fragment, useMemo } from "react";
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
@@ -25,8 +25,12 @@ export interface RenderSpellProps {
     const theme = useTheme();
     const textColor = theme['color-basic-500'];
     const itemCirculo = item.level === 0 ? 'Truque' : `${item.level}º Círculo`;
+     const rotaSpells = () => {
+        router.push(`/SpellDetails?magia_id=${item.id}`);
+    }
     return (
         <ListItem
+        onPress={rotaSpells}
         title={() => (
             <TitleText type='h4'>
             {item.name}

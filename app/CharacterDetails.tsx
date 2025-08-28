@@ -1,16 +1,21 @@
 import React from "react";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import {  Alert, SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
-import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, ListItem, TabView, Tab} from "@ui-kitten/components";
+import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
-import { EditIcon, StarIcon } from "@/utils/useIcons";
+import { CirculoIcon, ClassIcon, EditIcon, RangeIcon, SchoolIcon, StarIcon, TempoIcon } from "@/utils/useIcons";
 import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { RenderSectionHeaderDb, races, classees, levels } from "../components/comp/sectionComponents";
 
 import {RenderSpell} from "../components/comp/sectionComponents";
+import SeachBar from "@/components/comp/SeachBar";
+import { debounce } from "@/utils/debounce";
+import DrawerFilter from "@/components/comp/drawerFilter";
+import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
+import { filterSpelsData, toggleItem } from "@/utils/filterFunctions";
 const CharacterDetails = () => {
 
     const teme = useTheme();
@@ -23,6 +28,9 @@ const CharacterDetails = () => {
     const [name, setname] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
     const [visible, setVisible] = React.useState(false);
+    //busca
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [showFilter, setShowFilter] = useState(false);
 
    
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
@@ -30,6 +38,64 @@ const CharacterDetails = () => {
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
 
+    
+    //search functions
+     const handleSearch = (query: string) => {
+          setSearchQuery(query);
+        };
+    // filter
+    
+    const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
+
+    const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
+    const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
+    const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+    const [selectedRange, setSelectedRange] = useState<string[]>([]);
+    const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
+    
+    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
+    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
+    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), [setSchoolsSelected]);
+    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), [setSelectedRange]);
+    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), [setSelectedTempo]);
+    
+  
+    const allFilters = [
+      selectedCircle, 
+      schoolsSelected, 
+      selectedClasses, 
+      selectedRange, 
+      selectedTempo
+    ].reduce((total, arr) => total + arr.length, 0);
+
+    const clearFilters = ()=>{
+        [setSelectedCircle, 
+        setSchoolsSelected, 
+        setSelectedClasses, 
+        setSelectedRange, 
+        setSelectedTempo
+        ].forEach(fn => fn([]));
+    };
+
+    const filters = useMemo(() => ({
+        selectedCircle,
+        schoolsSelected,
+        selectedClasses,
+        selectedRange,
+        selectedTempo
+    }), [selectedCircle , schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
+
+    const filteredSpells  = useMemo(() => {
+        const searchFiltered = searchQuery 
+            ? spels.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            : spels;
+
+        const hasFilters  = Object.values(filters).some(arr => arr.length > 0);
+
+        return hasFilters ? filterSpelsData(searchFiltered, filters) : searchFiltered;
+    }, [spels, filters, searchQuery]);
+
+   
     // functios to display selected values
     const displayValueRaça = selectedRaceIndex
     ? races[selectedRaceIndex.row]
@@ -44,16 +110,16 @@ const CharacterDetails = () => {
     // hooks
     useEffect(() => {
         characterSearch();    
-    }, []);
+    }, [ character_id ]);
 
     useEffect(() => {
         spellSearch();
-    }, []);
+    }, [ character_id ]);
 
     // group spells by level
     const grupedSpells = useMemo(() =>{
-        return groupSortSpells(spels);
-    }, [spels]);
+        return groupSortSpells(filteredSpells);
+    }, [filteredSpells]);
 
     const spellInSections = useMemo(()=>{
           return Object.entries(grupedSpells).map(([circulo, data]) => ({
@@ -120,27 +186,31 @@ const CharacterDetails = () => {
                 <StarIcon />
             </Layout>
             <Layout style={styles.header}>
-            {character.length > 0 ? (
-                character.map((Char) => (
-                    <Layout key={Char.id} style={{ marginBottom: 16 }}>
-                        <Text category="h5">{Char.name}</Text>
-                    </Layout>
-                ))
-            ) : (
-                <Text category="s1">Nenhum personagem encontrado.</Text>
-            )}
-            <EditIcon editIcon={() => {
-                if (character.length > 0) {
-                    const currentChar = character[0];
-                    setId(currentChar.id.toString()); // Convertendo para string para o estado
-                    setname(currentChar.name);
-                    setPlayer(currentChar.playerName);
-                    setSelectedRaceIndex(new IndexPath(races.indexOf(currentChar.race)));
-                    setSelectedClassIndex(new IndexPath(classees.indexOf(currentChar.classe)));
-                    setSelectedLevelIndex(new IndexPath(levels.indexOf(currentChar.level)));
-                }
-                setVisible(true);
-            }} />
+                <Layout style={styles.heade1}>
+                    {character.length > 0 ? (
+                        character.map((Char) => (
+                            <Layout key={Char.id} style={{ marginBottom: 16 }}>
+                                <Text category="h5">{Char.name}</Text>
+                            </Layout>
+                        ))
+                    ) : (
+                        <Text category="s1">Nenhum personagem encontrado.</Text>
+                    )}
+                </Layout>
+                <Layout style={styles.heade2}>
+                    <EditIcon editIcon={() => {
+                        if (character.length > 0) {
+                            const currentChar = character[0];
+                            setId(currentChar.id.toString()); // Convertendo para string para o estado
+                            setname(currentChar.name);
+                            setPlayer(currentChar.playerName);
+                            setSelectedRaceIndex(new IndexPath(races.indexOf(currentChar.race)));
+                            setSelectedClassIndex(new IndexPath(classees.indexOf(currentChar.classe)));
+                            setSelectedLevelIndex(new IndexPath(levels.indexOf(currentChar.level)));
+                        }
+                        setVisible(true);
+                    }} />
+                </Layout>
             </Layout>
             <TabView
                 selectedIndex={selectedIndexTab}
@@ -153,6 +223,12 @@ const CharacterDetails = () => {
                 </Tab>
                 <Tab title='Todas as Magias'>
                     <Layout style={styles.tabContainer}>
+                        <SeachBar 
+                            value={searchQuery}
+                            onChangeText={handleSearch}
+                            handleOpenFilter={handleOpenModalFilter}
+                            allFilters={allFilters}
+                           />
                         <SectionList
                             style={styles.list}
                             sections={spellInSections}
@@ -220,6 +296,37 @@ const CharacterDetails = () => {
                         </Layout>    
                     </Card>
             </Modal>
+                    <Modal
+                    visible={showFilter }
+                    backdropStyle={styles.backdrop}
+                    style={styles.filterModal}
+                    onBackdropPress={() => setShowFilter(false)}
+                    >
+                    <Card disabled={true} style={styles.filterList}>
+                     <Text style={styles.Text}>Selecione os filtros:</Text>
+                        <DrawerFilter
+                            selectCircle={selectedCircle}
+                            selectedClasses={selectedClasses}
+                            schoolsSelected={schoolsSelected}
+                            selectedRange={selectedRange}
+                            selectedTempo={selectedTempo}
+                            toggleCircle={toggleCircle}
+                            toggleClass={toggleClass}
+                            toggleSchool={toggleSchool}
+                            toggleRange={toggleRange}
+                            toggleTime={toggleTime}
+                            CirculoIcon={CirculoIcon}
+                            ClassIcon={ClassIcon}
+                            SchoolIcon={SchoolIcon}
+                            RangeIcon={RangeIcon}
+                            TempoIcon={TempoIcon}                      
+                        />
+                        <Layout style={styles.buttons}>
+                          <AppliFilterButton applyFilter={() => setShowFilter(false)} allFilters={allFilters} />
+                          <ClearFiltersButton clearFilters={clearFilters} />
+                        </Layout>
+                    </Card>
+                  </Modal>
         </Layout>
     )
 } 
@@ -234,8 +341,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 15 
     },
+    heade1: {
+        marginLeft:5
+    },
+    heade2: {
+        marginRight: 5,
+    },
         input: {
-        margin: 4,
+        margin: 2,
     },
     header: {
         flexDirection: 'row',
@@ -248,18 +361,42 @@ const styles = StyleSheet.create({
     containerbottom: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
+        padding: 5,
     },
     botton:{
         flex: 1,
         margin: 5,
     },
     tabContainer: {
-    
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  list:{
-    width: '90%',
-  }
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    list:{
+        
+        width: '100%',
+    },
+    filterModal:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 25,
+    },
+    filterList: {
+        maxHeight: '90%',
+        width: '100%',
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+     Text:{
+        paddingTop: 10,
+        marginLeft: 15, 
+    },
+    buttons:{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 5,
+        padding: 5,
+        borderRadius: 5,
+        marginHorizontal: 5,
+    },
 });

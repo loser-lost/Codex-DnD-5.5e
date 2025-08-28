@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { Alert, StyleSheet } from "react-native";
 import {useCharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import { Stack, useRouter } from "expo-router";
+import { races, classees, levels } from "../components/comp/sectionComponents";
 
 const CreateCharacterScreen = () => {
     const router = useRouter();
@@ -15,10 +16,6 @@ const CreateCharacterScreen = () => {
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
 
-    //'Mago', 'Feiticeiro', 'Clérigo', 'Guardião', 'Bardo', 'Druida', 'Bruxo','Paladino'
-    const races = useMemo(() => ['Humano', 'Elfo', 'Anão', 'Orc', 'Assimar', 'Gnomo', 'Halfling', 'Golias', 'Tiferino', 'Draconato'], []);
-    const classees = useMemo(() => ['Mago', 'Feiticeiro', 'Clérigo', 'Ladino', 'Guardião', 'Bardo', 'Druida', 'Bruxo','Paladino'], []);
-    const levels = useMemo(() => [1, 2, 3, 4 ,5 , 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], []);
 
     const  characterDatabase  = useCharacterDatabase();
     const BackFunction = () => {router.back();}

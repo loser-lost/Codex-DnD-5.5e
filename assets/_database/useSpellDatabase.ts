@@ -20,16 +20,23 @@ export function useSpellDatabase() {
 
     }
 
-    async function read(){
-        try {
-            const query = 'SELECT * FROM spell'
-            const response = await db.getAllAsync<spellDatabase>(query);
-            console.log('Magias retornadas do banco de dados:'); // Adicione este log
-            return response;
-        } catch (error) {
-            console.error('Erro ao listar magias:', error);
-            throw error;
-        }
+    async function read() {
+    try {
+        const query = 'SELECT * FROM spell';
+        const response = await db.getAllAsync<Omit<spellDatabase, 'classe'> & { classe: string }>(query);
+
+        // Converte a string de classes para um array de strings
+        const spellsWithArrayClasses = response.map(spell => ({
+        ...spell,
+        classe: spell.classe.split(',') // Assume que as classes são separadas por vírgula
+        }));
+
+        //console.log('Magias retornadas do banco de dados:', spellsWithArrayClasses);
+        return spellsWithArrayClasses;
+    } catch (error) {
+        console.error('Erro ao listar magias:', error);
+        throw error;
+    }
     }
     
     async function update() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Layout, Input, Button, useTheme, IconElement,  } from '@ui-kitten/components';
+import { Layout, Input, Button  } from '@ui-kitten/components';
 import { DeleteIcon } from '@/utils/useIcons';
 
 type Props = {
@@ -35,7 +35,7 @@ type Props = {
     }
     const styles = StyleSheet.create({
     header: {
-        marginTop: 25,
+        
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',

@@ -223,6 +223,5 @@ export default function SpellsScreen() {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 25,
-   
     }
   });
