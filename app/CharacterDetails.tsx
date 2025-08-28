@@ -9,15 +9,14 @@ import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { RenderSectionHeaderDb, races, classees, levels } from "../components/comp/sectionComponents";
-
 import {RenderSpell} from "../components/comp/sectionComponents";
 import SeachBar from "@/components/comp/SeachBar";
-import { debounce } from "@/utils/debounce";
+
 import DrawerFilter from "@/components/comp/drawerFilter";
 import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctions";
-const CharacterDetails = () => {
 
+const CharacterDetails = () => {
     const teme = useTheme();
     const characterDb = useCharacterDatabase();
     const spellDb = useSpellDatabase(); //useSpellDatabase();
@@ -28,23 +27,18 @@ const CharacterDetails = () => {
     const [name, setname] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
     const [visible, setVisible] = React.useState(false);
-    //busca
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [showFilter, setShowFilter] = useState(false);
-
-   
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
 
-    
-    //search functions
+    // filter and search function
      const handleSearch = (query: string) => {
           setSearchQuery(query);
-        };
-    // filter
-    
+    };
+
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
 
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
@@ -59,7 +53,6 @@ const CharacterDetails = () => {
     const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), [setSelectedRange]);
     const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), [setSelectedTempo]);
     
-  
     const allFilters = [
       selectedCircle, 
       schoolsSelected, 
@@ -85,17 +78,20 @@ const CharacterDetails = () => {
         selectedTempo
     }), [selectedCircle , schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
 
+    function removerAcentos(texto: String) {
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
     const filteredSpells  = useMemo(() => {
-        const searchFiltered = searchQuery 
-            ? spels.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            const searchFiltered = searchQuery
+            ? spels.filter(item => 
+                removerAcentos(item.name).toLowerCase().includes(removerAcentos(searchQuery).toLowerCase())
+                )
             : spels;
 
         const hasFilters  = Object.values(filters).some(arr => arr.length > 0);
-
         return hasFilters ? filterSpelsData(searchFiltered, filters) : searchFiltered;
     }, [spels, filters, searchQuery]);
 
-   
     // functios to display selected values
     const displayValueRaça = selectedRaceIndex
     ? races[selectedRaceIndex.row]
