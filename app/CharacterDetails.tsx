@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import {  Alert, SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
@@ -12,9 +12,9 @@ import { RenderSectionHeaderDb, races, classees, levels } from "../components/co
 import {RenderSpell} from "../components/comp/sectionComponents";
 import SeachBar from "@/components/comp/SeachBar";
 
-import DrawerFilter from "@/components/comp/drawerFilter";
+import DrawerFilter from "@/components/comp/drawerFilterDb";
 import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
-import { filterSpelsData, toggleItem } from "@/utils/filterFunctions";
+import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 
 const CharacterDetails = () => {
     const teme = useTheme();
@@ -42,41 +42,35 @@ const CharacterDetails = () => {
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
 
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
-    const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
-    const [selectedRange, setSelectedRange] = useState<string[]>([]);
-    const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
-    
+
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
-    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), [setSchoolsSelected]);
-    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), [setSelectedRange]);
-    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), [setSelectedTempo]);
+ 
     
     const allFilters = [
       selectedCircle, 
-      schoolsSelected, 
-      selectedClasses, 
-      selectedRange, 
-      selectedTempo
+      selectedClasses
     ].reduce((total, arr) => total + arr.length, 0);
 
     const clearFilters = ()=>{
-        [setSelectedCircle, 
-        setSchoolsSelected, 
-        setSelectedClasses, 
-        setSelectedRange, 
-        setSelectedTempo
+        [setSelectedCircle,
+        setSelectedClasses
         ].forEach(fn => fn([]));
     };
 
+    const autoFilters = useMemo(() => {
+        return Array.from(new Set(character.map(character => character.classe).flat()));
+    }, [spels]);
+
+    useEffect(() => {
+        setSelectedClasses(autoFilters);
+    }, [autoFilters]);
+
     const filters = useMemo(() => ({
         selectedCircle,
-        schoolsSelected,
         selectedClasses,
-        selectedRange,
-        selectedTempo
-    }), [selectedCircle , schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
+    }), [selectedCircle , selectedClasses]);
 
     function removerAcentos(texto: String) {
         return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -303,19 +297,10 @@ const CharacterDetails = () => {
                         <DrawerFilter
                             selectCircle={selectedCircle}
                             selectedClasses={selectedClasses}
-                            schoolsSelected={schoolsSelected}
-                            selectedRange={selectedRange}
-                            selectedTempo={selectedTempo}
                             toggleCircle={toggleCircle}
                             toggleClass={toggleClass}
-                            toggleSchool={toggleSchool}
-                            toggleRange={toggleRange}
-                            toggleTime={toggleTime}
                             CirculoIcon={CirculoIcon}
-                            ClassIcon={ClassIcon}
-                            SchoolIcon={SchoolIcon}
-                            RangeIcon={RangeIcon}
-                            TempoIcon={TempoIcon}                      
+                            ClassIcon={ClassIcon}                   
                         />
                         <Layout style={styles.buttons}>
                           <AppliFilterButton applyFilter={() => setShowFilter(false)} allFilters={allFilters} />
@@ -368,8 +353,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     list:{
-        
         width: '100%',
+        height: '87%',
     },
     filterModal:{
         flex: 1,
