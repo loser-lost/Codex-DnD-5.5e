@@ -1,24 +1,19 @@
 import { Alert, StyleSheet } from 'react-native';
-
-
 import {   Layout, List, ListItem } from '@ui-kitten/components';
-
 import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
-import { DeleteIconX, PlusIcon } from '../../utils/useIcons';
+import { DeleteIconX, PlusIcon, StarIcon } from '../../utils/useIcons';
 import { useRouter } from 'expo-router';
-
-
 
 export default function TabTwoScreen() {
   //const [search, setSearch] = useState('');
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
   const  characterDatabase  = useCharacterDatabase();
   const router = useRouter();
-  const newCharacter = () => {router.push('/CreateCharacter')}
+  const newCharacter = () => {
+    router.push('/CreateCharacter')
+  }
 
-
-      
   /*
     async function seacrchlistCharacters(){
       try {
@@ -45,16 +40,16 @@ export default function TabTwoScreen() {
     async function listCharacters() {
       try {
         const response = await characterDatabase.read()
-        setCharacters(response);
+        setCharacters(response ?? []);
       } catch (error) {
         console.error('Erro ao listar personagens:', error);
-        throw error;
+        setCharacters([]);
       } 
     }
 
     useEffect(() => {
       listCharacters();
-    }, [listCharacters]);
+    }, []);
 
     const roteCharacterDetails = (id: number) => {
       router.push(`/CharacterDetails?character_id=${id}`);
@@ -88,7 +83,9 @@ export default function TabTwoScreen() {
       
   return (
     <Layout style={styles.container}>
-      
+       <Layout style={styles.headerIcons}>
+            <StarIcon />
+        </Layout>
       <Layout style={styles.nivelBar}>
           <PlusIcon plusIcon={newCharacter} />
       </Layout>
@@ -114,7 +111,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
- 
+  headerIcons: { 
+        marginTop: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
   nivelBar: {
     padding: 10,
     marginTop: 40,

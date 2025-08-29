@@ -8,7 +8,8 @@ import { CirculoIcon, ClassIcon, EditIcon, RangeIcon, SchoolIcon, StarIcon, Temp
 import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
-import { RenderSectionHeaderDb, races, classees, levels } from "../components/comp/sectionComponents";
+import { RenderSectionHeaderDb} from "../components/comp/sectionComponents";
+import { races, classees, levels } from "../components/comp/arrays";
 import {RenderSpell} from "../components/comp/sectionComponents";
 import SeachBar from "@/components/comp/SeachBar";
 
@@ -29,25 +30,31 @@ const CharacterDetails = () => {
     const [visible, setVisible] = React.useState(false);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [showFilter, setShowFilter] = useState(false);
+    const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
+    const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
 
     // filter and search function
+    
+    const autoFilters = useMemo(() => {
+        return Array.from(new Set(character.map(character => character.classe).flat()));
+    }, [spels]);
+
+    useEffect(() => {
+        setSelectedClasses(autoFilters);
+    }, [autoFilters]);
+
      const handleSearch = (query: string) => {
           setSearchQuery(query);
     };
 
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
-
-    const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
-    const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
-
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
  
-    
     const allFilters = [
       selectedCircle, 
       selectedClasses
@@ -58,14 +65,6 @@ const CharacterDetails = () => {
         setSelectedClasses
         ].forEach(fn => fn([]));
     };
-
-    const autoFilters = useMemo(() => {
-        return Array.from(new Set(character.map(character => character.classe).flat()));
-    }, [spels]);
-
-    useEffect(() => {
-        setSelectedClasses(autoFilters);
-    }, [autoFilters]);
 
     const filters = useMemo(() => ({
         selectedCircle,
@@ -314,13 +313,15 @@ const CharacterDetails = () => {
 export default CharacterDetails;
 const styles = StyleSheet.create({
     container: {
+
         flex: 1,
         padding: 20,
     },
     headerIcons: { 
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center',
-        padding: 15 
+       
     },
     heade1: {
         marginLeft:5

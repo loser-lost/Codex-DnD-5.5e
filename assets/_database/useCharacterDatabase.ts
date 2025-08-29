@@ -10,8 +10,6 @@ export type CharacterDatabase = {
     
 }
 
-
-
 export function useCharacterDatabase() {
     const db = useSQLiteContext();
 
@@ -32,7 +30,7 @@ export function useCharacterDatabase() {
             return { insertedRowId };
         } catch (error) {
             console.error('Erro ao criar personagem:', error);
-            return;
+            return { insertedRowId: null }; 
         } finally {
             await statement.finalizeAsync();
         }
@@ -45,7 +43,7 @@ export function useCharacterDatabase() {
         return response;
     } catch (error) {
         console.error('Erro ao buscar personagem por id:', error);
-        throw error;  
+        return [];
     }
     
 }
@@ -57,7 +55,7 @@ export function useCharacterDatabase() {
             return response;
         } catch (error) {
             console.error('Erro ao listar personagens:', error);
-            throw error;     
+            return [];     
         }
     }
     
@@ -76,19 +74,15 @@ export function useCharacterDatabase() {
             })
         } catch (error) {
             console.error('Erro ao criar personagem:', error);
-            return;
         } finally {
             await statement.finalizeAsync();
         }
     }
-    async function remove(id: Number) {
+    async function remove(id: number) {
         try {
-            //const query = "DELETE FROM caracter WHERE id = ";
-            await db.execAsync("DELETE FROM caracter WHERE id = " + id);
-            // Lógica para deletar os personagens do banco de dados
+            await db.runAsync("DELETE FROM caracter WHERE id = ?", [id]);
         } catch (error) {
-            console.error('Erro ao listar personagens:', error);
-            throw error;    
+            console.error('Erro ao listar personagens:', error); 
         }
     }
     return {

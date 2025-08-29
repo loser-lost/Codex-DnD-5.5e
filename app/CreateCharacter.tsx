@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import { Alert, StyleSheet } from "react-native";
 import {useCharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import { Stack, useRouter } from "expo-router";
-import { races, classees, levels } from "../components/comp/sectionComponents";
+import { races, classees, levels } from "../components/comp/arrays";
 
 const CreateCharacterScreen = () => {
     const router = useRouter();

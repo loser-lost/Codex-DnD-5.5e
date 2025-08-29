@@ -15,7 +15,7 @@ import { magias } from '@/assets/json/magias.json';
 import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
 import { debounce } from '@/utils/debounce';
-import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon } from '../../utils/useIcons';
+import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon, StarIcon } from '../../utils/useIcons';
 import { filterSpels, toggleItem } from '../../utils/filterFunctions';
 
 export default function SpellsScreen() {
@@ -115,6 +115,9 @@ export default function SpellsScreen() {
 
     return (
       <Layout style={styles.container}>
+          <Layout style={styles.headerIcons}>
+              <StarIcon />
+          </Layout>
         <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenModalFilter} allFilters={allFilters}  />
 
         <SectionList
@@ -167,12 +170,17 @@ export default function SpellsScreen() {
       flex: 1,
     },
     header: {
-      
       flexDirection: 'row',
       alignItems: 'center',
       width: '100%',
       paddingVertical: 8,
       display: 'flex',
+    },
+    headerIcons: { 
+        marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+         
     },
     input: {
       flex: 1,

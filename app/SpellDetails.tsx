@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    padding: 8
+    marginTop: 10,
+    padding: 15
   },
   headerIconsLeft: {
     width: '15%',
