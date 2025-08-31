@@ -1,8 +1,8 @@
 import { Alert, StyleSheet } from 'react-native';
-import {   Layout, List, ListItem } from '@ui-kitten/components';
+import {   Button, Layout, List, ListItem, useTheme} from '@ui-kitten/components';
 import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
-import { DeleteIconX, PlusIcon, StarIcon } from '../../utils/useIcons';
+import { DeleteIconX, EditIcon, PlusIcon, StarIcon } from '../../utils/useIcons';
 import { useRouter } from 'expo-router';
 import { FAB } from 'react-native-paper';
 
@@ -12,7 +12,8 @@ export default function TabTwoScreen() {
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
   const  characterDatabase  = useCharacterDatabase();
   const router = useRouter();
-
+  const theme = useTheme();
+  const fabColor = theme['color-primary-500'];
   const newCharacter = () => {
     router.push('/CreateCharacter')
   }
@@ -64,9 +65,6 @@ export default function TabTwoScreen() {
     <Layout style={styles.headerIcons}>
       <StarIcon />
     </Layout>
-    <Layout style={styles.nivelBar}>
-      <PlusIcon plusIcon={newCharacter} />
-    </Layout>
     <Layout style={{width: '100%', alignItems: 'center'}}>
       <List
         style={{ marginTop: 20, width: '90%'}}
@@ -76,11 +74,13 @@ export default function TabTwoScreen() {
         }
       />
     </Layout>
-    <FAB
-      style={{ position: 'absolute', right: 16, bottom: 16 }}
-      icon="plus"
+     
+      <Button
+      style={styles.fabButton}
+      accessoryLeft={PlusIcon}
       onPress={newCharacter}
-    />
+      />
+   
   </Layout>
   );
   }
@@ -104,6 +104,15 @@ const styles = StyleSheet.create({
   list:{
     marginTop: 10,
     width: '85%',
-    
+  },
+  fabButton: {
+    position: 'absolute',
+    right: 20, 
+    bottom: 20, 
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+     
   }
+ 
 });

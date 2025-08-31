@@ -8,6 +8,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Feather from '@expo/vector-icons/Feather';
 import { JSX } from "react";
+import Entypo from "@expo/vector-icons/build/Entypo";
 
 
     type BackIconProps = {
@@ -29,10 +30,6 @@ import { JSX } from "react";
         style?: Partial<TextStyle>;
     };
 
-    type PlusIconProps = {
-        plusIcon: () => void;
-        style?: Partial<TextStyle>;
-    };
   
     type DeleteIconXProps = {
         deleteIconX: () => void;
@@ -169,21 +166,22 @@ import { JSX } from "react";
         );
     };
 
-    export const PlusIcon = ({plusIcon, style }: PlusIconProps): IconElement=> {
+    export const PlusIcon = (): IconElement=> {
         const theme = useTheme();
         return (
-            <AntDesign 
-            name="pluscircle" 
-            size={24} 
-            color={theme['color-basic-500']}
-            onPress={plusIcon}
+            <Entypo 
+            name="plus" 
+            size={28} 
+            color={theme['background-basic-color-1']}
+            
             />
+            
         );
     }
     export const DeleteIconX = ({ deleteIconX, style }: DeleteIconXProps): IconElement => {
         const theme = useTheme();
         return (
-            <FontAwesome6 
+            <FontAwesome6  
             name="xmark" 
             size={24} 
             color={theme['color-basic-500']}
@@ -191,7 +189,17 @@ import { JSX } from "react";
             />
         )
     }
-
+    export const IconX = (): IconElement => {
+        const theme = useTheme();
+        return (
+            <FontAwesome6  
+            name="xmark" 
+            size={10} 
+            color={theme['color-basic-500']}
+           
+            />
+        )
+    }
     export const EditIcon = ({ editIcon, style }: editIconProps): IconElement => {
         const theme = useTheme();
         return (

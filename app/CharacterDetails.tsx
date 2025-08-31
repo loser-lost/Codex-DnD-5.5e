@@ -4,7 +4,7 @@ import {  Alert, SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
 import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
-import { CirculoIcon, ClassIcon, EditIcon, RangeIcon, SchoolIcon, StarIcon, TempoIcon } from "@/utils/useIcons";
+import { CirculoIcon, ClassIcon, DeleteIconX, EditIcon, IconX, RangeIcon, SchoolIcon, StarIcon, TempoIcon } from "@/utils/useIcons";
 import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
@@ -12,6 +12,7 @@ import { RenderSectionHeaderDb} from "../components/comp/sectionComponents";
 import { races, classees, levels } from "../components/comp/arrays";
 import {RenderSpell} from "../components/comp/sectionComponents";
 import SeachBar from "@/components/comp/SeachBar";
+import ShowButtons from "@/components/comp/showFilterBottons";
 
 import DrawerFilter from "@/components/comp/drawerFilterDb";
 import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
@@ -38,7 +39,6 @@ const CharacterDetails = () => {
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
 
     // filter and search function
-    
     const autoFilters = useMemo(() => {
         return Array.from(new Set(character.map(character => character.classe).flat()));
     }, [spels]);
@@ -167,6 +167,24 @@ const CharacterDetails = () => {
           alert('Erro ao editar personagem. Tente novamente.');
         }
       }
+    
+    // function to remove items from selected filters
+    const removeItem = useCallback(<T,>(
+        itemToRemove: T,
+        state: T[],
+        setState: React.Dispatch<React.SetStateAction<T[]>>
+    ) => {
+        setState(state.filter(item => item !== itemToRemove));
+    }, []);
+    
+    const handleRemoveClass = useCallback((className: string) => {
+        removeItem(className, selectedClasses, setSelectedClasses);
+    }, [ selectedClasses]);
+
+    const handleRemoveCircle = useCallback((circleName: string) => {
+        removeItem(circleName, selectedCircle, setSelectedCircle);
+    }, [ selectedCircle]);
+
 
     return (
         <Layout style={[styles.container, { backgroundColor: teme['background-basic-color-1'] }]}>
@@ -180,7 +198,7 @@ const CharacterDetails = () => {
                         character.map((Char) => (
                             <Layout key={Char.id} style={{ marginBottom: 16 }}>
                                 <Text category="h5">{Char.name}</Text>
-                            </Layout>
+                            </Layout> 
                         ))
                     ) : (
                         <Text category="s1">Nenhum personagem encontrado.</Text>
@@ -200,7 +218,14 @@ const CharacterDetails = () => {
                         setVisible(true);
                     }} />
                 </Layout>
+                
             </Layout>
+             <ShowButtons
+                            selectedClasses={selectedClasses}
+                            selectedCircle={selectedCircle}
+                            onRemoveClass={handleRemoveClass}
+                            onRemoveCircle={handleRemoveCircle}
+                        />{/*Ainda decidindo se é realmente nescessario*/}
             <TabView
                 selectedIndex={selectedIndexTab}
                 onSelect={index => setSelectedIndexTab(index)}
@@ -218,6 +243,7 @@ const CharacterDetails = () => {
                             handleOpenFilter={handleOpenModalFilter}
                             allFilters={allFilters}
                            />
+
                         <SectionList
                             style={styles.list}
                             sections={spellInSections}
@@ -228,7 +254,9 @@ const CharacterDetails = () => {
                             maxToRenderPerBatch={10}
                             windowSize={5} 
                         />
+                        
                     </Layout>
+                    
                 </Tab>           
             </TabView>
             <Modal
@@ -313,15 +341,13 @@ const CharacterDetails = () => {
 export default CharacterDetails;
 const styles = StyleSheet.create({
     container: {
-
         flex: 1,
         padding: 20,
     },
     headerIcons: { 
         marginTop: 10,
         flexDirection: 'row',
-        justifyContent: 'center',
-       
+        justifyContent: 'center'  
     },
     heade1: {
         marginLeft:5
@@ -380,5 +406,9 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 5,
         marginHorizontal: 5,
+    },
+    filterButton:{
+       margin: 5,
+       borderRadius: 10,
     },
 });
