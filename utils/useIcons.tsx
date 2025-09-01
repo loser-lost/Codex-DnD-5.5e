@@ -212,5 +212,11 @@ import Entypo from "@expo/vector-icons/build/Entypo";
         )
     }
 
+    export const AddSpellIcon = (): IconElement => {
+        const theme = useTheme();
+        return (
+        <FontAwesome6 name="add" size={15} color={theme['background-basic-color-1']} />
+        );
+    }
 
 //<FontAwesome6 name="edit" size={24} color="black" />

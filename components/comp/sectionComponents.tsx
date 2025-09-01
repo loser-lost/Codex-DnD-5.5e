@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
 import { spellDatabase } from "../../assets/_database/useSpellDatabase";
+import { AddSpellIcon } from "@/utils/useIcons";
 
 
 
@@ -22,7 +23,7 @@ export interface RenderSpellProps {
     const RenderSpell = React.memo(({ item, buttonKnow }: RenderSpellProps) => {
     const theme = useTheme();
     const textColor = theme['color-basic-500'];
-    const itemCirculo = item.level === 0 ? 'Truque' : `${item.level}º Círculo`;
+    
 
 
     const rotaSpells = () => {
@@ -30,19 +31,20 @@ export interface RenderSpellProps {
     }
     return (
         <ListItem
-        onPress={rotaSpells}
         title={() => (
-            <TitleText type='h4'>
+            <TitleText type='h4' onPress={rotaSpells}>
             {item.name}
             </TitleText>
         )}
         description={() => (
             <>
-            <Text style={{ fontSize: 13, color: textColor }}>Duração: {item.duration}</Text>
+            <Text style={{ fontSize: 13, color: textColor }} >Duração: {item.duration}</Text>
             <Text style={{ fontSize: 11, color: textColor }}>Tempo de Conjuracao: {item.castingTime}</Text>
             </>
         )}
-        accessoryRight={props => <Button onPress={buttonKnow}>Adicionar</Button>}
+        //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
+        accessoryRight={props => <Button style={styles.boton} onPress={buttonKnow} size='tiny' accessoryLeft={AddSpellIcon} />}
+        
         />
     );
     });
@@ -71,6 +73,11 @@ const styles =  StyleSheet.create({
     text:{
 
 
+    }, 
+    boton:{
+      width: 30,
+      height: 30,
+      borderRadius: 28,
     }
 });
 

@@ -41,9 +41,23 @@ export function useCharacterSpellDatabase() {
             return []; 
         }
     }
-    async function searchById(id: number) {
+    async function searchById(id: number | number[]) {
         try {
-            const query = 'SELECT * FROM spell WHERE id = ?';
+            const idArray = Array.isArray(id) ? id : [id];
+            const placeholders = idArray.map(() => '?').join(', ');
+
+            const query = `SELECT * FROM spell WHERE id IN (${placeholders})`;
+            const response = await db.getAllAsync<spellDatabase>(query, idArray)
+            return response;
+        } catch (error) {
+            console.error('Erro ao buscar magia do personagem por id:', error);
+            return [];
+        }
+    }
+
+    async function searchSpellsByCharacterid(id: number){
+        const query = 'SELECT t1.character_id,  t1.spell_id,  t2.*  FROM character_spell AS t1 INNER JOIN spell AS t2 ON t1.spell_id = t2.id  WHERE t1.character_id = ?;'
+        try {
             const response = await db.getAllAsync<spellDatabase>(query, [id]);
             return response;
         } catch (error) {
@@ -54,6 +68,7 @@ export function useCharacterSpellDatabase() {
     async function update() {
         
     }
+
 
     async function checkIfExists(characterId: number, spellId: number): Promise<boolean> {
     try {
@@ -74,6 +89,7 @@ export function useCharacterSpellDatabase() {
         update,
         remove,
         searchById,
-        checkIfExists
+        checkIfExists,
+        searchSpellsByCharacterid
     }
 }

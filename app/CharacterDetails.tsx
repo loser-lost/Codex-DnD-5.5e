@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import {  Alert, SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
@@ -8,12 +8,11 @@ import { CirculoIcon, ClassIcon, EditIcon,StarIcon } from "@/utils/useIcons";
 import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
-import { useCharacterSpellDatabase,CharacterSpell } from '../assets/_database/useCharacterSpell'
+import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
 import { RenderSectionHeaderDb, RenderSpell} from "../components/comp/sectionComponents";
 import { races, classees, levels } from "../components/comp/arrays";
 import SeachBar from "@/components/comp/SeachBar";
 import ShowButtons from "@/components/comp/showFilterBottons";
-
 import DrawerFilter from "@/components/comp/drawerFilterDb";
 import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
@@ -54,6 +53,7 @@ const CharacterDetails = () => {
     };
 
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
+    
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
  
@@ -112,16 +112,16 @@ const CharacterDetails = () => {
         return groupSortSpells(filteredSpells);
     }, [filteredSpells]);
 
+     const grupedSpells2 = useMemo(() =>{
+        return groupSortSpells(spelsKnow);
+    }, [filteredSpells]);
+
     const spellInSections = useMemo(()=>{
           return Object.entries(grupedSpells).map(([circulo, data]) => ({
               title: circulo,
               data,
           }));
     }, [grupedSpells]);
-
-    const grupedSpells2 = useMemo(() =>{
-        return groupSortSpells(spelsKnow);
-    }, [filteredSpells]);
 
     const spellInSectionsSelected = useMemo(()=>{
           return Object.entries(grupedSpells2).map(([circulo, data]) => ({
@@ -135,10 +135,8 @@ const CharacterDetails = () => {
         try {
             const response = await characterDb.seachById(character_id as string);
             setCharacter(response);
-    
         } catch (error) {
             console.error('Erro ao buscar personagem:', error);
-            throw error; 
         }
     }
 
@@ -154,37 +152,15 @@ const CharacterDetails = () => {
 
     useEffect(() => {
         spellSearchSpelCharacter(Number(character_id));
-    }, [autoFilters]);
-    
+    }, []);
+
     async function spellSearchSpelCharacter(id: number){
         try {
-            const response = await characterSpellDb.read(id);
-            const searchPromisse = response.map( spell => {
-                return spellSearchByID(spell.spell_id);
-            })
-
-            const allSpellResults = await Promise.all(searchPromisse);
-
-            const flattenedSpells = allSpellResults.flat();
-            console.log("Todas as magias do personagem", flattenedSpells);
-
-            setSpelsKnow(flattenedSpells);
-
+            const response = await characterSpellDb.searchSpellsByCharacterid(id);
+            setSpelsKnow(response);
         } catch (error) {
             console.error('Erro ao buscar magias do personagem:', error);
         }    
-    }
-
-    async function spellSearchByID(id: number) {
-        try {
-            const response = await characterSpellDb.searchById(id);
-            console.log("magias do personagem", response)
-            return response;
-        } catch (error) {
-            console.error('Erro ao buscar magias do personagem por id:', error);
-            return [];
-        }
-        
     }
 
     // render item for SectionList
@@ -202,8 +178,6 @@ const CharacterDetails = () => {
             const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
             if (response && response.insertedRowId) {
                 Alert.alert("Magia adicionada ao personagem com sucesso.");
-            } else {
-                Alert.alert("Erro ao adicionar a magia ao personagem.");
             }
         } catch (error) {
             console.error('Erro ao adicionar a magia ao personagem:', error);
@@ -213,6 +187,7 @@ const CharacterDetails = () => {
     const renderItemSpels = useCallback(({ item }: { item: spellDatabase }) => (
       <RenderSpell item={item} buttonKnow={() => buttonKnow(item.id)} />
     ), []);
+
     // key extractor for SectionList
     const keyExtractor = useCallback((item: spellDatabase, index: number) => String(item.id) + index, [])
 
@@ -333,7 +308,6 @@ const CharacterDetails = () => {
                             maxToRenderPerBatch={10}
                             windowSize={5} 
                         />
-                        
                     </Layout>
                     
                 </Tab>           
