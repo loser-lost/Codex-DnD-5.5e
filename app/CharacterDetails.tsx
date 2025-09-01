@@ -4,13 +4,13 @@ import {  Alert, SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
 import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
-import { CirculoIcon, ClassIcon, DeleteIconX, EditIcon, IconX, RangeIcon, SchoolIcon, StarIcon, TempoIcon } from "@/utils/useIcons";
+import { CirculoIcon, ClassIcon, EditIcon,StarIcon } from "@/utils/useIcons";
 import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
-import { RenderSectionHeaderDb} from "../components/comp/sectionComponents";
+import { useCharacterSpellDatabase,CharacterSpell } from '../assets/_database/useCharacterSpell'
+import { RenderSectionHeaderDb, RenderSpell} from "../components/comp/sectionComponents";
 import { races, classees, levels } from "../components/comp/arrays";
-import {RenderSpell} from "../components/comp/sectionComponents";
 import SeachBar from "@/components/comp/SeachBar";
 import ShowButtons from "@/components/comp/showFilterBottons";
 
@@ -21,9 +21,11 @@ import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 const CharacterDetails = () => {
     const teme = useTheme();
     const characterDb = useCharacterDatabase();
+    const characterSpellDb = useCharacterSpellDatabase();
     const spellDb = useSpellDatabase(); //useSpellDatabase();
     const {character_id} = useLocalSearchParams();
     const [spels, setSpels] = useState<spellDatabase[]>([]);
+    const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
@@ -117,6 +119,17 @@ const CharacterDetails = () => {
           }));
     }, [grupedSpells]);
 
+    const grupedSpells2 = useMemo(() =>{
+        return groupSortSpells(spelsKnow);
+    }, [filteredSpells]);
+
+    const spellInSectionsSelected = useMemo(()=>{
+          return Object.entries(grupedSpells2).map(([circulo, data]) => ({
+              title: circulo,
+              data,
+          }));
+    }, [grupedSpells2]);
+
     // functions to fetch data
     async function characterSearch(){
         try {
@@ -139,9 +152,66 @@ const CharacterDetails = () => {
         }
     }
 
+    useEffect(() => {
+        spellSearchSpelCharacter(Number(character_id));
+    }, [autoFilters]);
+    
+    async function spellSearchSpelCharacter(id: number){
+        try {
+            const response = await characterSpellDb.read(id);
+            const searchPromisse = response.map( spell => {
+                return spellSearchByID(spell.spell_id);
+            })
+
+            const allSpellResults = await Promise.all(searchPromisse);
+
+            const flattenedSpells = allSpellResults.flat();
+            console.log("Todas as magias do personagem", flattenedSpells);
+
+            setSpelsKnow(flattenedSpells);
+
+        } catch (error) {
+            console.error('Erro ao buscar magias do personagem:', error);
+        }    
+    }
+
+    async function spellSearchByID(id: number) {
+        try {
+            const response = await characterSpellDb.searchById(id);
+            console.log("magias do personagem", response)
+            return response;
+        } catch (error) {
+            console.error('Erro ao buscar magias do personagem por id:', error);
+            return [];
+        }
+        
+    }
+
     // render item for SectionList
+    const buttonKnow = (id: number) => {
+        knowSpell(id)
+    }
+    async function knowSpell(id: number) {
+        const char_id = Number(character_id);
+        try{
+            const exists = await characterSpellDb.checkIfExists(char_id, id);
+            if (exists) {
+                Alert.alert("Magia já adicionada", "Este personagem já conhece esta magia.");
+                return;
+            }
+            const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
+            if (response && response.insertedRowId) {
+                Alert.alert("Magia adicionada ao personagem com sucesso.");
+            } else {
+                Alert.alert("Erro ao adicionar a magia ao personagem.");
+            }
+        } catch (error) {
+            console.error('Erro ao adicionar a magia ao personagem:', error);
+        }
+    }
+
     const renderItemSpels = useCallback(({ item }: { item: spellDatabase }) => (
-      <RenderSpell item={item} />
+      <RenderSpell item={item} buttonKnow={() => buttonKnow(item.id)} />
     ), []);
     // key extractor for SectionList
     const keyExtractor = useCallback((item: spellDatabase, index: number) => String(item.id) + index, [])
@@ -232,7 +302,16 @@ const CharacterDetails = () => {
             >
                 <Tab title='Magias Conhecidas'>
                     <Layout style={styles.tabContainer}>
-                        <Text>Conteúdo de Magias Conhecidas</Text>
+                        <SectionList
+                            style={{ ...styles.list, marginTop: 10, marginBottom: 10 }}
+                            sections={spellInSectionsSelected}
+                            keyExtractor={keyExtractor}
+                            renderSectionHeader={({ section }) => (<RenderSectionHeaderDb title={section.title} data={section.data} />)}
+                            renderItem={renderItemSpels}
+                            initialNumToRender={10}
+                            maxToRenderPerBatch={10}
+                            windowSize={5} 
+                        />
                     </Layout>
                 </Tab>
                 <Tab title='Todas as Magias'>

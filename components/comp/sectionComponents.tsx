@@ -1,24 +1,31 @@
-import { ListItem, Text, useTheme, Layout, IndexPath } from "@ui-kitten/components";
-import { router, useRouter } from "expo-router";
-import { Fragment, useMemo } from "react";
+
+import React from "react";
+import { ListItem, Text, useTheme, Layout, Button} from "@ui-kitten/components";
+import { router } from "expo-router";
+
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
 import { spellDatabase } from "../../assets/_database/useSpellDatabase";
-import React from "react";
+
+
 
 export interface Section {
   title: string;
   data: spellDatabase[];
 }
-
+ 
 export interface RenderSpellProps {
   item: spellDatabase;
+  buttonKnow: () => void;
+  
 }
-    const RenderSpell = React.memo(({ item }: RenderSpellProps) => {
+    const RenderSpell = React.memo(({ item, buttonKnow }: RenderSpellProps) => {
     const theme = useTheme();
     const textColor = theme['color-basic-500'];
     const itemCirculo = item.level === 0 ? 'Truque' : `${item.level}º Círculo`;
-     const rotaSpells = () => {
+
+
+    const rotaSpells = () => {
         router.push(`/SpellDetails?magia_id=${item.id}`);
     }
     return (
@@ -35,11 +42,7 @@ export interface RenderSpellProps {
             <Text style={{ fontSize: 11, color: textColor }}>Tempo de Conjuracao: {item.castingTime}</Text>
             </>
         )}
-        accessoryRight={() => (
-            <Text style={{ fontSize: 14 }}>
-            {itemCirculo}
-            </Text>
-        )}
+        accessoryRight={props => <Button onPress={buttonKnow}>Adicionar</Button>}
         />
     );
     });
