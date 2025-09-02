@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import {  Alert, SectionList, StyleSheet } from 'react-native';
+import {  SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
 import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
@@ -9,23 +9,28 @@ import { groupSortSpells } from '../utils/groupMagicDb'
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
-import { RenderSectionHeaderDb, RenderSpell} from "../components/comp/sectionComponents";
+import { RenderKnowSpell, RenderSectionHeaderDb, RenderSpell} from "../components/comp/sectionComponents";
 import { races, classees, levels } from "../components/comp/arrays";
 import SeachBar from "@/components/comp/SeachBar";
 import ShowButtons from "@/components/comp/showFilterBottons";
 import DrawerFilter from "@/components/comp/drawerFilterDb";
 import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
+import { removerAcentos } from "@/components/comp/utilities";
+import { toastMessages } from "@/components/comp/toastMessages"
 
 const CharacterDetails = () => {
-    const teme = useTheme();
+    const TM = toastMessages();
+    const theme = useTheme();
     const characterDb = useCharacterDatabase();
     const characterSpellDb = useCharacterSpellDatabase();
     const spellDb = useSpellDatabase(); //useSpellDatabase();
     const {character_id} = useLocalSearchParams();
+
     const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
+
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
@@ -41,19 +46,34 @@ const CharacterDetails = () => {
 
     // filter and search function
     const autoFilters = useMemo(() => {
-        return Array.from(new Set(character.map(character => character.classe).flat()));
-    }, [spels]);
+        return Array.from(new Set(character.map(char => char.classe).flat()));
+    }, [character]);
 
+    // hooks
+    
     useEffect(() => {
         setSelectedClasses(autoFilters);
     }, [autoFilters]);
+    
+    useEffect(() => {
+        if (character_id) {
+            characterSearch();
+            spellSearch();
+        }
+    }, [character_id]);
+
+    useEffect(() => {
+        if (character_id) {
+            spellSearchSpelCharacter(Number(character_id));
+        }
+    }, [character_id]);
 
      const handleSearch = (query: string) => {
           setSearchQuery(query);
     };
 
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
-    
+
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
  
@@ -72,10 +92,7 @@ const CharacterDetails = () => {
         selectedCircle,
         selectedClasses,
     }), [selectedCircle , selectedClasses]);
-
-    function removerAcentos(texto: String) {
-        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    }
+ 
     const filteredSpells  = useMemo(() => {
             const searchFiltered = searchQuery
             ? spels.filter(item => 
@@ -98,37 +115,14 @@ const CharacterDetails = () => {
     ? levels[selectedLevelIndex.row] 
     : 0; 
 
-    // hooks
-    useEffect(() => {
-        characterSearch();    
-    }, [ character_id ]);
-
-    useEffect(() => {
-        spellSearch();
-    }, [ character_id ]);
-
     // group spells by level
-    const grupedSpells = useMemo(() =>{
-        return groupSortSpells(filteredSpells);
-    }, [filteredSpells]);
-
-     const grupedSpells2 = useMemo(() =>{
-        return groupSortSpells(spelsKnow);
-    }, [filteredSpells]);
-
-    const spellInSections = useMemo(()=>{
-          return Object.entries(grupedSpells).map(([circulo, data]) => ({
-              title: circulo,
-              data,
-          }));
-    }, [grupedSpells]);
-
-    const spellInSectionsSelected = useMemo(()=>{
-          return Object.entries(grupedSpells2).map(([circulo, data]) => ({
-              title: circulo,
-              data,
-          }));
-    }, [grupedSpells2]);
+   
+    const spellInSectionsSelected = useMemo(() =>
+         groupSortSpells(spelsKnow), [spelsKnow]
+    );
+    const spellInSections = useMemo(() =>
+         groupSortSpells(filteredSpells), [filteredSpells]
+    );
 
     // functions to fetch data
     async function characterSearch(){
@@ -146,13 +140,8 @@ const CharacterDetails = () => {
             setSpels(response);
         } catch (error) {
             console.error('Erro ao buscar magias:', error);
-            throw error;
         }
     }
-
-    useEffect(() => {
-        spellSearchSpelCharacter(Number(character_id));
-    }, []);
 
     async function spellSearchSpelCharacter(id: number){
         try {
@@ -164,32 +153,51 @@ const CharacterDetails = () => {
     }
 
     // render item for SectionList
-    const buttonKnow = (id: number) => {
-        knowSpell(id)
-    }
     async function knowSpell(id: number) {
         const char_id = Number(character_id);
         try{
             const exists = await characterSpellDb.checkIfExists(char_id, id);
             if (exists) {
-                Alert.alert("Magia já adicionada", "Este personagem já conhece esta magia.");
+                TM.knowedSpell()
                 return;
             }
             const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
             if (response && response.insertedRowId) {
-                Alert.alert("Magia adicionada ao personagem com sucesso.");
+                const addedSpell = spels.find(s => s.id === id);
+            if (addedSpell) {
+                setSpelsKnow(prev => [...prev, addedSpell]);
+                TM.showSucessSpell()
+            }
             }
         } catch (error) {
+            TM.showFailSpell()
             console.error('Erro ao adicionar a magia ao personagem:', error);
         }
     }
 
-    const renderItemSpels = useCallback(({ item }: { item: spellDatabase }) => (
-      <RenderSpell item={item} buttonKnow={() => buttonKnow(item.id)} />
+    const renderItemSpels = useCallback(({item}: {item: spellDatabase})=> {
+        const handleKnowSpell = () => knowSpell(item.id);
+        return <RenderSpell item={item} buttonKnow={handleKnowSpell} />;
+    }, [knowSpell]);
+
+
+    const renderItemSpelsKnow = useCallback(({ item }: { item: spellDatabase }) => (
+        <RenderKnowSpell item={item} removeSpell={() => removeSpell(item.id)} />
     ), []);
 
+    async function removeSpell(id:number) {
+        try {
+            await characterSpellDb.remove(id)
+            setSpelsKnow(prev => prev.filter(s => s.id !== id));  
+            TM.removeSpSucess()                      
+        } catch (error) {
+            console.error('Erro ao deletar magia:', error);  
+            TM.removeSpFail()          
+        }
+    }
+
     // key extractor for SectionList
-    const keyExtractor = useCallback((item: spellDatabase, index: number) => String(item.id) + index, [])
+    const keyExtractor = useCallback((item: spellDatabase) => String(item.id), [])
 
     async function updateCharacter(){
         const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
@@ -205,46 +213,45 @@ const CharacterDetails = () => {
             playerName
             })
             characterSearch()
-            Alert.alert("Personagem editado com sucesso.");
+            TM.EditCharacterSucess()
             setVisible(false);
         }catch (error) {
-          console.error('Erro ao editar personagem:', error);
-          alert('Erro ao editar personagem. Tente novamente.');
+            console.error('Erro ao editar personagem:', error);
+            TM.EditCharacterFail
         }
-      }
+    }
     
     // function to remove items from selected filters
     const removeItem = useCallback(<T,>(
         itemToRemove: T,
-        state: T[],
         setState: React.Dispatch<React.SetStateAction<T[]>>
     ) => {
-        setState(state.filter(item => item !== itemToRemove));
+        setState(prevItems => prevItems.filter(item => item !== itemToRemove));
     }, []);
-    
     const handleRemoveClass = useCallback((className: string) => {
-        removeItem(className, selectedClasses, setSelectedClasses);
-    }, [ selectedClasses]);
+        removeItem(className, setSelectedClasses);
+    }, [removeItem]); 
 
     const handleRemoveCircle = useCallback((circleName: string) => {
-        removeItem(circleName, selectedCircle, setSelectedCircle);
-    }, [ selectedCircle]);
+        removeItem(circleName, setSelectedCircle);
+    }, [removeItem]); 
 
+    const currentCharacter = useMemo(() => {
+        return character.length > 0 ? character[0] : null;
+    }, [character]);
 
     return (
-        <Layout style={[styles.container, { backgroundColor: teme['background-basic-color-1'] }]}>
+        <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
             <Stack.Screen options={{ headerShown: false }} />
             <Layout style={styles.headerIcons}>
                 <StarIcon />
             </Layout>
             <Layout style={styles.header}>
                 <Layout style={styles.heade1}>
-                    {character.length > 0 ? (
-                        character.map((Char) => (
-                            <Layout key={Char.id} style={{ marginBottom: 16 }}>
-                                <Text category="h5">{Char.name}</Text>
-                            </Layout> 
-                        ))
+                    {currentCharacter ? (
+                            <Layout key={currentCharacter.id} style={{ marginBottom: 16 }}>
+                                <Text category="h5">{currentCharacter.name}</Text>
+                            </Layout>
                     ) : (
                         <Text category="s1">Nenhum personagem encontrado.</Text>
                     )}
@@ -265,12 +272,12 @@ const CharacterDetails = () => {
                 </Layout>
                 
             </Layout>
-             <ShowButtons
-                            selectedClasses={selectedClasses}
-                            selectedCircle={selectedCircle}
-                            onRemoveClass={handleRemoveClass}
-                            onRemoveCircle={handleRemoveCircle}
-                        />{/*Ainda decidindo se é realmente nescessario*/}
+                <ShowButtons
+                    selectedClasses={selectedClasses}
+                    selectedCircle={selectedCircle}
+                    onRemoveClass={handleRemoveClass}
+                    onRemoveCircle={handleRemoveCircle}
+                />{/*Ainda decidindo se é realmente nescessario*/}
             <TabView
                 selectedIndex={selectedIndexTab}
                 onSelect={index => setSelectedIndexTab(index)}
@@ -282,10 +289,11 @@ const CharacterDetails = () => {
                             sections={spellInSectionsSelected}
                             keyExtractor={keyExtractor}
                             renderSectionHeader={({ section }) => (<RenderSectionHeaderDb title={section.title} data={section.data} />)}
-                            renderItem={renderItemSpels}
-                            initialNumToRender={10}
-                            maxToRenderPerBatch={10}
+                            renderItem={renderItemSpelsKnow}
+                            initialNumToRender={5}
+                            maxToRenderPerBatch={5}
                             windowSize={5} 
+                            removeClippedSubviews={true}
                         />
                     </Layout>
                 </Tab>
@@ -304,9 +312,10 @@ const CharacterDetails = () => {
                             keyExtractor={keyExtractor}
                             renderSectionHeader={({ section }) => (<RenderSectionHeaderDb title={section.title} data={section.data} />)}
                             renderItem={renderItemSpels}
-                            initialNumToRender={10}
-                            maxToRenderPerBatch={10}
+                            initialNumToRender={5}
+                            maxToRenderPerBatch={5}
                             windowSize={5} 
+                            removeClippedSubviews={true}
                         />
                     </Layout>
                     

@@ -41,19 +41,7 @@ export function useCharacterSpellDatabase() {
             return []; 
         }
     }
-    async function searchById(id: number | number[]) {
-        try {
-            const idArray = Array.isArray(id) ? id : [id];
-            const placeholders = idArray.map(() => '?').join(', ');
-
-            const query = `SELECT * FROM spell WHERE id IN (${placeholders})`;
-            const response = await db.getAllAsync<spellDatabase>(query, idArray)
-            return response;
-        } catch (error) {
-            console.error('Erro ao buscar magia do personagem por id:', error);
-            return [];
-        }
-    }
+   
 
     async function searchSpellsByCharacterid(id: number){
         const query = 'SELECT t1.character_id,  t1.spell_id,  t2.*  FROM character_spell AS t1 INNER JOIN spell AS t2 ON t1.spell_id = t2.id  WHERE t1.character_id = ?;'
@@ -65,22 +53,31 @@ export function useCharacterSpellDatabase() {
             return [];
         }
     }
+
     async function update() {
         
     }
 
 
     async function checkIfExists(characterId: number, spellId: number): Promise<boolean> {
-    try {
-        const query = 'SELECT 1 FROM character_spell WHERE character_id = ? AND spell_id = ?';
-        const response = await db.getFirstAsync(query, [characterId, spellId]);
-        return response !== null; // Retorna true se encontrar um registro, false caso contrário
-    } catch (error) {
-        console.error('Erro ao verificar existência da magia:', error);
-        return false;
+        try {
+            const query = 'SELECT 1 FROM character_spell WHERE character_id = ? AND spell_id = ?';
+            const response = await db.getFirstAsync(query, [characterId, spellId]);
+            return response !== null; // Retorna true se encontrar um registro, false caso contrário
+        } catch (error) {
+            console.error('Erro ao verificar existência da magia:', error);
+            return false;
+        }
     }
-}
-    async function remove() {
+    async function remove(id:number) {
+        try {
+            await db.runAsync("DELETE FROM character_spell WHERE spell_id = ? ", [id])
+            
+        } catch (error) {
+            console.error('Erro ao deletar magia:', error); 
+        }
+        
+    
         
     }
     return{
@@ -88,7 +85,6 @@ export function useCharacterSpellDatabase() {
         read,
         update,
         remove,
-        searchById,
         checkIfExists,
         searchSpellsByCharacterid
     }

@@ -18,14 +18,18 @@ export interface Section {
 export interface RenderSpellProps {
   item: spellDatabase;
   buttonKnow: () => void;
+
   
 }
-    const RenderSpell = React.memo(({ item, buttonKnow }: RenderSpellProps) => {
+export interface RenderSpelsKnow{
+  item: spellDatabase;
+  removeSpell: () => void; 
+}
+
+const RenderSpell = React.memo(({ item, buttonKnow }: RenderSpellProps) => {
     const theme = useTheme();
     const textColor = theme['color-basic-500'];
     
-
-
     const rotaSpells = () => {
         router.push(`/SpellDetails?magia_id=${item.id}`);
     }
@@ -47,8 +51,36 @@ export interface RenderSpellProps {
         
         />
     );
-    });
-    export { RenderSpell};
+});
+export { RenderSpell};
+
+    const RenderKnowSpell = React.memo(({ item, removeSpell }: RenderSpelsKnow) => {
+    const theme = useTheme();
+    const textColor = theme['color-basic-500'];
+    
+    const rotaSpells = () => {
+        router.push(`/SpellDetails?magia_id=${item.id}`);
+    }
+    return (
+        <ListItem
+        title={() => (
+            <TitleText type='h4' onPress={rotaSpells}>
+            {item.name}
+            </TitleText>
+        )}
+        description={() => (
+            <>
+            <Text style={{ fontSize: 13, color: textColor }}>Duração: {item.duration}</Text>
+            <Text style={{ fontSize: 11, color: textColor }}>Tempo de Conjuracao: {item.castingTime}</Text>
+            </>
+        )}
+        //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
+        accessoryRight={props => <Button style={styles.boton} onPress={removeSpell} size='tiny' accessoryLeft={AddSpellIcon} />}
+        
+        />
+    );
+});
+export { RenderKnowSpell};
     
 const RenderSectionHeaderDb = (( {title,data}: Section) => {
     return (

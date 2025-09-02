@@ -82,7 +82,7 @@ export function useCharacterDatabase() {
         try {
             await db.runAsync("DELETE FROM caracter WHERE id = ?", [id]);
         } catch (error) {
-            console.error('Erro ao listar personagens:', error); 
+            console.error('Erro ao deletar personagens:', error); 
         }
     }
     return {

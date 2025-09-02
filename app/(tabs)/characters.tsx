@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
 import { DeleteIconX, EditIcon, PlusIcon, StarIcon } from '../../utils/useIcons';
 import { useRouter } from 'expo-router';
-import { FAB } from 'react-native-paper';
+
 
 
 export default function TabTwoScreen() {
@@ -42,7 +42,6 @@ export default function TabTwoScreen() {
       listCharacters();
     } catch (error) {
       console.error('Erro ao deletar personagem:', error);
-      throw error;
     }
   }
 

@@ -44,6 +44,12 @@ export function useSpellDatabase() {
     }
 
     async function remove() {
+        try {
+            //await db.runAsync("DELETE FROM ")
+            
+        } catch (error) {
+            console.error('Erro ao deletar magia:', error); 
+        }
         
     }
     return{
