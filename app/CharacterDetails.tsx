@@ -158,7 +158,7 @@ const CharacterDetails = () => {
         try{
             const exists = await characterSpellDb.checkIfExists(char_id, id);
             if (exists) {
-                TM.knowedSpell()
+                TM.knowedSpell();
                 return;
             }
             const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
@@ -166,11 +166,11 @@ const CharacterDetails = () => {
                 const addedSpell = spels.find(s => s.id === id);
             if (addedSpell) {
                 setSpelsKnow(prev => [...prev, addedSpell]);
-                TM.showSucessSpell()
+                TM.showSucessSpell();
             }
             }
         } catch (error) {
-            TM.showFailSpell()
+            TM.showFailSpell();
             console.error('Erro ao adicionar a magia ao personagem:', error);
         }
     }
@@ -188,11 +188,11 @@ const CharacterDetails = () => {
     async function removeSpell(id:number) {
         try {
             await characterSpellDb.remove(id)
-            setSpelsKnow(prev => prev.filter(s => s.id !== id));  
-            TM.removeSpSucess()                      
+            TM.removeSpSucess();
+            setSpelsKnow(prev => prev.filter(s => s.id !== id));                        
         } catch (error) {
             console.error('Erro ao deletar magia:', error);  
-            TM.removeSpFail()          
+            TM.removeSpFail();         
         }
     }
 
