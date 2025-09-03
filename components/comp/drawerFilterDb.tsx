@@ -2,8 +2,6 @@ import { ReactElement, memo } from 'react';
 import { Drawer, DrawerGroup, DrawerItem, CheckBox, IconProps } from '@ui-kitten/components';
 import { CIRCLES, CLASSES } from '@/components/comp/arrays';
 
-
-
 interface DrawerFilterProps {
   selectCircle: string[];
   selectedClasses: string[];

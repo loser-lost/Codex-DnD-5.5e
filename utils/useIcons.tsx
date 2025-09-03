@@ -173,7 +173,6 @@ import Entypo from "@expo/vector-icons/build/Entypo";
             name="plus" 
             size={28} 
             color={theme['background-basic-color-1']}
-            
             />
             
         );
@@ -186,6 +185,17 @@ import Entypo from "@expo/vector-icons/build/Entypo";
             size={24} 
             color={theme['color-basic-500']}
             onPress={deleteIconX}
+            />
+        )
+    }
+
+    export const DeleteIconXNoProps = (): IconElement => {
+        const theme = useTheme();
+        return (
+            <FontAwesome6  
+            name="xmark" 
+            size={24} 
+            color={theme['color-basic-500']}
             />
         )
     }
@@ -215,8 +225,16 @@ import Entypo from "@expo/vector-icons/build/Entypo";
     export const AddSpellIcon = (): IconElement => {
         const theme = useTheme();
         return (
-        <FontAwesome6 name="add" size={15} color={theme['background-basic-color-1']} />
+        <FontAwesome6 name="plus" size={24} color={theme['color-primary-500']} />
         );
     }
 
-//<FontAwesome6 name="edit" size={24} color="black" />
+    export const AdedSpellIcon = (): IconElement => {
+        const theme = useTheme();
+        return (
+        <FontAwesome5 name="angle-down" size={24} color={theme['background-basic-color-1']} />
+        );
+        //<FontAwesome6 name="check" size={15} color={theme['background-basic-color-1']} />
+    }
+
+//color="black" />

@@ -45,8 +45,9 @@ type SetProps = {
     const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        
         alignItems: 'center',
+        flexWrap: 'wrap'
     },
     
     filterButton:{

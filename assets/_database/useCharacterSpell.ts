@@ -44,7 +44,7 @@ export function useCharacterSpellDatabase() {
    
 
     async function searchSpellsByCharacterid(id: number){
-        const query = 'SELECT t1.character_id,  t1.spell_id,  t2.*  FROM character_spell AS t1 INNER JOIN spell AS t2 ON t1.spell_id = t2.id  WHERE t1.character_id = ?;'
+        const query = 'SELECT t1.character_id, t1.spell_id, t2.* FROM character_spell AS t1 INNER JOIN spell AS t2 ON t1.spell_id = t2.id WHERE t1.character_id = ?;'
         try {
             const response = await db.getAllAsync<spellDatabase>(query, [id]);
             return response;
@@ -57,7 +57,6 @@ export function useCharacterSpellDatabase() {
     async function update() {
         
     }
-
 
     async function checkIfExists(characterId: number, spellId: number): Promise<boolean> {
         try {
@@ -75,11 +74,9 @@ export function useCharacterSpellDatabase() {
             
         } catch (error) {
             console.error('Erro ao deletar magia:', error); 
-        }
-        
-    
-        
+        }  
     }
+    
     return{
         createSC,
         read,

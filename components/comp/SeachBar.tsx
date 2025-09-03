@@ -38,12 +38,10 @@ type Props = {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        paddingVertical: 8,
         display: 'flex',
     },
     input: {
         flex: 1,
-        marginHorizontal: 4
     },
     })
 

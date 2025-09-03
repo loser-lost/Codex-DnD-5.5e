@@ -2,7 +2,7 @@ import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import {  SectionList, StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
-import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab} from "@ui-kitten/components";
+import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab, DrawerGroup, DrawerItem, Drawer} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
 import { CirculoIcon, ClassIcon, EditIcon,StarIcon } from "@/utils/useIcons";
 import { groupSortSpells } from '../utils/groupMagicDb'
@@ -11,13 +11,13 @@ import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellData
 import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
 import { RenderKnowSpell, RenderSectionHeaderDb, RenderSpell} from "../components/comp/sectionComponents";
 import { races, classees, levels } from "../components/comp/arrays";
-import SeachBar from "@/components/comp/SeachBar";
 import ShowButtons from "@/components/comp/showFilterBottons";
 import DrawerFilter from "@/components/comp/drawerFilterDb";
 import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 import { removerAcentos } from "@/components/comp/utilities";
 import { toastMessages } from "@/components/comp/toastMessages"
+import FilterButton from "@/components/comp/buttonFilter";
 
 const CharacterDetails = () => {
     const TM = toastMessages();
@@ -35,7 +35,7 @@ const CharacterDetails = () => {
     const [name, setname] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
     const [visible, setVisible] = React.useState(false);
-    const [searchQuery, setSearchQuery] = useState<string>('');
+ 
     const [showFilter, setShowFilter] = useState(false);
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
@@ -43,7 +43,8 @@ const CharacterDetails = () => {
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
-
+   
+ 
     // filter and search function
     const autoFilters = useMemo(() => {
         return Array.from(new Set(character.map(char => char.classe).flat()));
@@ -68,15 +69,11 @@ const CharacterDetails = () => {
         }
     }, [character_id]);
 
-     const handleSearch = (query: string) => {
-          setSearchQuery(query);
-    };
-
+    // functions to fetch data
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
-
     const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
     const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
- 
+
     const allFilters = [
       selectedCircle, 
       selectedClasses
@@ -92,7 +89,8 @@ const CharacterDetails = () => {
         selectedCircle,
         selectedClasses,
     }), [selectedCircle , selectedClasses]);
- 
+
+    const [searchQuery, setSearchQuery] = useState('');
     const filteredSpells  = useMemo(() => {
             const searchFiltered = searchQuery
             ? spels.filter(item => 
@@ -116,14 +114,13 @@ const CharacterDetails = () => {
     : 0; 
 
     // group spells by level
-   
     const spellInSectionsSelected = useMemo(() =>
          groupSortSpells(spelsKnow), [spelsKnow]
     );
     const spellInSections = useMemo(() =>
          groupSortSpells(filteredSpells), [filteredSpells]
     );
-
+    
     // functions to fetch data
     async function characterSearch(){
         try {
@@ -153,7 +150,7 @@ const CharacterDetails = () => {
     }
 
     // render item for SectionList
-    async function knowSpell(id: number) {
+    const knowSpell = useCallback(async (id: number) => {
         const char_id = Number(character_id);
         try{
             const exists = await characterSpellDb.checkIfExists(char_id, id);
@@ -167,22 +164,31 @@ const CharacterDetails = () => {
             if (addedSpell) {
                 setSpelsKnow(prev => [...prev, addedSpell]);
                 TM.showSucessSpell();
+
             }
             }
         } catch (error) {
             TM.showFailSpell();
             console.error('Erro ao adicionar a magia ao personagem:', error);
         }
-    }
+    }, [character_id, spels, spelsKnow]);
 
     const renderItemSpels = useCallback(({item}: {item: spellDatabase})=> {
         const handleKnowSpell = () => knowSpell(item.id);
-        return <RenderSpell item={item} buttonKnow={handleKnowSpell} />;
-    }, [knowSpell]);
+        const isKnow = spelsKnow.some(spell => spell.id === item.id);
+        return <RenderSpell
+                    item={item}
+                    buttonKnow={handleKnowSpell}
+                    isKnow={isKnow}
+                 />;
+    }, [ spelsKnow, knowSpell]);
 
 
     const renderItemSpelsKnow = useCallback(({ item }: { item: spellDatabase }) => (
-        <RenderKnowSpell item={item} removeSpell={() => removeSpell(item.id)} />
+        <RenderKnowSpell
+            item={item} 
+            removeSpell={() => removeSpell(item.id)} 
+            />
     ), []);
 
     async function removeSpell(id:number) {
@@ -240,6 +246,40 @@ const CharacterDetails = () => {
         return character.length > 0 ? character[0] : null;
     }, [character]);
 
+    const RenderDrawerContent = () => (
+        <Layout style={{ flex: 1, height: '0%' }} >
+        <DrawerGroup title='Filtros'>
+            <DrawerItem
+            title={() => (
+                <FilterButton
+                handleOpenFilter={handleOpenModalFilter}
+                allFilters={allFilters}
+                />
+            )}
+            />
+            <DrawerItem
+            title={() => (
+                <ShowButtons
+                    selectedClasses={selectedClasses}
+                    selectedCircle={selectedCircle}
+                    onRemoveClass={handleRemoveClass}
+                    onRemoveCircle={handleRemoveCircle}
+                />
+            )}
+            />
+        </DrawerGroup>
+        </Layout>
+    );
+    const getItemLayout = useCallback(
+        (_: any, index: number) => ({
+            length: 60, // altura média de cada item (ajuste conforme seu card/spell)
+            offset: 60 * index,
+            index,
+        }),
+        []
+    );
+            
+
     return (
         <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
             <Stack.Screen options={{ headerShown: false }} />
@@ -270,14 +310,13 @@ const CharacterDetails = () => {
                         setVisible(true);
                     }} />
                 </Layout>
-                
             </Layout>
-                <ShowButtons
-                    selectedClasses={selectedClasses}
-                    selectedCircle={selectedCircle}
-                    onRemoveClass={handleRemoveClass}
-                    onRemoveCircle={handleRemoveCircle}
-                />{/*Ainda decidindo se é realmente nescessario*/}
+            <Layout>
+                <Drawer>
+                    <RenderDrawerContent />
+                </Drawer>
+            </Layout>
+
             <TabView
                 selectedIndex={selectedIndexTab}
                 onSelect={index => setSelectedIndexTab(index)}
@@ -294,18 +333,13 @@ const CharacterDetails = () => {
                             maxToRenderPerBatch={5}
                             windowSize={5} 
                             removeClippedSubviews={true}
+                            getItemLayout={getItemLayout}
                         />
                     </Layout>
                 </Tab>
                 <Tab title='Todas as Magias'>
                     <Layout style={styles.tabContainer}>
-                        <SeachBar 
-                            value={searchQuery}
-                            onChangeText={handleSearch}
-                            handleOpenFilter={handleOpenModalFilter}
-                            allFilters={allFilters}
-                           />
-
+                        
                         <SectionList
                             style={styles.list}
                             sections={spellInSections}
@@ -316,6 +350,7 @@ const CharacterDetails = () => {
                             maxToRenderPerBatch={5}
                             windowSize={5} 
                             removeClippedSubviews={true}
+                            getItemLayout={getItemLayout}
                         />
                     </Layout>
                     

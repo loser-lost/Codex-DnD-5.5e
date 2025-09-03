@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import { TitleText } from "@/components/StyledText";
 import {  StyleSheet } from 'react-native';
 import { spellDatabase } from "../../assets/_database/useSpellDatabase";
-import { AddSpellIcon } from "@/utils/useIcons";
+import { AddSpellIcon, AdedSpellIcon, DeleteIconX, DeleteIconXNoProps } from "@/utils/useIcons";
 
 
 
@@ -18,15 +18,16 @@ export interface Section {
 export interface RenderSpellProps {
   item: spellDatabase;
   buttonKnow: () => void;
+  isKnow: boolean
 
-  
 }
 export interface RenderSpelsKnow{
   item: spellDatabase;
   removeSpell: () => void; 
+  
 }
 
-const RenderSpell = React.memo(({ item, buttonKnow }: RenderSpellProps) => {
+const RenderSpell = React.memo(({ item, buttonKnow, isKnow }: RenderSpellProps) => {
     const theme = useTheme();
     const textColor = theme['color-basic-500'];
     
@@ -47,7 +48,18 @@ const RenderSpell = React.memo(({ item, buttonKnow }: RenderSpellProps) => {
             </>
         )}
         //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
-        accessoryRight={props => <Button style={styles.boton} onPress={buttonKnow} size='tiny' accessoryLeft={AddSpellIcon} />}
+        accessoryRight={props => 
+            <Button 
+                style={styles.boton}
+                onPress={buttonKnow} 
+                size='tiny' 
+                appearance='ghost'
+                disabled={isKnow} // Desabilita o botão se a magia já for conhecida
+                accessoryRight={isKnow ? AdedSpellIcon : AddSpellIcon}
+            >
+                {isKnow ? "Conhecida" : "Adicionar"}
+            </Button>
+        }
         
         />
     );
@@ -75,7 +87,15 @@ export { RenderSpell};
             </>
         )}
         //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
-        accessoryRight={props => <Button style={styles.boton} onPress={removeSpell} size='tiny' accessoryLeft={AddSpellIcon} />}
+        accessoryRight={props => 
+            <Button 
+                style={styles.boton}
+                onPress={removeSpell} 
+                size='tiny' 
+                appearance='ghost'
+                accessoryLeft={DeleteIconXNoProps} 
+                />
+            }
         
         />
     );
@@ -93,23 +113,21 @@ const RenderSectionHeaderDb = (( {title,data}: Section) => {
 export { RenderSectionHeaderDb };
 const styles =  StyleSheet.create({
         nivelBar: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      width: '100%',
-      height: 40,
-      justifyContent: 'space-between',
-      paddingHorizontal: 10,
-      paddingVertical: 5,
-      backgroundColor: "black"
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        height: 40,
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        backgroundColor: "black"
     },
     text:{
 
 
     }, 
     boton:{
-      width: 30,
-      height: 30,
-      borderRadius: 28,
+      
     }
 });
 
