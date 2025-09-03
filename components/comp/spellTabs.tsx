@@ -1,9 +1,10 @@
-/*import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { SectionList } from "react-native";
 import { Layout, TabView, Tab } from "@ui-kitten/components";
 import { RenderSectionHeaderDb, RenderSpell, RenderKnowSpell } from "../comp/sectionComponents";
 import { spellDatabase } from "@/assets/_database/useSpellDatabase";
 import { groupSortSpells } from "@/utils/groupMagicDb";
+import {  StyleSheet } from 'react-native';
 
 interface spellTabsProps {
     spels: spellDatabase[];
@@ -40,10 +41,11 @@ const SpellTabs: React.FC<spellTabsProps> = ({ spels, spelsKnow, addSpell, remov
             onSelect={index => setSelectedIndexTab(index)}
             >
                 <Tab title='Magias Conhecidas'>
-                    <Layout style={{ flex: 1}}>
+                    <Layout style={{ }}>
                         <SectionList
+                            style={styles.list}
                             sections={spellInSectionsSelected}
-                            keyExtractor={item => String(item.id)}
+                            keyExtractor={(item: spellDatabase, index) => `${item.id}-${index}`}
                             renderSectionHeader={({ section }) => (
                                 <RenderSectionHeaderDb title={section.title} data={section.data} />
                             )}
@@ -56,10 +58,11 @@ const SpellTabs: React.FC<spellTabsProps> = ({ spels, spelsKnow, addSpell, remov
                     </Layout>
                 </Tab>
                 <Tab title="Todas as Magias">
-                    <Layout style={{ flex: 1 }}>
+                    <Layout style={{ }}>
                     <SectionList
+                        style={styles.list}
                         sections={spellInSections}
-                        keyExtractor={item => String(item.id)}
+                        keyExtractor={(item: spellDatabase, index) => `${item.id}-${index}`}
                         renderSectionHeader={({ section }) => (
                         <RenderSectionHeaderDb title={section.title} data={section.data} />
                         )}
@@ -69,6 +72,7 @@ const SpellTabs: React.FC<spellTabsProps> = ({ spels, spelsKnow, addSpell, remov
                         windowSize={5}
                         removeClippedSubviews
                     />
+                    
                     </Layout>
                 </Tab>
 
@@ -76,4 +80,10 @@ const SpellTabs: React.FC<spellTabsProps> = ({ spels, spelsKnow, addSpell, remov
     );
 
 }
-export default React.memo(SpellTabs);*/
+export default React.memo(SpellTabs);
+const styles = StyleSheet.create({
+    list:{
+        width: '100%',
+        height: '90%',
+    }
+});

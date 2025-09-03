@@ -18,6 +18,7 @@ import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 import { removerAcentos } from "@/components/comp/utilities";
 import { toastMessages } from "@/components/comp/toastMessages"
 import FilterButton from "@/components/comp/buttonFilter";
+import SpellTabs from "@/components/comp/spellTabs";
 
 const CharacterDetails = () => {
     const TM = toastMessages();
@@ -278,8 +279,10 @@ const CharacterDetails = () => {
         }),
         []
     );
-            
-
+    console.log("filteredSpells:", filteredSpells.length);
+    console.log("spelsKnow:", spelsKnow.length);
+    console.log("spels:", spels.length);
+    
     return (
         <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
             <Stack.Screen options={{ headerShown: false }} />
@@ -317,45 +320,12 @@ const CharacterDetails = () => {
                 </Drawer>
             </Layout>
 
-            <TabView
-                selectedIndex={selectedIndexTab}
-                onSelect={index => setSelectedIndexTab(index)}
-            >
-                <Tab title='Magias Conhecidas'>
-                    <Layout style={styles.tabContainer}>
-                        <SectionList
-                            style={{ ...styles.list, marginTop: 10, marginBottom: 10 }}
-                            sections={spellInSectionsSelected}
-                            keyExtractor={keyExtractor}
-                            renderSectionHeader={({ section }) => (<RenderSectionHeaderDb title={section.title} data={section.data} />)}
-                            renderItem={renderItemSpelsKnow}
-                            initialNumToRender={5}
-                            maxToRenderPerBatch={5}
-                            windowSize={5} 
-                            removeClippedSubviews={true}
-                            getItemLayout={getItemLayout}
-                        />
-                    </Layout>
-                </Tab>
-                <Tab title='Todas as Magias'>
-                    <Layout style={styles.tabContainer}>
-                        
-                        <SectionList
-                            style={styles.list}
-                            sections={spellInSections}
-                            keyExtractor={keyExtractor}
-                            renderSectionHeader={({ section }) => (<RenderSectionHeaderDb title={section.title} data={section.data} />)}
-                            renderItem={renderItemSpels}
-                            initialNumToRender={5}
-                            maxToRenderPerBatch={5}
-                            windowSize={5} 
-                            removeClippedSubviews={true}
-                            getItemLayout={getItemLayout}
-                        />
-                    </Layout>
-                    
-                </Tab>           
-            </TabView>
+            <SpellTabs
+                spels={filteredSpells}
+                spelsKnow={spelsKnow}
+                addSpell={knowSpell}
+                removeSpell={removeSpell}
+            />
             <Modal
                 visible={visible}
                 backdropStyle={styles.backdrop}
