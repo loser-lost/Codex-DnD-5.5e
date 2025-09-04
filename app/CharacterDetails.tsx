@@ -1,24 +1,22 @@
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import {  SectionList, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
-import { Layout , Text, Modal, Card, Input, Select, Button, SelectItem, IndexPath, TabView, Tab, DrawerGroup, DrawerItem, Drawer} from "@ui-kitten/components";
+import { Layout , Text, DrawerGroup, DrawerItem, Drawer, IndexPath} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
-import { CirculoIcon, ClassIcon, EditIcon,StarIcon } from "@/utils/useIcons";
-import { groupSortSpells } from '../utils/groupMagicDb'
+import { EditIcon,StarIcon } from "@/utils/useIcons";
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
-import { RenderKnowSpell, RenderSectionHeaderDb, RenderSpell} from "../components/comp/sectionComponents";
 import { races, classees, levels } from "../components/comp/arrays";
 import ShowButtons from "@/components/comp/showFilterBottons";
-import DrawerFilter from "@/components/comp/drawerFilterDb";
-import { AppliFilterButton, ClearFiltersButton } from "@/components/comp/buttons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 import { removerAcentos } from "@/components/comp/utilities";
 import { toastMessages } from "@/components/comp/toastMessages"
 import FilterButton from "@/components/comp/buttonFilter";
 import SpellTabs from "@/components/comp/spellTabs";
+import { CharacterEditModal } from "@/components/comp/CharacterComps/CharacterEditModal";
+import { ModalFilter } from "@/components/comp/modalFilterDb";
 
 const CharacterDetails = () => {
     const TM = toastMessages();
@@ -31,21 +29,21 @@ const CharacterDetails = () => {
     const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
+    
+    const [visible, setVisible] = React.useState(false);
+    const [showFilter, setShowFilter] = useState(false);
 
     const [id, setId] = React.useState('');
     const [name, setname] = React.useState('');
     const [playerName, setPlayer] = React.useState('');
-    const [visible, setVisible] = React.useState(false);
- 
-    const [showFilter, setShowFilter] = useState(false);
+
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
     const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
-   
- 
+
     // filter and search function
     const autoFilters = useMemo(() => {
         return Array.from(new Set(character.map(char => char.classe).flat()));
@@ -102,25 +100,6 @@ const CharacterDetails = () => {
         const hasFilters  = Object.values(filters).some(arr => arr.length > 0);
         return hasFilters ? filterSpelsData(searchFiltered, filters) : searchFiltered;
     }, [spels, filters, searchQuery]);
-
-    // functios to display selected values
-    const displayValueRaça = selectedRaceIndex
-    ? races[selectedRaceIndex.row]
-    : '';
-    const displayValueClasse = selectedClassIndex
-    ? classees[selectedClassIndex.row]
-    : '';
-    const displayValueLevel = selectedLevelIndex
-    ? levels[selectedLevelIndex.row] 
-    : 0; 
-
-    // group spells by level
-    const spellInSectionsSelected = useMemo(() =>
-         groupSortSpells(spelsKnow), [spelsKnow]
-    );
-    const spellInSections = useMemo(() =>
-         groupSortSpells(filteredSpells), [filteredSpells]
-    );
     
     // functions to fetch data
     async function characterSearch(){
@@ -174,24 +153,6 @@ const CharacterDetails = () => {
         }
     }, [character_id, spels, spelsKnow]);
 
-    const renderItemSpels = useCallback(({item}: {item: spellDatabase})=> {
-        const handleKnowSpell = () => knowSpell(item.id);
-        const isKnow = spelsKnow.some(spell => spell.id === item.id);
-        return <RenderSpell
-                    item={item}
-                    buttonKnow={handleKnowSpell}
-                    isKnow={isKnow}
-                 />;
-    }, [ spelsKnow, knowSpell]);
-
-
-    const renderItemSpelsKnow = useCallback(({ item }: { item: spellDatabase }) => (
-        <RenderKnowSpell
-            item={item} 
-            removeSpell={() => removeSpell(item.id)} 
-            />
-    ), []);
-
     async function removeSpell(id:number) {
         try {
             await characterSpellDb.remove(id)
@@ -203,29 +164,16 @@ const CharacterDetails = () => {
         }
     }
 
-    // key extractor for SectionList
-    const keyExtractor = useCallback((item: spellDatabase) => String(item.id), [])
-
-    async function updateCharacter(){
-        const race = selectedRaceIndex !== undefined ? races[selectedRaceIndex.row] : '';
-        const classe = selectedClassIndex !== undefined ? classees[selectedClassIndex.row] : '';
-        const level = displayValueLevel;
-        try {
-            await characterDb.update({
-            id: Number(id),
-            name,
-            race,
-            classe,
-            level: Number(level),
-            playerName
-            })
-            characterSearch()
-            TM.EditCharacterSucess()
-            setVisible(false);
-        }catch (error) {
-            console.error('Erro ao editar personagem:', error);
-            TM.EditCharacterFail
-        }
+    async function updateCharacter(updated: CharacterDatabase) {
+    try {
+        await characterDb.update(updated);
+        characterSearch(); // recarrega
+        TM.EditCharacterSucess();
+        setVisible(false);
+    } catch (error) {
+        console.error("Erro ao editar personagem:", error);
+        TM.EditCharacterFail();
+    }
     }
     
     // function to remove items from selected filters
@@ -282,6 +230,19 @@ const CharacterDetails = () => {
     console.log("filteredSpells:", filteredSpells.length);
     console.log("spelsKnow:", spelsKnow.length);
     console.log("spels:", spels.length);
+
+    const OpenEditCharacter = ()=>{
+            if (character.length > 0) {
+                const currentChar = character[0];
+                setId(currentChar.id.toString()); // Convertendo para string para o estado
+                setname(currentChar.name);
+                setPlayer(currentChar.playerName);
+                setSelectedRaceIndex(new IndexPath(races.indexOf(currentChar.race)));
+                setSelectedClassIndex(new IndexPath(classees.indexOf(currentChar.classe)));
+                setSelectedLevelIndex(new IndexPath(levels.indexOf(currentChar.level)));
+            }
+            setVisible(true);
+    }
     
     return (
         <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
@@ -300,20 +261,10 @@ const CharacterDetails = () => {
                     )}
                 </Layout>
                 <Layout style={styles.heade2}>
-                    <EditIcon editIcon={() => {
-                        if (character.length > 0) {
-                            const currentChar = character[0];
-                            setId(currentChar.id.toString()); // Convertendo para string para o estado
-                            setname(currentChar.name);
-                            setPlayer(currentChar.playerName);
-                            setSelectedRaceIndex(new IndexPath(races.indexOf(currentChar.race)));
-                            setSelectedClassIndex(new IndexPath(classees.indexOf(currentChar.classe)));
-                            setSelectedLevelIndex(new IndexPath(levels.indexOf(currentChar.level)));
-                        }
-                        setVisible(true);
-                    }} />
+                    <EditIcon editIcon={OpenEditCharacter} />
                 </Layout>
             </Layout>
+
             <Layout>
                 <Drawer>
                     <RenderDrawerContent />
@@ -326,82 +277,23 @@ const CharacterDetails = () => {
                 addSpell={knowSpell}
                 removeSpell={removeSpell}
             />
-            <Modal
+            <CharacterEditModal
                 visible={visible}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() => setVisible(false)}
-            >
-                    <Card>
-                        <Text category="h5">Editar Personagem</Text>
-                        <Layout style={styles.container}>
-                            <Input
-                                style={styles.input}
-                                value={name}
-                                placeholder="Nome"
-                                onChangeText={setname}
-                            />
-                            <Input
-                                style={styles.input}
-                                value={playerName}
-                                placeholder="Nome do Jogador"
-                                onChangeText={setPlayer}
-                            />
-                            <Select
-                                style={styles.input}
-                                value={displayValueRaça}
-                                selectedIndex={selectedRaceIndex}
-                                onSelect={index => setSelectedRaceIndex(index as IndexPath)}
-                                placeholder="Raça"
-                            >
-                                {races.map((r, i) => <SelectItem key={i} title={r} />)}
-                            </Select>
-                            <Select
-                                style={styles.input}
-                                value={displayValueClasse}
-                                selectedIndex={selectedClassIndex}
-                                onSelect={index => setSelectedClassIndex(index as IndexPath)}
-                                placeholder="Classe"
-                            >
-                                {classees.map((r, i) => <SelectItem key={i} title={r} />)}
-                            </Select>
-                            <Select
-                                style={styles.input}
-                                value={displayValueLevel.toString()}
-                                selectedIndex={selectedLevelIndex}
-                                onSelect={index => setSelectedLevelIndex(index as IndexPath)}
-                                placeholder="Nível"
-                            >
-                                {levels.map((r, i) => <SelectItem key={i} title={r.toString()} />)}
-                            </Select>
-                            <Layout style={styles.containerbottom}>
-                                <Button style={styles.botton} onPress={updateCharacter}>Salvar</Button>
-                                <Button style={styles.botton} onPress={() => setVisible(false)}>Cancelar</Button>
-                            </Layout>
-                        </Layout>    
-                    </Card>
-            </Modal>
-                    <Modal
-                    visible={showFilter }
-                    backdropStyle={styles.backdrop}
-                    style={styles.filterModal}
-                    onBackdropPress={() => setShowFilter(false)}
-                    >
-                    <Card disabled={true} style={styles.filterList}>
-                     <Text style={styles.Text}>Selecione os filtros:</Text>
-                        <DrawerFilter
-                            selectCircle={selectedCircle}
-                            selectedClasses={selectedClasses}
-                            toggleCircle={toggleCircle}
-                            toggleClass={toggleClass}
-                            CirculoIcon={CirculoIcon}
-                            ClassIcon={ClassIcon}                   
-                        />
-                        <Layout style={styles.buttons}>
-                          <AppliFilterButton applyFilter={() => setShowFilter(false)} allFilters={allFilters} />
-                          <ClearFiltersButton clearFilters={clearFilters} />
-                        </Layout>
-                    </Card>
-                  </Modal>
+                onClose={() => setVisible(false)}
+                character={currentCharacter}
+                onSave={updateCharacter}
+                onBackDrop={()=> setVisible(false)}
+            />
+           <ModalFilter 
+                showFilter={showFilter} 
+                onBackDrop={()=> setShowFilter(false)} 
+                selectedCircle={selectedCircle} 
+                selectedClasses={selectedClasses} 
+                toggleCircle={toggleCircle} 
+                toggleClass={toggleClass} 
+                allFilters={allFilters} 
+                clearFilters={clearFilters}
+            />   
         </Layout>
     )
 } 
@@ -422,60 +314,9 @@ const styles = StyleSheet.create({
     heade2: {
         marginRight: 5,
     },
-        input: {
-        margin: 2,
-    },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    backdrop: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    containerbottom: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 5,
-    },
-    botton:{
-        flex: 1,
-        margin: 5,
-    },
-    tabContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    list:{
-        width: '100%',
-        height: '87%',
-    },
-    filterModal:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 25,
-    },
-    filterList: {
-        maxHeight: '90%',
-        width: '100%',
-        borderRadius: 8,
-        overflow: 'hidden',
-    },
-     Text:{
-        paddingTop: 10,
-        marginLeft: 15, 
-    },
-    buttons:{
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        marginTop: 5,
-        padding: 5,
-        borderRadius: 5,
-        marginHorizontal: 5,
-    },
-    filterButton:{
-       margin: 5,
-       borderRadius: 10,
     },
 });
