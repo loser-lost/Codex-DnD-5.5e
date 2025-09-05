@@ -34,31 +34,31 @@ const SpellTabs: React.FC<spellTabsProps> = ({ spels, spelsKnow, addSpell, remov
         ),
         [removeSpell]
     );
-       
+        
     return(
         <TabView 
             selectedIndex={selectedIndexTab}
             onSelect={index => setSelectedIndexTab(index)}
             >
-                <Tab title='Magias Conhecidas'>
-                    <Layout style={{ }}>
-                        <SectionList
-                            style={styles.list}
-                            sections={spellInSectionsSelected}
-                            keyExtractor={(item: spellDatabase, index) => `${item.id}-${index}`}
-                            renderSectionHeader={({ section }) => (
-                                <RenderSectionHeaderDb title={section.title} data={section.data} />
-                            )}
-                            renderItem={renderItemSpelsKnow}
-                            initialNumToRender={5}
-                            maxToRenderPerBatch={5}
-                            windowSize={5}
-                            removeClippedSubviews
-                        />
-                    </Layout>
-                </Tab>
-                <Tab title="Todas as Magias">
-                    <Layout style={{ }}>
+            <Tab title='Magias Conhecidas'>
+                <Layout>
+                    <SectionList
+                        style={styles.list}
+                        sections={spellInSectionsSelected}
+                        keyExtractor={(item: spellDatabase, index) => `${item.id}-${index}`}
+                        renderSectionHeader={({ section }) => (
+                            <RenderSectionHeaderDb title={section.title} data={section.data} />
+                        )}
+                        renderItem={renderItemSpelsKnow}
+                        initialNumToRender={5}
+                        maxToRenderPerBatch={5}
+                        windowSize={5}
+                        removeClippedSubviews
+                    />
+                </Layout>
+            </Tab>
+            <Tab title="Todas as Magias">
+                <Layout style={{ }}>
                     <SectionList
                         style={styles.list}
                         sections={spellInSections}
@@ -67,18 +67,15 @@ const SpellTabs: React.FC<spellTabsProps> = ({ spels, spelsKnow, addSpell, remov
                         <RenderSectionHeaderDb title={section.title} data={section.data} />
                         )}
                         renderItem={renderItemSpels}
-                        initialNumToRender={5}
+                        initialNumToRender={15}
                         maxToRenderPerBatch={5}
-                        windowSize={5}
+                        windowSize={15}
                         removeClippedSubviews
                     />
-                    
-                    </Layout>
-                </Tab>
-
+                </Layout>
+            </Tab>
         </TabView>
     );
-
 }
 export default React.memo(SpellTabs);
 const styles = StyleSheet.create({

@@ -40,6 +40,11 @@ import Entypo from "@expo/vector-icons/build/Entypo";
         editIcon: () => void;
         style?: Partial<TextStyle>;
     }
+
+    type FilterIconProps = {
+        filterIcon: () => void;
+        style?: Partial<TextStyle>;
+    }
     
   
     export const ClassIcon = (props?: Partial<ImageProps>): React.ReactElement => {
@@ -222,6 +227,18 @@ import Entypo from "@expo/vector-icons/build/Entypo";
         )
     }
 
+    export const FilterIcon = ({ filterIcon, style }: FilterIconProps): IconElement => {
+        const theme = useTheme();
+        return(
+            <FontAwesome6 
+            name="filter" 
+            size={24} 
+            color={theme['color-basic-500']}
+            onPress={filterIcon}
+            />
+        )
+    }
+
     export const AddSpellIcon = (): IconElement => {
         const theme = useTheme();
         return (
@@ -236,5 +253,7 @@ import Entypo from "@expo/vector-icons/build/Entypo";
         );
         //<FontAwesome6 name="check" size={15} color={theme['background-basic-color-1']} />
     }
+
+    
 
 //color="black" />

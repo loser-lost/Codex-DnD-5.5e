@@ -33,8 +33,6 @@ export function CharacterForm({ character, onClose, onSave }: Props) {
     }
   }, [character]);
 
-  
-
   const handleChange = (field: keyof CharacterDatabase, value: string | number) => {
     setForm(prev => ({ ...prev, [field]: value }));
   };

@@ -50,7 +50,6 @@ const RenderSpell = React.memo(({ item, buttonKnow, isKnow }: RenderSpellProps) 
         //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
         accessoryRight={props => 
             <Button 
-                style={styles.boton}
                 onPress={buttonKnow} 
                 size='tiny' 
                 appearance='ghost'
@@ -89,7 +88,7 @@ export { RenderSpell};
         //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
         accessoryRight={props => 
             <Button 
-                style={styles.boton}
+                
                 onPress={removeSpell} 
                 size='tiny' 
                 appearance='ghost'
@@ -121,13 +120,6 @@ const styles =  StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         backgroundColor: "black"
-    },
-    text:{
-
-
-    }, 
-    boton:{
-      
-    }
+    }   
 });
 

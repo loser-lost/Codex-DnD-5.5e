@@ -1,5 +1,5 @@
 import { ReactElement, memo } from 'react';
-import { Drawer, DrawerGroup, DrawerItem, CheckBox, IconProps } from '@ui-kitten/components';
+import { Drawer, DrawerGroup, DrawerItem, CheckBox, IconProps, Layout } from '@ui-kitten/components';
 import { CIRCLES, CLASSES } from '@/components/comp/arrays';
 
 interface DrawerFilterProps {
@@ -20,6 +20,7 @@ const FilterGroup = ({title, items, selectedItems, toggleItem, Icon}: {
   toggleItem: (value: string) => void;
   Icon: (props: IconProps) => ReactElement;
 }) => (
+  
   <DrawerGroup
     title={`${title} (${selectedItems.length})`}
     accessoryLeft={Icon}
@@ -35,6 +36,7 @@ const FilterGroup = ({title, items, selectedItems, toggleItem, Icon}: {
         />
     ))}
   </DrawerGroup>
+ 
 );
 
 function DrawerFilter({selectCircle, selectedClasses, toggleCircle, toggleClass, CirculoIcon, ClassIcon,}: DrawerFilterProps) {

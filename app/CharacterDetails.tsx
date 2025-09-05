@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
 import { Layout , Text, DrawerGroup, DrawerItem, Drawer, IndexPath} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
-import { EditIcon,StarIcon } from "@/utils/useIcons";
+import { EditIcon,FilterIcon,StarIcon } from "@/utils/useIcons";
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
@@ -23,27 +23,17 @@ const CharacterDetails = () => {
     const theme = useTheme();
     const characterDb = useCharacterDatabase();
     const characterSpellDb = useCharacterSpellDatabase();
-    const spellDb = useSpellDatabase(); //useSpellDatabase();
-    const {character_id} = useLocalSearchParams();
+    const spellDb = useSpellDatabase();
 
+    const {character_id} = useLocalSearchParams();
     const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
-    
     const [visible, setVisible] = React.useState(false);
     const [showFilter, setShowFilter] = useState(false);
-
-    const [id, setId] = React.useState('');
-    const [name, setname] = React.useState('');
-    const [playerName, setPlayer] = React.useState('');
-
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
-    const [selectedRaceIndex, setSelectedRaceIndex] = React.useState<IndexPath | undefined>(undefined);
-    const [selectedClassIndex, setSelectedClassIndex] = React.useState<IndexPath | undefined>(undefined);
-    const [selectedLevelIndex, setSelectedLevelIndex] = React.useState<IndexPath | undefined>(undefined);
-    const [selectedIndexTab, setSelectedIndexTab] = React.useState(0);
-
+  
     // filter and search function
     const autoFilters = useMemo(() => {
         return Array.from(new Set(character.map(char => char.classe).flat()));
@@ -195,53 +185,33 @@ const CharacterDetails = () => {
         return character.length > 0 ? character[0] : null;
     }, [character]);
 
-    const RenderDrawerContent = () => (
-        <Layout style={{ flex: 1, height: '0%' }} >
-        <DrawerGroup title='Filtros'>
-            <DrawerItem
-            title={() => (
-                <FilterButton
-                handleOpenFilter={handleOpenModalFilter}
-                allFilters={allFilters}
-                />
-            )}
-            />
-            <DrawerItem
-            title={() => (
-                <ShowButtons
-                    selectedClasses={selectedClasses}
-                    selectedCircle={selectedCircle}
-                    onRemoveClass={handleRemoveClass}
-                    onRemoveCircle={handleRemoveCircle}
-                />
-            )}
-            />
-        </DrawerGroup>
-        </Layout>
-    );
-    const getItemLayout = useCallback(
-        (_: any, index: number) => ({
-            length: 60, // altura média de cada item (ajuste conforme seu card/spell)
-            offset: 60 * index,
-            index,
-        }),
-        []
-    );
-    console.log("filteredSpells:", filteredSpells.length);
-    console.log("spelsKnow:", spelsKnow.length);
-    console.log("spels:", spels.length);
+    const TopListFilters = ()=>{
+        return(
+            <Layout style={styles.header}>
+                <Layout style={styles.heade1}>
+                    <ShowButtons
+                        selectedClasses={selectedClasses}
+                        selectedCircle={selectedCircle}
+                        onRemoveClass={handleRemoveClass}
+                        onRemoveCircle={handleRemoveCircle}
+                    />
+                </Layout>
+                <Layout style={styles.heade2}>
+                    <FilterIcon filterIcon={handleOpenModalFilter} />
+                </Layout>
+
+            </Layout>
+        )
+    }
+    {/*
+        
+         */}
+  
+    console.log("Numero de renderizações:");
+
 
     const OpenEditCharacter = ()=>{
-            if (character.length > 0) {
-                const currentChar = character[0];
-                setId(currentChar.id.toString()); // Convertendo para string para o estado
-                setname(currentChar.name);
-                setPlayer(currentChar.playerName);
-                setSelectedRaceIndex(new IndexPath(races.indexOf(currentChar.race)));
-                setSelectedClassIndex(new IndexPath(classees.indexOf(currentChar.classe)));
-                setSelectedLevelIndex(new IndexPath(levels.indexOf(currentChar.level)));
-            }
-            setVisible(true);
+        setVisible(true);
     }
     
     return (
@@ -249,7 +219,7 @@ const CharacterDetails = () => {
             <Stack.Screen options={{ headerShown: false }} />
             <Layout style={styles.headerIcons}>
                 <StarIcon />
-            </Layout>
+            </Layout> 
             <Layout style={styles.header}>
                 <Layout style={styles.heade1}>
                     {currentCharacter ? (
@@ -266,9 +236,7 @@ const CharacterDetails = () => {
             </Layout>
 
             <Layout>
-                <Drawer>
-                    <RenderDrawerContent />
-                </Drawer>
+                <TopListFilters />
             </Layout>
 
             <SpellTabs

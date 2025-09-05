@@ -5,10 +5,7 @@ import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/us
 import { DeleteIconX, EditIcon, PlusIcon, StarIcon } from '../../utils/useIcons';
 import { useRouter } from 'expo-router';
 
-
-
 export default function TabTwoScreen() {
-
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
   const  characterDatabase  = useCharacterDatabase();
   const router = useRouter();
@@ -45,10 +42,6 @@ export default function TabTwoScreen() {
     }
   }
 
-  const renderItemAccessory = (props: any) => (
-      <DeleteIconX deleteIconX={() => deleteCharacter(props.item.id)} />
-  );
-
   const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => (
     <ListItem
       onPress={() => roteCharacterDetails(item.id)}
@@ -58,12 +51,14 @@ export default function TabTwoScreen() {
       accessoryRight={ <DeleteIconX deleteIconX={() => deleteCharacter(item.id)} />}
     />
   );
- 
+
   return (
   <Layout style={styles.container}>
+
     <Layout style={styles.headerIcons}>
       <StarIcon />
     </Layout>
+
     <Layout style={{width: '100%', alignItems: 'center'}}>
       <List
         style={{ marginTop: 20, width: '90%'}}
@@ -73,36 +68,26 @@ export default function TabTwoScreen() {
         }
       />
     </Layout>
-     
-      <Button
-      style={styles.fabButton}
-      accessoryLeft={PlusIcon}
-      onPress={newCharacter}
-      />
-   
+
+    <Button
+    style={styles.fabButton}
+    accessoryLeft={PlusIcon}
+    onPress={newCharacter}
+    />
+
   </Layout>
   );
   }
 
 const styles = StyleSheet.create({
   container: {
-  flex: 1,
+    flex: 1,
     alignItems: 'center',
   },
   headerIcons: { 
     marginTop: 5,
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  nivelBar: {
-    padding: 10,
-    marginTop: 40,
-    flexDirection: 'row',
-    width: '85%', 
-  }, 
-  list:{
-    marginTop: 10,
-    width: '85%',
   },
   fabButton: {
     position: 'absolute',
@@ -111,7 +96,5 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-     
   }
- 
 });
