@@ -2,7 +2,7 @@
   "expo": {
     "name": "Codex D&D 5.5e",
     "description": "O aplicativo inclui uma lista de magias oficiais da 5.5a edição do Dungeons & Dragons.",
-    "slug": "Codex-DnD-55e",
+    "slug": "codexdnd",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,8 +43,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "27d0c156-d01e-4358-9fb8-9f61ec91c7ed"
+        "projectId": "57b15f51-0108-4cf2-8f7f-9e46b02669c2"
       }
-    }
+    },
+    "owner": "los_tloser"
   }
 }

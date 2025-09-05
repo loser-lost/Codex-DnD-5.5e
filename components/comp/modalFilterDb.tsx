@@ -14,6 +14,7 @@ interface Props {
   toggleClass: (classe: string) => void;
   allFilters: number;
   clearFilters: () => void;
+  AppliFilter: () => void;
 }
 
 export function ModalFilter({
@@ -25,6 +26,7 @@ export function ModalFilter({
   toggleClass,
   allFilters,
   clearFilters,
+  AppliFilter
 }: Props) {
   return (
     <Layout>
@@ -44,7 +46,7 @@ export function ModalFilter({
             ClassIcon={ClassIcon}
           />
           <Layout style={styles.buttons}>
-            <AppliFilterButton applyFilter={onBackDrop} allFilters={allFilters} />
+            <AppliFilterButton applyFilter={AppliFilter} allFilters={allFilters} />
             <ClearFiltersButton clearFilters={clearFilters} />
           </Layout>
         </Card>

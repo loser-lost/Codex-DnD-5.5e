@@ -8,12 +8,10 @@ import { EditIcon,FilterIcon,StarIcon } from "@/utils/useIcons";
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
-import { races, classees, levels } from "../components/comp/arrays";
 import ShowButtons from "@/components/comp/showFilterBottons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 import { removerAcentos } from "@/components/comp/utilities";
 import { toastMessages } from "@/components/comp/toastMessages"
-import FilterButton from "@/components/comp/buttonFilter";
 import SpellTabs from "@/components/comp/spellTabs";
 import { CharacterEditModal } from "@/components/comp/CharacterComps/CharacterEditModal";
 import { ModalFilter } from "@/components/comp/modalFilterDb";
@@ -31,8 +29,13 @@ const CharacterDetails = () => {
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
     const [visible, setVisible] = React.useState(false);
     const [showFilter, setShowFilter] = useState(false);
+
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+    const [appliedCircle, setAppliedCircle] = useState<string[]>([]);
+    const [appliedClasses, setAppliedClasses] = useState<string[]>([]);
+
+
   
     // filter and search function
     const autoFilters = useMemo(() => {
@@ -75,10 +78,16 @@ const CharacterDetails = () => {
     };
 
     const filters = useMemo(() => ({
-        selectedCircle,
-        selectedClasses,
-    }), [selectedCircle , selectedClasses]);
+        selectedCircle: appliedCircle,
+        selectedClasses: appliedClasses,
+    }), [appliedCircle, appliedClasses]);;
 
+    const applyFilters = () => {
+        setAppliedCircle(selectedCircle);
+        setAppliedClasses(selectedClasses);
+        setShowFilter(false); // fecha modal
+    }
+    ;  
     const [searchQuery, setSearchQuery] = useState('');
     const filteredSpells  = useMemo(() => {
             const searchFiltered = searchQuery
@@ -134,7 +143,6 @@ const CharacterDetails = () => {
             if (addedSpell) {
                 setSpelsKnow(prev => [...prev, addedSpell]);
                 TM.showSucessSpell();
-
             }
             }
         } catch (error) {
@@ -190,8 +198,8 @@ const CharacterDetails = () => {
             <Layout style={styles.header}>
                 <Layout style={styles.heade1}>
                     <ShowButtons
-                        selectedClasses={selectedClasses}
-                        selectedCircle={selectedCircle}
+                        selectedClasses={appliedClasses}
+                        selectedCircle={appliedCircle}
                         onRemoveClass={handleRemoveClass}
                         onRemoveCircle={handleRemoveCircle}
                     />
@@ -203,12 +211,6 @@ const CharacterDetails = () => {
             </Layout>
         )
     }
-    {/*
-        
-         */}
-  
-    console.log("Numero de renderizações:");
-
 
     const OpenEditCharacter = ()=>{
         setVisible(true);
@@ -261,6 +263,7 @@ const CharacterDetails = () => {
                 toggleClass={toggleClass} 
                 allFilters={allFilters} 
                 clearFilters={clearFilters}
+                AppliFilter={applyFilters}
             />   
         </Layout>
     )
