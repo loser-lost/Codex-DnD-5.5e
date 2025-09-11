@@ -1,8 +1,8 @@
 import React from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
-import { Layout , Text, DrawerGroup, DrawerItem, Drawer, IndexPath} from "@ui-kitten/components";
+import { Layout , Text} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
 import { EditIcon,FilterIcon,StarIcon } from "@/utils/useIcons";
 import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
@@ -13,7 +13,6 @@ import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 import { removerAcentos } from "@/components/comp/utilities";
 import { toastMessages } from "@/components/comp/toastMessages"
 import SpellTabs from "@/components/comp/spellTabs";
-import { CharacterEditModal } from "@/components/comp/CharacterComps/CharacterEditModal";
 import { ModalFilter } from "@/components/comp/modalFilterDb";
 
 const CharacterDetails = () => {
@@ -27,7 +26,6 @@ const CharacterDetails = () => {
     const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
     const [character, setCharacter] = useState<CharacterDatabase[]>([]);
-    const [visible, setVisible] = React.useState(false);
     const [showFilter, setShowFilter] = useState(false);
 
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
@@ -35,19 +33,16 @@ const CharacterDetails = () => {
     const [appliedCircle, setAppliedCircle] = useState<string[]>([]);
     const [appliedClasses, setAppliedClasses] = useState<string[]>([]);
 
-
-  
     // filter and search function
     const autoFilters = useMemo(() => {
         return Array.from(new Set(character.map(char => char.classe).flat()));
     }, [character]);
 
     // hooks
-    
     useEffect(() => {
         setSelectedClasses(autoFilters);
     }, [autoFilters]);
-    
+
     useEffect(() => {
         if (character_id) {
             characterSearch();
@@ -132,23 +127,23 @@ const CharacterDetails = () => {
     const knowSpell = useCallback(async (id: number) => {
         const char_id = Number(character_id);
         try{
-            const exists = await characterSpellDb.checkIfExists(char_id, id);
-            if (exists) {
-                TM.knowedSpell();
-                return;
+                const exists = await characterSpellDb.checkIfExists(char_id, id);
+                if (exists) {
+                    TM.knowedSpell();
+                    return;
+                }
+                const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
+                if (response && response.insertedRowId) {
+                    const addedSpell = spels.find(s => s.id === id);
+                    if (addedSpell) {
+                        setSpelsKnow(prev => [...prev, addedSpell]);
+                        TM.showSucessSpell();
+                    }
+                }
+            } catch (error) {
+                TM.showFailSpell();
+                console.error('Erro ao adicionar a magia ao personagem:', error);
             }
-            const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
-            if (response && response.insertedRowId) {
-                const addedSpell = spels.find(s => s.id === id);
-            if (addedSpell) {
-                setSpelsKnow(prev => [...prev, addedSpell]);
-                TM.showSucessSpell();
-            }
-            }
-        } catch (error) {
-            TM.showFailSpell();
-            console.error('Erro ao adicionar a magia ao personagem:', error);
-        }
     }, [character_id, spels, spelsKnow]);
 
     async function removeSpell(id:number) {
@@ -162,18 +157,10 @@ const CharacterDetails = () => {
         }
     }
 
-    async function updateCharacter(updated: CharacterDatabase) {
-    try {
-        await characterDb.update(updated);
-        characterSearch(); // recarrega
-        TM.EditCharacterSucess();
-        setVisible(false);
-    } catch (error) {
-        console.error("Erro ao editar personagem:", error);
-        TM.EditCharacterFail();
+    const editCharacter = () => {
+        router.push(`/EditCharacter?character_id=${character_id}`);    
     }
-    }
-    
+
     // function to remove items from selected filters
     const removeItem = useCallback(<T,>(
         itemToRemove: T,
@@ -198,8 +185,8 @@ const CharacterDetails = () => {
             <Layout style={styles.header}>
                 <Layout style={styles.heade1}>
                     <ShowButtons
-                        selectedClasses={appliedClasses}
-                        selectedCircle={appliedCircle}
+                        selectedClasses={selectedClasses}
+                        selectedCircle={selectedCircle}
                         onRemoveClass={handleRemoveClass}
                         onRemoveCircle={handleRemoveCircle}
                     />
@@ -207,15 +194,10 @@ const CharacterDetails = () => {
                 <Layout style={styles.heade2}>
                     <FilterIcon filterIcon={handleOpenModalFilter} />
                 </Layout>
-
             </Layout>
         )
     }
 
-    const OpenEditCharacter = ()=>{
-        setVisible(true);
-    }
-    
     return (
         <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
             <Stack.Screen options={{ headerShown: false }} />
@@ -233,10 +215,10 @@ const CharacterDetails = () => {
                     )}
                 </Layout>
                 <Layout style={styles.heade2}>
-                    <EditIcon editIcon={OpenEditCharacter} />
+                    <EditIcon editIcon={editCharacter} />
                 </Layout>
             </Layout>
-
+{/*editCharacter OpenEditCharacter*/}
             <Layout>
                 <TopListFilters />
             </Layout>
@@ -246,13 +228,6 @@ const CharacterDetails = () => {
                 spelsKnow={spelsKnow}
                 addSpell={knowSpell}
                 removeSpell={removeSpell}
-            />
-            <CharacterEditModal
-                visible={visible}
-                onClose={() => setVisible(false)}
-                character={currentCharacter}
-                onSave={updateCharacter}
-                onBackDrop={()=> setVisible(false)}
             />
            <ModalFilter 
                 showFilter={showFilter} 
@@ -275,7 +250,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     headerIcons: { 
-        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center'  
     },

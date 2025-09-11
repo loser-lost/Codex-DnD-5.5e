@@ -115,10 +115,12 @@ export default function SpellsScreen() {
 
     return (
       <Layout style={styles.container}>
-          <Layout style={styles.headerIcons}>
-              <StarIcon />
-          </Layout>
-        <SeachBar value={searchQuery} onChangeText={handleSearch} handleOpenFilter={handleOpenModalFilter} allFilters={allFilters}  />
+        <SeachBar 
+          value={searchQuery} 
+          onChangeText={handleSearch} 
+          handleOpenFilter={handleOpenModalFilter} 
+          allFilters={allFilters} 
+        />
 
         <SectionList
           sections={spellInSections}
@@ -130,12 +132,14 @@ export default function SpellsScreen() {
           maxToRenderPerBatch={10}
           windowSize={5}
         />
+
         <Modal
         visible={showFilter }
         backdropStyle={styles.backdrop}
         style={styles.filterModal}
         onBackdropPress={() => setShowFilter(false)}
         >
+          
         <Card disabled={true} style={styles.filterList}>
          <Text style={styles.Text}>Selecione os filtros:</Text>
             <DrawerFilter
@@ -177,7 +181,7 @@ export default function SpellsScreen() {
       display: 'flex',
     },
     headerIcons: { 
-        marginTop: 10,
+      
         flexDirection: 'row',
         justifyContent: 'center',
          

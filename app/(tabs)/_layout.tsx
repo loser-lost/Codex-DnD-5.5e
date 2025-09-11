@@ -58,6 +58,11 @@ export default function TabLayout() {
           options={{ presentation: 'modal',
           headerShown: false, animation: 'slide_from_bottom',
         }} />
+         <Stack.Screen
+          name="EditCharacter"
+          options={{ presentation: 'modal',
+          headerShown: false, animation: 'slide_from_bottom',
+        }} />
         <Stack.Screen
           name="CharacterDetails"
           options={{ presentation: 'modal',
