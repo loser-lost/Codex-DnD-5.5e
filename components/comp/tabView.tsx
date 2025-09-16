@@ -10,7 +10,7 @@ export const TabViewComponent: React.FC = () => {
 
 
     return (
-        <>
+        <Layout>
         <TabView
             selectedIndex={selectedIndexTab}
             onSelect={index => setSelectedIndexTab(index)}
@@ -26,7 +26,7 @@ export const TabViewComponent: React.FC = () => {
                 </Layout>
             </Tab>
         </TabView>
-        </>
+        </Layout>
     )
 };
 const styles = StyleSheet.create({

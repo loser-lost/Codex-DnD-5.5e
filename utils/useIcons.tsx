@@ -1,6 +1,6 @@
 
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { Icon, IconElement, useTheme } from "@ui-kitten/components";
+import { IconElement, useTheme } from "@ui-kitten/components";
 import { ImageProps, TextStyle } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
@@ -113,13 +113,13 @@ import Entypo from "@expo/vector-icons/build/Entypo";
    
     return (
         <AntDesign
-            name="back"
+            name="backward"
             size={26}
             color={theme['color-basic-500']}
             onPress={onBackPress}
         />
     );
-    };
+    };//<AntDesign name="backward" size={24} color="black" />
 
     export const StarIcon = (props?: Partial<ImageProps> ): IconElement =>{
          const theme = useTheme();
@@ -139,13 +139,13 @@ import Entypo from "@expo/vector-icons/build/Entypo";
     
         return (
             <AntDesign
-                name="pluscircleo"
+                name="plus-circle"
                 size={26}
                 color={theme['color-basic-500']}
                 onPress={addOnCharacter}
             />
         );
-    };
+    };//<AntDesign name="plus-circle" size={24} color="black" />
       export const AlterFont = ({ fontModify, style }: fontIconProps): JSX.Element => {
         const theme = useTheme();
     

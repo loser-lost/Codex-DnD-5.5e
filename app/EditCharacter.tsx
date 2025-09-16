@@ -30,6 +30,10 @@ const CreateCharacterScreen = () => {
         }
     },[character])
 
+    const BackFunction = () => {
+        router.back();
+      }
+
     async function characterSearch(){
         try {
             const response = await characterDb.seachById(character_id as string);
@@ -45,9 +49,6 @@ const CreateCharacterScreen = () => {
         setSelectedRaceIndex(new IndexPath(races.indexOf(character[0].race)));
         setSelectedClassIndex(new IndexPath(classees.indexOf(character[0].classe)));
         setSelectedLevelIndex(new IndexPath(levels.indexOf(character[0].level)));
-    }
-    const roteCharacterDetails = (id: number) => {
-      router.push(`/CharacterDetails?character_id=${id}`);
     }
 
     // 🔹 Inicializa selects com valores do personagem
@@ -65,7 +66,7 @@ const CreateCharacterScreen = () => {
         try {
             await characterDb.update(updated);
             characterSearch(); // recarrega
-            roteCharacterDetails(updated.id);
+            BackFunction();
         } catch (error) {
             console.error("Erro ao editar personagem:", error);
         }
@@ -81,12 +82,10 @@ const CreateCharacterScreen = () => {
         updated.level = levels[selectedLevelIndex!.row];
         updateCharacter(updated);
       }
-      const BackFunction = () => {
-        router.back();
-      }
+
     return(
         <Layout style={[ { backgroundColor: theme['background-basic-color-1'] }]} level="1">
-              <Stack.Screen options={{ headerShown: false }} />
+
               <Layout style={styles.container}>
                     <Input
                       style={styles.input}
@@ -94,7 +93,7 @@ const CreateCharacterScreen = () => {
                       placeholder='Nome*'
                       onChangeText={setname}
                     />
-                    
+
                     <Select
                       style={styles.input}
                       value={displayValueRaça}
@@ -122,14 +121,14 @@ const CreateCharacterScreen = () => {
                     >
                      {levels.map(r => <SelectItem key={r} title={r} />)}
                     </Select>
-                   
+
                     <Input
                       style={styles.input}
                       value={playerName}
                       placeholder='Nome do player'
                       onChangeText={setPlayer}
                     />
-                   
+
                     <Layout style={styles.containerbottom}>
                       <Button style={styles.botton} onPress={calEditCharacter}>Salvar</Button>
                       <Button style={styles.botton} onPress={BackFunction}>Cancelar</Button>

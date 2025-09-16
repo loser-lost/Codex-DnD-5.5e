@@ -11,7 +11,7 @@ export function NotFound() {
     const theme = useTheme();
   return (
     <Layout style={[styles.container, { backgroundColor: theme['color-basic-1000'] }]}>
-        <Stack.Screen options={{ headerShown: false }} />
+        
             <Layout style={styles.headerIcons} >
                 <BackIcon onBackPress={BackFunction} />
                 <StarIcon />

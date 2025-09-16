@@ -1,4 +1,4 @@
-import { Alert, StyleSheet } from 'react-native';
+import {  StyleSheet } from 'react-native';
 import {   Button, Layout, List, ListItem, useTheme} from '@ui-kitten/components';
 import React, { useState, useEffect } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
@@ -33,6 +33,10 @@ export default function TabTwoScreen() {
     router.push(`/CharacterDetails?character_id=${id}`);
   }
 
+    const editCharacter = ({ item }: { item: CharacterDatabase}) => {
+          router.push(`/EditCharacter?character_id=${item.id}`);    
+    }
+
   async function deleteCharacter(id: number) {
     try {
       await characterDatabase.remove(id)
@@ -42,15 +46,19 @@ export default function TabTwoScreen() {
     }
   }
 
-  const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => (
-    <ListItem
-      onPress={() => roteCharacterDetails(item.id)}
-      title={`${item.name}`}
-      description={`${item.race} - ${item.classe}`}
-    // accessoryLeft={renderItemIcon}
-      accessoryRight={ <DeleteIconX deleteIconX={() => deleteCharacter(item.id)} />}
-    />
-  );
+  const renderItem = ({ item }: { item: CharacterDatabase}): React.ReactElement => {
+    //console.log('Renderizando item:', item);
+    
+    return (
+      <ListItem
+        onPress={() => roteCharacterDetails(item.id)}
+        title={`${item.name}`} // O problema provavelmente está no valor aqui
+        description={`${item.race} - ${item.classe}`}
+        accessoryLeft={<EditIcon editIcon={() => editCharacter({item})} />}
+        accessoryRight={<DeleteIconX deleteIconX={() => deleteCharacter(item.id)} />}
+      />
+    );
+  };
 
   return (
   <Layout style={styles.container}>

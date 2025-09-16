@@ -52,7 +52,7 @@ const CreateCharacterScreen = () => {
     }
     return(
         <Layout style={[ { backgroundColor: theme['background-basic-color-1'] }]} level="1">
-              <Stack.Screen options={{ headerShown: false }} />
+              
               <Layout style={styles.container}>
                     <Input
                       style={styles.input}

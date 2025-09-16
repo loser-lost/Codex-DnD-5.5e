@@ -1,17 +1,12 @@
 import React, {  useCallback, useEffect, useMemo, useState } from 'react';
-
 import { SectionList, StyleSheet } from 'react-native';
-
 import {  Divider, Layout,  Text, Modal, Card } from '@ui-kitten/components';
-
 import SeachBar from '../../components/comp/SeachBar';
 import RenderSpell from '../../components/comp/renderSpell';
 import {RenderSectionHeader} from '../../components/comp/renderSpell';
 import DrawerFilter from '../../components/comp/drawerFilter';
 import { AppliFilterButton, ClearFiltersButton } from '@/components/comp/buttons';
-
 import { magias } from '@/assets/json/magias.json';
-
 import { groupSortSpells } from '../../utils/groupMagic';
 import { Spell } from '../../utils/groupMagic';
 import { debounce } from '@/utils/debounce';
@@ -181,10 +176,8 @@ export default function SpellsScreen() {
       display: 'flex',
     },
     headerIcons: { 
-      
-        flexDirection: 'row',
-        justifyContent: 'center',
-         
+      flexDirection: 'row',
+      justifyContent: 'center', 
     },
     input: {
       flex: 1,

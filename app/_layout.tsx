@@ -66,11 +66,11 @@ function RootLayoutNav() {
       <SQLiteProvider databaseName="codexDnd.db" onInit={initializeDatabase}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' ,animation: 'fade_from_bottom', }} />
-        <Stack.Screen name="SpellDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
-        <Stack.Screen name="CreateCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
-        <Stack.Screen name="EditCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
-        <Stack.Screen name="CharacterDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal' ,animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="SpellDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="CreateCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="EditCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="CharacterDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
       </Stack>
       </SQLiteProvider>
     </ApplicationProvider>

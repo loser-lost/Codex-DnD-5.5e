@@ -37,6 +37,27 @@ export default function Description({ item, fontSize }: descriptionProps) {
             </>
         )
     };
+    // Esta função agora retorna APENAS UMA STRING
+    const formatClasses = (item: Spell): string => {
+        let classString = '';
+        if (item.classes.length > 1) {
+            classString = item.classes.join(', ');
+        } else if (item.classes.length === 1) {
+            classString = item.classes[0];
+        }
+        return classString + '.'; // Adiciona o ponto no final da string
+    };
+
+    // Faça o mesmo para os componentes
+    const formatComponents = (item: Spell): string => {
+        let componentString = '';
+        if (item.componentes.length > 1) {
+            componentString = item.componentes.join(', ');
+        } else if (item.componentes.length === 1) {
+            componentString = item.componentes[0];
+        }
+        return componentString + '.';
+    };
     return (
         <Fragment>
             <TitleText type='h2' color="primary">
@@ -51,7 +72,7 @@ export default function Description({ item, fontSize }: descriptionProps) {
             <Layout style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: fontSize + 1 }}>Classes: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-400'] }}>
-                    {pontuationClass(item)}
+                    {formatClasses(item)}
                 </Text>
             </Layout>
             <Layout style={{ flexDirection: 'row' }}>
@@ -75,7 +96,7 @@ export default function Description({ item, fontSize }: descriptionProps) {
             <Layout style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: fontSize + 1 }}>Componentes: </Text>
                 <Text style={{ fontSize, color: theme['color-basic-400'] }}>
-                    {pontuationComponent(item)}
+                    {formatComponents(item)}
                 </Text>
             </Layout>
             <Layout style={{ flexDirection: 'row' }}>

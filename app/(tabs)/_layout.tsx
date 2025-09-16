@@ -48,26 +48,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />
         }} />
     </Tabs>
-        <Stack.Screen
-          name="SpellDetails"
-          options={{ presentation: 'modal',
-          headerShown: false, animation: 'slide_from_bottom',
-        }} />
-        <Stack.Screen
-          name="CreateCharacter"
-          options={{ presentation: 'modal',
-          headerShown: false, animation: 'slide_from_bottom',
-        }} />
-         <Stack.Screen
-          name="EditCharacter"
-          options={{ presentation: 'modal',
-          headerShown: false, animation: 'slide_from_bottom',
-        }} />
-        <Stack.Screen
-          name="CharacterDetails"
-          options={{ presentation: 'modal',
-          headerShown: false, animation: 'slide_from_bottom',
-        }} />
         
       </>
           

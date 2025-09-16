@@ -1,5 +1,5 @@
 'use client';
-import React, {  useMemo } from "react";
+import React from "react";
 
 import { useRouter, useLocalSearchParams, Stack } from "expo-router";
 import { useTheme, Text, Layout } from "@ui-kitten/components";
@@ -20,7 +20,7 @@ const SpellDetails = () => {
     const magiaId = Array.isArray(magia_id) ? magia_id[0] : magia_id;
     const item = magias.magias.find((m: Spell) => m.magia_id === magiaId);
     const [fontSize, setFontSize] = React.useState(14);
-    
+
     const BackFunction = () => {
         router.back();
     }
@@ -28,20 +28,18 @@ const SpellDetails = () => {
     const addOnCharacter = () => {
         alert('Adicionar ao personagem');
     }
-   
+
     const fontModify = () => {
        setFontSize(prev => (prev < 20 ? prev + 2 : 16)); // loop entre 14 e 24
     }
 
     if (!item) {
     return (
-        
         <NotFound />
     );
     }
     return (
-        <Layout style={[styles.container ]} level="1">
-            <Stack.Screen options={{ headerShown: false }} />
+        <Layout style={[styles.container ]} level="1">    
             <Layout style={styles.headerIcons} >
                 <BackIcon onBackPress={BackFunction} />
                 <StarIcon />

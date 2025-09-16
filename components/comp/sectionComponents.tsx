@@ -42,10 +42,10 @@ const RenderSpell = React.memo(({ item, buttonKnow, isKnow }: RenderSpellProps) 
             </TitleText>
         )}
         description={() => (
-            <>
+            <Layout>
             <Text style={{ fontSize: 13, color: textColor }} >Duração: {item.duration}</Text>
             <Text style={{ fontSize: 11, color: textColor }}>Tempo de Conjuracao: {item.castingTime}</Text>
-            </>
+            </Layout>
         )}
         //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
         accessoryRight={props => 
@@ -80,10 +80,10 @@ export { RenderSpell};
             </TitleText>
         )}
         description={() => (
-            <>
+            <Layout>
             <Text style={{ fontSize: 13, color: textColor }}>Duração: {item.duration}</Text>
             <Text style={{ fontSize: 11, color: textColor }}>Tempo de Conjuracao: {item.castingTime}</Text>
-            </>
+            </Layout>
         )}
         //accessoryLeft={props => <Button onPress={rotaSpells} size='tiny' />}
         accessoryRight={props => 

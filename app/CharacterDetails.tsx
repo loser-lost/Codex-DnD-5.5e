@@ -33,28 +33,23 @@ const CharacterDetails = () => {
     const [appliedCircle, setAppliedCircle] = useState<string[]>([]);
     const [appliedClasses, setAppliedClasses] = useState<string[]>([]);
 
-    // filter and search function
-    const autoFilters = useMemo(() => {
-        return Array.from(new Set(character.map(char => char.classe).flat()));
-    }, [character]);
-
-    // hooks
-    useEffect(() => {
-        setSelectedClasses(autoFilters);
-    }, [autoFilters]);
-
     useEffect(() => {
         if (character_id) {
             characterSearch();
             spellSearch();
-        }
-    }, [character_id]);
-
-    useEffect(() => {
-        if (character_id) {
             spellSearchSpelCharacter(Number(character_id));
         }
     }, [character_id]);
+
+    // filter and search function
+    const autoFilters = useMemo(() => {
+        return Array.from(new Set(character.map(char => char.classe).flat()));
+    }, [character]);
+    
+    // hooks
+    useEffect(() => {
+        setSelectedClasses(autoFilters);
+    }, [autoFilters]);
 
     // functions to fetch data
     const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
@@ -157,9 +152,6 @@ const CharacterDetails = () => {
         }
     }
 
-    const editCharacter = () => {
-        router.push(`/EditCharacter?character_id=${character_id}`);    
-    }
 
     // function to remove items from selected filters
     const removeItem = useCallback(<T,>(
@@ -200,7 +192,7 @@ const CharacterDetails = () => {
 
     return (
         <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
-            <Stack.Screen options={{ headerShown: false }} />
+            
             <Layout style={styles.headerIcons}>
                 <StarIcon />
             </Layout> 
@@ -215,13 +207,10 @@ const CharacterDetails = () => {
                     )}
                 </Layout>
                 <Layout style={styles.heade2}>
-                    <EditIcon editIcon={editCharacter} />
+                    <TopListFilters />
                 </Layout>
             </Layout>
 {/*editCharacter OpenEditCharacter*/}
-            <Layout>
-                <TopListFilters />
-            </Layout>
 
             <SpellTabs
                 spels={filteredSpells}
