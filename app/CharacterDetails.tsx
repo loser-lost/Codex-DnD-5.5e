@@ -1,11 +1,10 @@
 import React from "react";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { StyleSheet } from 'react-native';
 import { useCallback, useEffect, useMemo, useState,  } from "react";
 import { Layout , Text} from "@ui-kitten/components";
 import { useTheme } from "@ui-kitten/components/theme";
-import { EditIcon,FilterIcon,StarIcon } from "@/utils/useIcons";
-import {useCharacterDatabase, CharacterDatabase} from '../assets/_database/useCharacterDatabase'
+import { FilterIcon,StarIcon } from "@/utils/useIcons";
 import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
 import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
 import ShowButtons from "@/components/comp/showFilterBottons";
@@ -18,14 +17,15 @@ import { ModalFilter } from "@/components/comp/modalFilterDb";
 const CharacterDetails = () => {
     const TM = toastMessages();
     const theme = useTheme();
-    const characterDb = useCharacterDatabase();
+
     const characterSpellDb = useCharacterSpellDatabase();
     const spellDb = useSpellDatabase();
 
-    const {character_id} = useLocalSearchParams();
+    const { idChar, nameChar, classChar } = useLocalSearchParams();
+    const character_id = idChar;
+   
     const [spels, setSpels] = useState<spellDatabase[]>([]);
     const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
-    const [character, setCharacter] = useState<CharacterDatabase[]>([]);
     const [showFilter, setShowFilter] = useState(false);
 
     const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
@@ -35,7 +35,6 @@ const CharacterDetails = () => {
 
     useEffect(() => {
         if (character_id) {
-            characterSearch();
             spellSearch();
             spellSearchSpelCharacter(Number(character_id));
         }
@@ -43,8 +42,15 @@ const CharacterDetails = () => {
 
     // filter and search function
     const autoFilters = useMemo(() => {
-        return Array.from(new Set(character.map(char => char.classe).flat()));
-    }, [character]);
+        
+        if (Array.isArray(classChar)) {
+            return classChar;
+        }
+        if (typeof classChar === 'string') {
+            return [classChar];
+        }
+        return []; // Retorna um array vazio como padrão seguro
+    }, [classChar]);
     
     // hooks
     useEffect(() => {
@@ -91,15 +97,6 @@ const CharacterDetails = () => {
     }, [spels, filters, searchQuery]);
     
     // functions to fetch data
-    async function characterSearch(){
-        try {
-            const response = await characterDb.seachById(character_id as string);
-            setCharacter(response);
-        } catch (error) {
-            console.error('Erro ao buscar personagem:', error);
-        }
-    }
-
     async function spellSearch(){
         try {
             const response = await spellDb.read();
@@ -152,7 +149,6 @@ const CharacterDetails = () => {
         }
     }
 
-
     // function to remove items from selected filters
     const removeItem = useCallback(<T,>(
         itemToRemove: T,
@@ -167,10 +163,6 @@ const CharacterDetails = () => {
     const handleRemoveCircle = useCallback((circleName: string) => {
         removeItem(circleName, setSelectedCircle);
     }, [removeItem]); 
-
-    const currentCharacter = useMemo(() => {
-        return character.length > 0 ? character[0] : null;
-    }, [character]);
 
     const TopListFilters = ()=>{
         return(
@@ -198,13 +190,7 @@ const CharacterDetails = () => {
             </Layout> 
             <Layout style={styles.header}>
                 <Layout style={styles.heade1}>
-                    {currentCharacter ? (
-                            <Layout key={currentCharacter.id} style={{ marginBottom: 16 }}>
-                                <Text category="h5">{currentCharacter.name}</Text>
-                            </Layout>
-                    ) : (
-                        <Text category="s1">Nenhum personagem encontrado.</Text>
-                    )}
+                    <Text>{nameChar}</Text>
                 </Layout>
                 <Layout style={styles.heade2}>
                     <TopListFilters />

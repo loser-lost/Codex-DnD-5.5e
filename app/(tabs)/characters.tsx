@@ -9,8 +9,7 @@ export default function TabTwoScreen() {
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
   const  characterDatabase  = useCharacterDatabase();
   const router = useRouter();
-  const theme = useTheme();
-  const fabColor = theme['color-primary-500'];
+
   const newCharacter = () => {
     router.push('/CreateCharacter')
   }
@@ -32,6 +31,20 @@ export default function TabTwoScreen() {
   const roteCharacterDetails = (id: number) => {
     router.push(`/CharacterDetails?character_id=${id}`);
   }
+  const roteCharacterDetailsTeste = ({ item }: { item: CharacterDatabase}) => {
+    router.push(`/CharacterDetails?character_id=${item.id}Character_name=${item.name}Character_class=${item.classe}`);
+  }
+  const roteCharDetails =({ item }: { item: CharacterDatabase }) =>{
+    router.push({
+      pathname: '/CharacterDetails',
+      params:{
+        idChar: item.id,
+        nameChar: item.name,
+        classChar: item.classe,
+        //raceChar: item.race
+      }
+    })
+  }
 
     const editCharacter = ({ item }: { item: CharacterDatabase}) => {
           router.push(`/EditCharacter?character_id=${item.id}`);    
@@ -51,7 +64,7 @@ export default function TabTwoScreen() {
     
     return (
       <ListItem
-        onPress={() => roteCharacterDetails(item.id)}
+        onPress={() => roteCharDetails({item})}
         title={`${item.name}`} // O problema provavelmente está no valor aqui
         description={`${item.race} - ${item.classe}`}
         accessoryLeft={<EditIcon editIcon={() => editCharacter({item})} />}
