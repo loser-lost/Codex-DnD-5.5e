@@ -13,6 +13,7 @@ const spellsData = spellsJson.magias;
 
 
 export async function getDatabase(): Promise<SQLiteDatabase> {
+  
   const sqliteDir = `${FileSystem.documentDirectory}SQLite`;
   await FileSystem.makeDirectoryAsync(sqliteDir, { intermediates: true });
 
@@ -72,6 +73,44 @@ export async function initializeDatabase(database: SQLiteDatabase) {
             PRIMARY KEY (character_id, spell_id),
             FOREIGN KEY (character_id) REFERENCES caracter(id) ON DELETE CASCADE,
             FOREIGN KEY (spell_id) REFERENCES spell(id) ON DELETE CASCADE
+        );
+        `);
+
+         await database.execAsync(`
+        CREATE TABLE IF NOT EXISTS monsterSistem ( 
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            livro TEXT NOT NULL,
+            linguagem TEXT NOT NULL
+        );
+        `);
+        await database.execAsync(`
+        CREATE TABLE IF NOT EXISTS monster5eIN ( 
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            armorClass TEXT NOT NULL,
+            hitPoints TEXT NOT NULL,
+            STR INTEGER NOT NULL,
+            STR_mod TEXT NOT NULL,
+            DEX INTEGER NOT NULL,
+            DEX_mod TEXT NOT NULL,
+            CON INTEGER NOT NULL,
+            CON_mod TEXT NOT NULL,
+            INT INTEGER NOT NULL,
+            INT_mod TEXT NOT NULL,
+            WIS INTEGER NOT NULL,
+            WIS_mod TEXT NOT NULL,
+            CHA INTEGER NOT NULL,
+            CHA_mod TEXT NOT NULL,
+            savingThrows TEXT,
+            Skills TEXT,
+            Senses TEXT,
+            Languages TEXT,
+            Challenge TEXT,
+            Traits TEXT,
+            Actions TEXT,
+            LegendaryActions TEXT,
+            img_url TEXT,
         );
         `);
 
