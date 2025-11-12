@@ -1,9 +1,9 @@
 import {  StyleSheet } from 'react-native';
 import {   Button, Layout, List, ListItem, useTheme} from '@ui-kitten/components';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {useCharacterDatabase, CharacterDatabase} from '../../assets/_database/useCharacterDatabase'
 import { DeleteIconX, EditIcon, PlusIcon, StarIcon } from '../../utils/useIcons';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 
 export default function TabTwoScreen() {
   const [characters, setCharacters] = useState<CharacterDatabase[]>([]);
@@ -24,16 +24,18 @@ export default function TabTwoScreen() {
     } 
   }
 
-  useEffect(() => {
-    listCharacters();
-  }, []);
 
-  const roteCharacterDetails = (id: number) => {
-    router.push(`/CharacterDetails?character_id=${id}`);
-  }
-  const roteCharacterDetailsTeste = ({ item }: { item: CharacterDatabase}) => {
-    router.push(`/CharacterDetails?character_id=${item.id}Character_name=${item.name}Character_class=${item.classe}`);
-  }
+  useFocusEffect(
+    useCallback(() => {
+      listCharacters();
+      // Opcional: função de limpeza se necessário
+      return () => {
+        // console.log('Saindo da Screen A');
+      };
+    }, [listCharacters])
+  );
+  
+ 
   const roteCharDetails =({ item }: { item: CharacterDatabase }) =>{
     router.push({
       pathname: '/CharacterDetails',

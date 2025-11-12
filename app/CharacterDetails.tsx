@@ -1,224 +1,251 @@
-import React from "react";
-import { useLocalSearchParams } from "expo-router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleSheet } from 'react-native';
-import { useCallback, useEffect, useMemo, useState,  } from "react";
-import { Layout , Text} from "@ui-kitten/components";
+import { useLocalSearchParams } from "expo-router";
+import { Layout, Text, Input } from "@ui-kitten/components"; // Adicionei Input para a busca
 import { useTheme } from "@ui-kitten/components/theme";
-import { FilterIcon,StarIcon } from "@/utils/useIcons";
-import {useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase'
-import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell'
+
+// Imports locais (mantidos)
+import { FilterIcon, StarIcon } from "@/utils/useIcons";
+import { useSpellDatabase, spellDatabase } from '../assets/_database/useSpellDatabase';
+import { useCharacterSpellDatabase } from '../assets/_database/useCharacterSpell';
 import ShowButtons from "@/components/comp/showFilterBottons";
 import { filterSpelsData, toggleItem } from "@/utils/filterFunctionsDb";
 import { removerAcentos } from "@/components/comp/utilities";
-import { toastMessages } from "@/components/comp/toastMessages"
+import { toastMessages } from "@/components/comp/toastMessages";
 import SpellTabs from "@/components/comp/spellTabs";
 import { ModalFilter } from "@/components/comp/modalFilterDb";
 
 const CharacterDetails = () => {
     const TM = toastMessages();
     const theme = useTheme();
-
     const characterSpellDb = useCharacterSpellDatabase();
     const spellDb = useSpellDatabase();
 
     const { idChar, nameChar, classChar } = useLocalSearchParams();
-    const character_id = idChar;
-   
-    const [spels, setSpels] = useState<spellDatabase[]>([]);
-    const [spelsKnow, setSpelsKnow] = useState<spellDatabase[]>([]);
-    const [showFilter, setShowFilter] = useState(false);
+    
+    // Normalização segura do ID
+    const characterId = useMemo(() => Number(idChar), [idChar]);
 
-    const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
+    // Correção de nomeclatura: spells e knownSpells
+    const [spells, setSpells] = useState<spellDatabase[]>([]);
+    const [knownSpells, setKnownSpells] = useState<spellDatabase[]>([]);
+    const [showFilter, setShowFilter] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Estados de filtro
+    const [selectedCircle, setSelectedCircle] = useState<string[]>([]);
     const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
     const [appliedCircle, setAppliedCircle] = useState<string[]>([]);
     const [appliedClasses, setAppliedClasses] = useState<string[]>([]);
 
+    // Carregamento inicial de dados
     useEffect(() => {
-        if (character_id) {
-            spellSearch();
-            spellSearchSpelCharacter(Number(character_id));
+        if (characterId) {
+            loadSpells();
+            loadCharacterSpells(characterId);
         }
-    }, [character_id]);
+    }, [characterId]);
 
-    // filter and search function
-    const autoFilters = useMemo(() => {
-        
+    // Auto-filtro baseado na classe que vem da navegação
+    useEffect(() => {
+        let initialClassFilter: string[] = [];
         if (Array.isArray(classChar)) {
-            return classChar;
+            initialClassFilter = classChar.map(String); // Garante string
+        } else if (typeof classChar === 'string') {
+            initialClassFilter = [classChar];
         }
-        if (typeof classChar === 'string') {
-            return [classChar];
+
+        // Atualiza tanto a seleção visual quanto o filtro aplicado
+        if (initialClassFilter.length > 0) {
+            setSelectedClasses(initialClassFilter);
+            setAppliedClasses(initialClassFilter);
         }
-        return []; // Retorna um array vazio como padrão seguro
     }, [classChar]);
-    
-    // hooks
-    useEffect(() => {
-        setSelectedClasses(autoFilters);
-    }, [autoFilters]);
 
-    // functions to fetch data
-    const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
-    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
-    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
-
-    const allFilters = [
-      selectedCircle, 
-      selectedClasses
-    ].reduce((total, arr) => total + arr.length, 0);
-
-    const clearFilters = ()=>{
-        [setSelectedCircle,
-        setSelectedClasses
-        ].forEach(fn => fn([]));
-    };
-
-    const filters = useMemo(() => ({
-        selectedCircle: appliedCircle,
-        selectedClasses: appliedClasses,
-    }), [appliedCircle, appliedClasses]);;
-
-    const applyFilters = () => {
-        setAppliedCircle(selectedCircle);
-        setAppliedClasses(selectedClasses);
-        setShowFilter(false); // fecha modal
-    }
-    ;  
-    const [searchQuery, setSearchQuery] = useState('');
-    const filteredSpells  = useMemo(() => {
-            const searchFiltered = searchQuery
-            ? spels.filter(item => 
-                removerAcentos(item.name).toLowerCase().includes(removerAcentos(searchQuery).toLowerCase())
-                )
-            : spels;
-
-        const hasFilters  = Object.values(filters).some(arr => arr.length > 0);
-        return hasFilters ? filterSpelsData(searchFiltered, filters) : searchFiltered;
-    }, [spels, filters, searchQuery]);
-    
-    // functions to fetch data
-    async function spellSearch(){
+    // Funções de Busca no Banco
+    async function loadSpells() {
         try {
             const response = await spellDb.read();
-            setSpels(response);
+            setSpells(response);
         } catch (error) {
             console.error('Erro ao buscar magias:', error);
         }
     }
 
-    async function spellSearchSpelCharacter(id: number){
+    async function loadCharacterSpells(id: number) {
         try {
             const response = await characterSpellDb.searchSpellsByCharacterid(id);
-            setSpelsKnow(response);
+            setKnownSpells(response);
         } catch (error) {
             console.error('Erro ao buscar magias do personagem:', error);
-        }    
-    }
-
-    // render item for SectionList
-    const knowSpell = useCallback(async (id: number) => {
-        const char_id = Number(character_id);
-        try{
-                const exists = await characterSpellDb.checkIfExists(char_id, id);
-                if (exists) {
-                    TM.knowedSpell();
-                    return;
-                }
-                const response = await characterSpellDb.createSC({character_id: Number(char_id), spell_id: id});
-                if (response && response.insertedRowId) {
-                    const addedSpell = spels.find(s => s.id === id);
-                    if (addedSpell) {
-                        setSpelsKnow(prev => [...prev, addedSpell]);
-                        TM.showSucessSpell();
-                    }
-                }
-            } catch (error) {
-                TM.showFailSpell();
-                console.error('Erro ao adicionar a magia ao personagem:', error);
-            }
-    }, [character_id, spels, spelsKnow]);
-
-    async function removeSpell(id:number) {
-        try {
-            await characterSpellDb.remove(id)
-            TM.removeSpSucess();
-            setSpelsKnow(prev => prev.filter(s => s.id !== id));                        
-        } catch (error) {
-            console.error('Erro ao deletar magia:', error);  
-            TM.removeSpFail();         
         }
     }
 
-    // function to remove items from selected filters
-    const removeItem = useCallback(<T,>(
-        itemToRemove: T,
-        setState: React.Dispatch<React.SetStateAction<T[]>>
-    ) => {
-        setState(prevItems => prevItems.filter(item => item !== itemToRemove));
-    }, []);
+    // Lógica de Filtro Computada
+    const filters = useMemo(() => ({
+        selectedCircle: appliedCircle,
+        selectedClasses: appliedClasses,
+    }), [appliedCircle, appliedClasses]);
+
+    const filteredSpells = useMemo(() => {
+        let result = spells;
+
+        // 1. Filtro de Texto
+        if (searchQuery) {
+            const normalizedQuery = removerAcentos(searchQuery).toLowerCase();
+            result = result.filter(item => 
+                removerAcentos(item.name).toLowerCase().includes(normalizedQuery)
+            );
+        }
+
+        // 2. Filtros de Categoria (Classe/Circulo)
+        const hasFilters = Object.values(filters).some(arr => arr.length > 0);
+        if (hasFilters) {
+            result = filterSpelsData(result, filters);
+        }
+
+        return result;
+    }, [spells, filters, searchQuery]);
+
+    // Handlers de Ação
+    const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
+    
+    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), []);
+    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), []);
+
+    const handleApplyFilters = () => {
+        setAppliedCircle(selectedCircle);
+        setAppliedClasses(selectedClasses);
+        setShowFilter(false);
+    };
+
+    const handleClearFilters = () => {
+        setSelectedCircle([]);
+        setSelectedClasses([]);
+        // Opcional: se quiser limpar e aplicar imediatamente, descomente abaixo:
+        // setAppliedCircle([]);
+        // setAppliedClasses([]);
+    };
+
     const handleRemoveClass = useCallback((className: string) => {
-        removeItem(className, setSelectedClasses);
-    }, [removeItem]); 
+        setSelectedClasses(prev => {
+             const newState = prev.filter(item => item !== className);
+             setAppliedClasses(newState); // Atualiza o aplicado imediatamente ao remover pela tag
+             return newState;
+        });
+    }, []);
 
     const handleRemoveCircle = useCallback((circleName: string) => {
-        removeItem(circleName, setSelectedCircle);
-    }, [removeItem]); 
+        setSelectedCircle(prev => {
+            const newState = prev.filter(item => item !== circleName);
+            setAppliedCircle(newState);
+            return newState;
+        });
+    }, []);
 
-    const TopListFilters = ()=>{
-        return(
-            <Layout style={styles.header}>
-                <Layout style={styles.heade1}>
-                    <ShowButtons
-                        selectedClasses={selectedClasses}
-                        selectedCircle={selectedCircle}
-                        onRemoveClass={handleRemoveClass}
-                        onRemoveCircle={handleRemoveCircle}
-                    />
-                </Layout>
-                <Layout style={styles.heade2}>
-                    <FilterIcon filterIcon={handleOpenModalFilter} />
-                </Layout>
-            </Layout>
-        )
-    }
+    // Adicionar Magia
+    const handleLearnSpell = useCallback(async (spellId: number) => {
+        if (!characterId) return;
+        
+        try {
+            const exists = await characterSpellDb.checkIfExists(characterId, spellId);
+            if (exists) {
+                TM.knowedSpell();
+                return;
+            }
+            
+            const response = await characterSpellDb.createSC({
+                character_id: characterId, 
+                spell_id: spellId
+            });
+
+            if (response && response.insertedRowId) {
+                const addedSpell = spells.find(s => s.id === spellId);
+                if (addedSpell) {
+                    setKnownSpells(prev => [...prev, addedSpell]);
+                    TM.showSucessSpell();
+                }
+            }
+        } catch (error) {
+            TM.showFailSpell();
+            console.error('Erro ao adicionar magia:', error);
+        }
+    }, [characterId, spells, characterSpellDb, TM]);
+
+    // Remover Magia
+    const handleForgetSpell = async (id: number) => {
+        try {
+            await characterSpellDb.remove(id);
+            TM.removeSpSucess();
+            setKnownSpells(prev => prev.filter(s => s.id !== id));
+        } catch (error) {
+            console.error('Erro ao deletar magia:', error);
+            TM.removeSpFail();
+        }
+    };
+
+    const activeFilterCount = selectedCircle.length + selectedClasses.length;
 
     return (
         <Layout style={[styles.container, { backgroundColor: theme['background-basic-color-1'] }]}>
             
+            {/* Header com Ícone Central */}
             <Layout style={styles.headerIcons}>
                 <StarIcon />
             </Layout> 
-            <Layout style={styles.header}>
-                <Layout style={styles.heade1}>
-                    <Text>{nameChar}</Text>
+
+            {/* Header Principal: Nome e Filtros */}
+            <Layout style={styles.headerRow}>
+                <Layout style={styles.headerLeft}>
+                    <Text category="h6">{nameChar}</Text>
                 </Layout>
-                <Layout style={styles.heade2}>
-                    <TopListFilters />
+                
+                <Layout style={styles.headerRight}>
+                   {/* Removido componente aninhado TopListFilters */}
+                   <Layout style={styles.filterControls}>
+                        <ShowButtons
+                            selectedClasses={selectedClasses} // Usar appliedClasses se quiser mostrar apenas o que está ativo na lista
+                            selectedCircle={selectedCircle}
+                            onRemoveClass={handleRemoveClass}
+                            onRemoveCircle={handleRemoveCircle}
+                        />
+                        <FilterIcon filterIcon={handleOpenModalFilter} />
+                   </Layout>
                 </Layout>
             </Layout>
-{/*editCharacter OpenEditCharacter*/}
+
+            {/* IMPORTANTE: Campo de Busca Adicionado */}
+            <Input
+                placeholder="Buscar magia..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                style={styles.searchInput}
+            />
 
             <SpellTabs
                 spels={filteredSpells}
-                spelsKnow={spelsKnow}
-                addSpell={knowSpell}
-                removeSpell={removeSpell}
+                spelsKnow={knownSpells}
+                addSpell={handleLearnSpell}
+                removeSpell={handleForgetSpell}
             />
-           <ModalFilter 
+
+            <ModalFilter 
                 showFilter={showFilter} 
-                onBackDrop={()=> setShowFilter(false)} 
+                onBackDrop={() => setShowFilter(false)} 
                 selectedCircle={selectedCircle} 
                 selectedClasses={selectedClasses} 
                 toggleCircle={toggleCircle} 
                 toggleClass={toggleClass} 
-                allFilters={allFilters} 
-                clearFilters={clearFilters}
-                AppliFilter={applyFilters}
+                allFilters={activeFilterCount} 
+                clearFilters={handleClearFilters}
+                AppliFilter={handleApplyFilters}
             />   
         </Layout>
-    )
+    );
 } 
+
 export default CharacterDetails;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -226,17 +253,27 @@ const styles = StyleSheet.create({
     },
     headerIcons: { 
         flexDirection: 'row',
-        justifyContent: 'center'  
+        justifyContent: 'center',
+        marginBottom: 10
     },
-    heade1: {
-        marginLeft:5
-    },
-    heade2: {
-        marginRight: 5,
-    },
-    header: {
+    headerRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginBottom: 10,
     },
+    headerLeft: {
+        flex: 1,
+    },
+    headerRight: {
+        flexShrink: 1,
+    },
+    filterControls: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10
+    },
+    searchInput: {
+        marginBottom: 15,
+    }
 });
