@@ -215,16 +215,12 @@ const CharacterDetails = () => {
             </Layout>
 
             {/* IMPORTANTE: Campo de Busca Adicionado */}
-            <Input
-                placeholder="Buscar magia..."
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                style={styles.searchInput}
-            />
 
             <SpellTabs
                 spels={filteredSpells}
                 spelsKnow={knownSpells}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
                 addSpell={handleLearnSpell}
                 removeSpell={handleForgetSpell}
             />
@@ -272,8 +268,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10
-    },
-    searchInput: {
-        marginBottom: 15,
     }
+    
 });
