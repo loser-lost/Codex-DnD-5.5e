@@ -8,6 +8,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 export { ErrorBoundary } from 'expo-router';
 
+
 //* UI Kitten Imports
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
@@ -15,10 +16,13 @@ import { ApplicationProvider } from '@ui-kitten/components';
 //* Assets Imports
 import { default as theme } from "../assets/theme/custom-theme.json";
 
+
 //* Third Party Imports
 import { AveriaSerifLibre_400Regular, AveriaSerifLibre_700Bold, useFonts } from '@expo-google-fonts/averia-serif-libre';
 import 'react-native-reanimated';
 import { Inter_400Regular, Inter_700Bold, Inter_400Regular_Italic } from '@expo-google-fonts/inter';
+import { SQLiteProvider } from 'expo-sqlite';
+import { initializeDatabase } from '../assets/_database/initializeDatabase';
 
 
 export const unstable_settings = { initialRouteName: '(tabs)' };
@@ -57,11 +61,19 @@ export default function RootLayout() {
 function RootLayoutNav() {
 
   return (
+    
     <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
+      <SQLiteProvider databaseName="codexDnd.db" onInit={initializeDatabase}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'fade_from_bottom' }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal' ,animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="SpellDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="CreateCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="EditCharacter" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
+        <Stack.Screen name="CharacterDetails" options={{ presentation: 'card', animation: 'fade_from_bottom', headerShown: false }} />
       </Stack>
+      </SQLiteProvider>
     </ApplicationProvider>
+    
   );
 }

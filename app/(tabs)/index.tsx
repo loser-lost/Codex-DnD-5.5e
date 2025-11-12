@@ -1,203 +1,232 @@
-import { ScrollView, StyleSheet } from 'react-native';
-import { Button, Divider, Input, Layout, List, ListItem, useTheme } from '@ui-kitten/components';
-import { Text, TitleText } from '@/components/StyledText';
-
-
+import React, {  useCallback, useEffect, useMemo, useState } from 'react';
+import { SectionList, StyleSheet } from 'react-native';
+import {  Divider, Layout,  Text, Modal, Card } from '@ui-kitten/components';
+import SeachBar from '../../components/comp/SeachBar';
+import RenderSpell from '../../components/comp/renderSpell';
+import {RenderSectionHeader} from '../../components/comp/renderSpell';
+import DrawerFilter from '../../components/comp/drawerFilter';
+import { AppliFilterButton, ClearFiltersButton } from '@/components/comp/buttons';
 import { magias } from '@/assets/json/magias.json';
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
-
-//Typing JSON
-interface Spell {
-  magia_id: string;
-  nome: string;
-  circulo: string;
-  escola: string;
-  classes: string[];
-  tempo_de_conjuracao: string;
-  alcance: string;
-  componentes: string[];
-  duracao: string;
-  efeito: string;
-}
-
-function agruparEOrdenarMagias(magias: Spell[]): Record<string, Spell[]> {
-  const grupos: Record<string, Spell[]> = {};
-
-
-  // Agrupamento
-  magias.forEach(magia => {
-    const circulo = magia.circulo;
-    if (!grupos[circulo]) {
-      grupos[circulo] = [];
-    }
-    grupos[circulo].push(magia);
-  });
-
-  // Ordenar cada grupo por nome
-  Object.keys(grupos).forEach(circulo => {
-    grupos[circulo].sort((a, b) => a.nome.localeCompare(b.nome));
-  });
-
-  // Função para ordenar corretamente "Truque", "1º", "2º", etc.
-  function obterOrdemCirculo(c: string): number {
-    if (c.toLowerCase().includes('truque')) return 0;
-    const match = c.match(/\d+/);
-    return match ? parseInt(match[0], 10) : Infinity;
-  }
-
-  const circulosOrdenados = Object.keys(grupos).sort(
-    (a, b) => obterOrdemCirculo(a) - obterOrdemCirculo(b)
-  );
-
-  // Retorna os grupos já na ordem correta
-  const resultado: Record<string, Spell[]> = {};
-  circulosOrdenados.forEach(circulo => {
-    resultado[circulo] = grupos[circulo];
-  });
-
-  return resultado;
-}
-
+import { groupSortSpells } from '../../utils/groupMagic';
+import { Spell } from '../../utils/groupMagic';
+import { debounce } from '@/utils/debounce';
+import {ClassIcon, SchoolIcon, RangeIcon, TempoIcon, CirculoIcon, StarIcon } from '../../utils/useIcons';
+import { filterSpels, toggleItem } from '../../utils/filterFunctions';
 
 export default function SpellsScreen() {
-  const theme = useTheme();
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filteredData, setFilteredData] = useState<Spell[]>([]);
-  //Organizando os dados
-  const [spells, setSpells] = useState<Spell[]>(magias);
+    // State variables
+    const [filteredData, setFilteredData] = useState<Spell[]>([]);
+    const [selectedCircle , setSelectedCircle] = useState<string[]>([]);
+    const [schoolsSelected, setSchoolsSelected] = useState<string[]>([]);
+    const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
+    const [selectedRange, setSelectedRange] = useState<string[]>([]);
+    const [selectedTempo, setSelectedTempo] = useState<string[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [spells, setSpells] = useState<Spell[]>(magias);
+    const [showFilter, setShowFilter] = useState(false);
+    const keyExtractor = useCallback((item: Spell) => String(item.magia_id), [])
 
-  const debounce = (func: (...args: string[]) => void, wait: number) => {
-    let timeout: number;
-    return (...args: string[]) => {
-      clearTimeout(timeout);
-      timeout = window.setTimeout(() => func(...args), wait);
+    //Search Functions 
+     const handleSearch = (query: string) => {
+      setSearchQuery(query);
     };
-  };
 
-  const handleSearchDebounced = debounce((query: string) => {
-    const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
-    setFilteredData(filtered);
-  }, 500);
-
-  useEffect(() => {
-    if (searchQuery.length > 0) {
-      handleSearchDebounced(searchQuery);
-    } else {
-      setSpells(magias);
-    }
-  }, [searchQuery]);
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  const handleFilter = () => {
-    alert('filtro');
-  };
-
-
-  const magiasAgrupadas = useMemo(() => {
-    const base = searchQuery ? filteredData : spells;
-    return agruparEOrdenarMagias(base);
-  }, [searchQuery, filteredData, spells]);
-
-  const renderItem = ({ item }: { item: Spell }) => (
-    <ListItem
-      title={() => (
-        <TitleText type='h4'>
-          {item.nome}
-        </TitleText>
-
-      )
+    useEffect(() => {
+      if (searchQuery.length > 0) {
+        handleSearchDebounced(searchQuery);
       }
-      description={() => (
-        <Fragment>
-          <Text style={{ fontSize: 13, color: theme['color-basic-500'] }}>Duração: {item.duracao}</Text>
-          <Text style={{ fontSize: 11, color: theme['color-basic-500'] }}>{item.tempo_de_conjuracao}</Text>
-        </Fragment>
-      )
+    }, [searchQuery]);
+
+    const handleSearchDebounced = useMemo(() => debounce((query: string) => {
+      const filtered = spells.filter(item => item.nome.toLowerCase().includes(query.toLowerCase()));
+      setFilteredData(filtered);
+    }, 500), [spells]);
+    //End search Functions
+
+    // start filters functions  
+    const toggleCircle = useCallback((item: string) => toggleItem(item, setSelectedCircle), [setSelectedCircle ]);
+    const toggleClass = useCallback((item: string) => toggleItem(item, setSelectedClasses), [setSelectedClasses]);
+    const toggleSchool = useCallback((item: string) => toggleItem(item, setSchoolsSelected), [setSchoolsSelected]);
+    const toggleRange = useCallback((item: string) => toggleItem(item, setSelectedRange), [setSelectedRange]);
+    const toggleTime = useCallback((item: string) => toggleItem(item, setSelectedTempo), [setSelectedTempo]);
+
+    const allFilters = [
+      selectedCircle, 
+      schoolsSelected, 
+      selectedClasses, 
+      selectedRange, 
+      selectedTempo
+    ].reduce((total, arr) => total + arr.length, 0);
+    
+    const clearFilters = ()=>{
+       [setSelectedCircle, 
+        setSchoolsSelected, 
+        setSelectedClasses, 
+        setSelectedRange, 
+        setSelectedTempo
+      ].forEach(fn => fn([]));
+    };
+
+    const filters = useMemo(() => ({
+      selectedCircle,
+      schoolsSelected,
+      selectedClasses,
+      selectedRange,
+      selectedTempo
+    }), [selectedCircle , schoolsSelected, selectedClasses, selectedRange, selectedTempo]);
+
+    const filter = useMemo(() => {
+      const shouldFilter = Object.values(filters).some(arr => arr.length > 0);
+      return shouldFilter ? filterSpels(magias, filters) : magias;
+    }, [filters]);
+
+      const applyFilter = () => {
+        setSpells(filter);
+        setShowFilter(false);
       }
-      accessoryRight={() => (
-        <Text style={{ fontSize: 14 }}>
-          {item.circulo === '0' ? 'Truque' : item.circulo + "º Círculo"}
-        </Text>
-      )
-      }
-    />
-  );
+    // End filters functions
 
+    // Start groups functions
+    const groupedSpells = useMemo(() => {
+      const base = searchQuery ? filteredData : spells;
+      return groupSortSpells(base);
+    }, [searchQuery, filteredData, spells]);
 
+    const spellInSections = useMemo(()=>{
+      return Object.entries(groupedSpells).map(([circulo, data]) => ({
+          title: circulo,
+          data,
+      }));
+    }, [groupedSpells]);
+    // End groups functions 
 
-  return (
+    // Start render functions
+    const renderItem = useCallback(({ item }: { item: Spell }) => (
+      <RenderSpell item={item} />
+    ), []);
+    
+    const handleOpenModalFilter = useCallback(() => setShowFilter(true), []);
+    // End render functions
 
-    <Layout style={styles.container}>
-      <Layout style={styles.header}>
-        <Input
-          style={styles.input}
-          placeholder="Procurar..."
-          value={searchQuery}
-          onChangeText={handleSearch}
-          size='medium'
+    return (
+      <Layout style={styles.container}>
+        <SeachBar 
+          value={searchQuery} 
+          onChangeText={handleSearch} 
+          handleOpenFilter={handleOpenModalFilter} 
+          allFilters={allFilters} 
         />
-        <Button onPress={() => handleFilter()} size='small' style={{ marginHorizontal: 4 }}>
-          FILTRO
-        </Button>
-      </Layout>
-      <ScrollView style={{ flex: 1 }}>
-        {Object.entries(magiasAgrupadas).map(([circulo, magias]) => (
 
-          <Layout key={circulo}>
-            <Layout style={styles.nivelBar}>
-              <Text>Nivel: {circulo}</Text>
-              <Text>Total: {magias.length}</Text>
-            </Layout>
-            <List
-              style={styles.listSpells}
-              data={magias}
-              renderItem={renderItem}
-              ItemSeparatorComponent={Divider}
+        <SectionList
+          sections={spellInSections}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          renderSectionHeader={({ section }) => (<RenderSectionHeader title={section.title} data={section.data} />)}
+          ItemSeparatorComponent={Divider}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
+          windowSize={5}
+        />
+
+        <Modal
+        visible={showFilter }
+        backdropStyle={styles.backdrop}
+        style={styles.filterModal}
+        onBackdropPress={() => setShowFilter(false)}
+        >
+          
+        <Card disabled={true} style={styles.filterList}>
+         <Text style={styles.Text}>Selecione os filtros:</Text>
+            <DrawerFilter
+                selectCircle={selectedCircle}
+                selectedClasses={selectedClasses}
+                schoolsSelected={schoolsSelected}
+                selectedRange={selectedRange}
+                selectedTempo={selectedTempo}
+                toggleCircle={toggleCircle}
+                toggleClass={toggleClass}
+                toggleSchool={toggleSchool}
+                toggleRange={toggleRange}
+                toggleTime={toggleTime}
+                CirculoIcon={CirculoIcon}
+                ClassIcon={ClassIcon}
+                SchoolIcon={SchoolIcon}
+                RangeIcon={RangeIcon}
+                TempoIcon={TempoIcon}                      
             />
-          </Layout>
-        ))}
-      </ScrollView>
+            <Layout style={styles.buttons}>
+              <AppliFilterButton applyFilter={applyFilter} allFilters={allFilters} />
+              <ClearFiltersButton clearFilters={clearFilters} />
+            </Layout>
+        </Card>
+      </Modal>
+    
     </Layout>
-
-  );
-
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    paddingVertical: 8,
-    display: 'flex',
-  },
-  input: {
-    flex: 1,
-    marginHorizontal: 4
-  },
-  nivelBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    height: 40,
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: "black"
-
-  },
-  listSpells: {
-    flex: 1,
-    width: '100%'
-  },
-  title: {
-    fontSize: 32, //DB7610
-    fontFamily: 'AveriaSerifLibreBold',
-  }
-});
+  )}
+  const styles = StyleSheet.create({
+    container: {
+      
+      flex: 1,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '100%',
+      paddingVertical: 8,
+      display: 'flex',
+    },
+    headerIcons: { 
+      flexDirection: 'row',
+      justifyContent: 'center', 
+    },
+    input: {
+      flex: 1,
+      marginHorizontal: 4
+    },
+    nivelBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '100%',
+      height: 40,
+      justifyContent: 'space-between',
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      backgroundColor: "black"
+    },
+    listSpells: {
+      flex: 1,
+      width: '100%'
+    },
+    title: {
+      fontSize: 32, //DB7610
+      fontFamily: 'AveriaSerifLibreBold',
+    },
+     backdrop: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+     Text:{
+        paddingTop: 10,
+        marginLeft: 15, 
+    },
+    filterList: {
+      maxHeight: '90%',
+      width: '100%',
+      borderRadius: 8,
+      overflow: 'hidden',
+    },
+     buttons:{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 5,
+        padding: 5,
+        borderRadius: 5,
+        marginHorizontal: 5,
+    },
+    filterModal:{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 25,
+    }
+  });

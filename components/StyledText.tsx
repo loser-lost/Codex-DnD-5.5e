@@ -15,6 +15,6 @@ export function TitleText(props: TitleTextProps) {
 }
 
 export function Text(props: TextProps) {
-  return <DefaultText {...props} style={[props.style, { fontFamily: 'Inter'}]} />;
+  return <DefaultText {...props} style={[props.style, { fontFamily: 'Inter' }]} />;
 }
 //Tenho que retirar as colors das fontes
